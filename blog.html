@@ -359,11 +359,54 @@
             <h3 class="text-lg sm:text-xl font-black text-carbon">最新文章陈列架</h3>
             <span class="text-xs text-carbonMuted font-normal" id="currentCategoryTitle">（全部文章）</span>
           </div>
-          <span class="text-xs text-carbonMuted" id="showingCount">显示 6 篇精选</span>
+          <span class="text-xs text-carbonMuted" id="showingCount">显示 7 篇精选</span>
         </div>
 
         <!-- 2~3 列文章卡片网格 -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="blogCardsContainer">
+
+          <!-- CARD 0: 年度置顶横评 (协议与测速 / 精选) -->
+          <article class="blog-card group bg-white rounded-2xl border-2 border-warmOrange/40 shadow-card hover:shadow-card-hover overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-category="protocol">
+            <div>
+              <div class="relative h-44 bg-gradient-to-tr from-[#FFF0EB] to-[#FFE0D3] overflow-hidden flex items-center justify-center border-b border-warmOrange/20">
+                <div class="text-6xl group-hover:scale-110 transition-transform duration-500 select-none">
+                  🏆
+                </div>
+                <div class="absolute top-3 left-3 bg-warmOrange text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow-xs">
+                  店长横评
+                </div>
+                <div class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+                  TOP 3 实测
+                </div>
+                <div class="absolute bottom-2 right-3 text-[10px] text-warmOrangeDeep font-mono font-bold">
+                  IPLC / 0丢包专线
+                </div>
+              </div>
+
+              <div class="p-5 sm:p-6">
+                <a href="top3-airports-2026.html" class="block group">
+                  <h4 class="text-base sm:text-lg font-bold text-carbon group-hover:text-warmOrange transition-colors leading-snug line-clamp-2">
+                    2026年机场推荐前三名深度横评：晚高峰实测、性价比与专线避坑指南
+                  </h4>
+                </a>
+                <p class="mt-2.5 text-xs sm:text-sm text-carbonMuted leading-relaxed line-clamp-2">
+                  深度实测第一名环球梯、第二名大佬云、第三名榴莲云在晚高峰丢包、4K秒开与原生IP防封表现，附独家7折优惠券。
+                </p>
+              </div>
+            </div>
+
+            <div class="px-5 pb-5 sm:px-6 sm:pb-6 pt-3 border-t border-oat/50 flex items-center justify-between text-[11px] text-carbonMuted">
+              <div class="flex items-center gap-1.5">
+                <span>👨‍🍳 店长小光</span>
+                <span>•</span>
+                <span>今日推荐</span>
+              </div>
+              <a href="top3-airports-2026.html" class="flex items-center gap-1 text-warmOrange font-bold group-hover:translate-x-0.5 transition-transform">
+                <span>深度精读</span>
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            </div>
+          </article>
 
           <!-- CARD 1: 协议与测速 -->
           <article class="blog-card group bg-white rounded-2xl border border-oat shadow-card hover:shadow-card-hover overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-category="protocol">

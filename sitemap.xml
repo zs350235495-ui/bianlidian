@@ -44,6 +44,14 @@
     <priority>0.9</priority>
   </url>
 
+  <!-- 5.1 热门深度横评 (Top 3 Airports Review) - 机场推荐前三名深度横评 -->
+  <url>
+    <loc>https://jichangbianli.org/top3-airports-2026.html</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
   <!-- 6. 设备专柜 (Devices) - 全平台客户端下载与设置 -->
   <url>
     <loc>https://jichangbianli.org/devices.html</loc>
