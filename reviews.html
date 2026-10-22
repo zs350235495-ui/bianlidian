@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>店长严选专柜 · 2026 机场推荐与晚高峰横评天梯榜 — 光速便利店</title>
+  <meta name="description" content="光速便利店店长严选专柜：严格基于晚高峰抗拥塞、0丢包IPLC专线、双ISP住宅IP及流媒体/AI原生解锁的真实横测天梯榜。专属折扣与客观评测。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // 优惠码一键复制
+    window.copyCouponCode = function(code) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(code).then(showTip).catch(() => fallbackCopy(code));
+      } else {
+        fallbackCopy(code);
+      }
+
+      function showTip() {
+        const tip = document.getElementById('copySuccessTip');
+        if (tip) {
+          tip.classList.remove('hidden');
+          setTimeout(() => tip.classList.add('hidden'), 3500);
+        } else {
+          alert('🎉 专属优惠码 ' + code + ' 已复制到剪贴板！');
+        }
+      }
+
+      function fallbackCopy(text) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+          showTip();
+        } catch (e) {
+          alert('专属优惠码为：' + text + '，请手动复制');
+        }
+        document.body.removeChild(ta);
+      }
+    };
+
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream:    '#FFF8F0',
+            oat:      '#F5EDE3',
+            warmOrange:  '#E8935A',
+            warmOrangeLight: '#F4B88A',
+            warmOrangeDeep: '#D47A3F',
+            buttercup: '#F5D78E',
+            buttercupLight: '#FBE9B7',
+            carbon:    '#2E2A27',
+            carbonLight: '#4A4541',
+            carbonMuted: '#8A8480',
+          },
+          fontFamily: {
+            sans: ['"Noto Sans SC"', '"Outfit"', 'system-ui', 'sans-serif'],
+            display: ['"Outfit"', '"Noto Sans SC"', 'sans-serif'],
+          },
+          boxShadow: {
+            'card': '0 2px 16px 0 rgba(46,42,39,0.06)',
+            'card-hover': '0 10px 32px 0 rgba(232,147,90,0.13)',
+            'shelf': '0 4px 24px 0 rgba(46,42,39,0.08)',
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'shimmer': 'shimmer 2.5s ease-in-out infinite',
+            'scale-up': 'scaleUp 0.25s ease-out forwards',
+          },
+          keyframes: {
+            float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+            shimmer: { '0%,100%': { opacity: '1' }, '50%': { opacity: '0.75' } },
+            scaleUp: { '0%': { opacity: '0', transform: 'scale(0.95)' }, '100%': { opacity: '1', transform: 'scale(1)' } }
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #F5EDE3; }
+    ::-webkit-scrollbar-thumb { background: #E8935A; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #D47A3F; }
+    html { scroll-behavior: smooth; }
+
+    .dots-pattern { background-image: radial-gradient(circle, #E8935A 1.2px, transparent 1.2px); background-size: 24px 24px; opacity: .06; }
+    .navbar-blur { backdrop-filter: blur(16px) saturate(1.6); -webkit-backdrop-filter: blur(16px) saturate(1.6); }
+
+    .mobile-menu-enter { max-height: 0; opacity: 0; overflow: hidden; transition: max-height .4s ease, opacity .3s ease; }
+    .mobile-menu-enter.open { max-height: 500px; opacity: 1; }
+
+    /* Nav active state */
+    .nav-link { position: relative; }
+    .nav-link.active { color: #E8935A; font-weight: 600; }
+    .nav-link.active::after { content: ''; position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%); width: 18px; height: 3px; background: #E8935A; border-radius: 9999px; }
+    .mobile-nav-link.active { color: #E8935A; background: rgba(232,147,90,.08); font-weight: 600; }
+
+    /* Filter pills */
+    .review-pill { transition: all .25s ease; cursor: pointer; user-select: none; }
+    .review-pill.active { background-color: #E8935A; color: #fff; box-shadow: 0 4px 14px rgba(232,147,90,.35); font-weight: 600; }
+    .review-pill:not(.active):hover { background-color: #FCEBD5; color: #2E2A27; }
+  </style>
+</head>
+<body class="bg-[#FDFBF7] text-carbon font-sans antialiased min-h-screen flex flex-col">
+
+  <!-- 复制成功浮动提示 (Toast) -->
+  <div id="copySuccessTip" class="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 hidden bg-carbon text-white text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-full shadow-2xl flex items-center gap-2 border border-warmOrange/40 animate-bounce">
+    <span class="text-base">🎉</span>
+    <span>专属 7 折优惠码已复制到剪贴板！官网结算时直接粘贴即可。</span>
+  </div>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="fixed top-0 left-0 right-0 z-40 navbar-blur bg-[#FFF8F0]/90 border-b border-oat/70" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 lg:h-[72px]">
+        <!-- Brand Logo -->
+        <a href="index.html" class="flex items-center gap-2.5 group">
+          <svg class="h-10 w-auto" viewBox="0 0 160 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="160" height="48" rx="8" fill="none"/>
+            <g transform="translate(6, 4)">
+              <rect x="0" y="2" width="36" height="36" rx="9" fill="#E8935A" class="group-hover:fill-warmOrangeDeep transition-colors"/>
+              <path d="M7 11h22v18a3 3 0 0 1-3 3H10a3 3 0 0 1-3-3V11z" fill="#FFF8F0"/>
+              <path d="M5 8a3 3 0 0 1 3-3h20a3 3 0 0 1 3 3v4H5V8z" fill="#F5D78E"/>
+              <polygon points="19,15 15,24 18,24 16,30 22,21 19,21" fill="#E8935A"/>
+            </g>
+            <g transform="translate(48, 6)">
+              <text x="0" y="22" fill="#2E2A27" font-family="'Noto Sans SC', system-ui" font-size="17" font-weight="900">光速便利店</text>
+              <text x="94" y="14" fill="#E8935A" font-family="'Outfit', system-ui" font-size="10" font-weight="700">24H</text>
+              <text x="0" y="34" fill="#8A8480" font-family="'Outfit', system-ui" font-size="9" font-weight="600" letter-spacing="1.2">SPEED MART</text>
+            </g>
+          </svg>
+        </a>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden lg:flex items-center gap-1" aria-label="主导航">
+          <a href="index.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="home">首页</a>
+          <a href="reviews.html" class="nav-link active px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="reviews">店长严选</a>
+          <a href="guide.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="guide">新手便当</a>
+          <a href="devices.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="devices">设备专柜</a>
+          <a href="speedtest.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="speedtest">测速冰箱</a>
+          <a href="blog.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="blog">便利店日志</a>
+          <a href="faq.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="faq">常见避坑</a>
+        </nav>
+
+        <div class="flex items-center gap-2">
+          <a href="#matrix-table" class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-bold hover:bg-warmOrange/25 transition-colors">
+            <span>📊</span>
+            <span>直达天梯对比表</span>
+          </a>
+          <button class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-oat/60" id="menu-toggle" aria-label="打开菜单">
+            <svg class="w-5 h-5 text-carbon" id="menu-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            <svg class="w-5 h-5 text-carbon hidden" id="menu-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div class="lg:hidden mobile-menu-enter bg-cream/95 navbar-blur border-t border-oat/40" id="mobile-menu">
+      <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
+        <a href="index.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg">首页</a>
+        <a href="reviews.html" class="mobile-nav-link active block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg">店长严选</a>
+        <a href="guide.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg">新手便当</a>
+        <a href="devices.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg">设备专柜</a>
+        <a href="speedtest.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg">测速冰箱</a>
+        <a href="blog.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg">便利店日志</a>
+        <a href="faq.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg">常见避坑</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== MAIN CONTENT ===================== -->
+  <main class="pt-20 lg:pt-[76px] flex-grow">
+
+    <!-- 1. 专柜头部 (Header & Breadcrumb) -->
+    <section class="relative bg-gradient-to-b from-[#FFF8F0] via-[#FAF3EC] to-[#FDFBF7] border-b border-oat/70 py-10 md:py-14 overflow-hidden">
+      <div class="absolute inset-0 dots-pattern pointer-events-none"></div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- 面包屑 -->
+        <nav class="mb-4" aria-label="面包屑导航">
+          <ol class="flex items-center gap-1.5 text-xs text-carbonMuted">
+            <li><a href="index.html" class="hover:text-warmOrange transition-colors">首页</a></li>
+            <li><svg class="w-3.5 h-3.5 text-carbonMuted/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></li>
+            <li class="text-warmOrange font-semibold">店长严选专柜</li>
+          </ol>
+        </nav>
+
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-bold mb-3 shadow-xs">
+              <span>🏪</span>
+              <span>2026 深度横测专柜 · 拒绝虚标与盲盒</span>
+            </div>
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-black text-carbon tracking-tight">
+              店长严选货架 · <span class="text-warmOrange">全线实测与天梯榜</span>
+            </h1>
+            <p class="mt-2.5 text-sm sm:text-base text-carbonMuted max-w-2xl leading-relaxed">
+              汇聚 6 大主流品牌深度横评。严格按晚高峰 20:00~23:00 丢包率、全 IPLC 专线抗波动能力、双 ISP 原生家宽 IP 与真实售后响应时间持续跟踪监测。
+            </p>
+          </div>
+
+          <!-- 便捷统计与天梯锚点 -->
+          <div class="flex flex-wrap items-center gap-3">
+            <div class="bg-white/90 backdrop-blur rounded-2xl border border-oat px-4 py-2.5 flex items-center gap-3 shadow-xs">
+              <span class="text-2xl">🏆</span>
+              <div>
+                <div class="text-[11px] text-carbonMuted font-medium">严选上架品牌</div>
+                <div class="text-base font-black text-carbon">6 家旗舰品牌</div>
+              </div>
+            </div>
+            <a href="#matrix-table" class="px-4 py-2.5 rounded-2xl bg-warmOrange hover:bg-warmOrangeDeep text-white text-xs font-bold shadow-sm transition-all flex items-center gap-1.5">
+              <span>查看参数天梯榜</span>
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- 2. 多维度动态筛选 Bar (Category / Tag Filters) -->
+        <div class="mt-8 pt-6 border-t border-oat/60 flex flex-wrap items-center justify-between gap-3" id="reviewFilterBar">
+          <div class="flex flex-wrap items-center gap-2 sm:gap-2.5">
+            <button class="review-pill active px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight" data-tag="all">
+              全部精选 (6)
+            </button>
+            <button class="review-pill px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight" data-tag="iplc">
+              全 IPLC 专线 (4)
+            </button>
+            <button class="review-pill px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight" data-tag="unlimited">
+              不限设备数 (5)
+            </button>
+            <button class="review-pill px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight" data-tag="isp">
+              双 ISP 家宽 IP (3)
+            </button>
+            <button class="review-pill px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight" data-tag="budget">
+              学生实惠 (3)
+            </button>
+          </div>
+
+          <div class="text-xs text-carbonMuted flex items-center gap-1">
+            <span>💡 提示：所有品牌结算均享专属 7 折特惠</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. 完整 6 宫格货架卡片 (Shelf Brand Cards) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h2 class="text-lg sm:text-xl font-black text-carbon flex items-center gap-2">
+            <span>🛒</span>
+            <span>严选品牌陈列架</span>
+          </h2>
+          <p class="text-xs text-carbonMuted mt-1">点击「查看套餐」可直接查阅各家各档位精确价格；点击「直达官网」自动携带优惠码。</p>
+        </div>
+        <span class="text-xs text-warmOrangeDeep font-bold bg-warmOrange/10 px-3 py-1 rounded-full" id="showingBrandCount">
+          显示 6 款品牌
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch" id="brandCardsGrid">
+
+        <!-- BRAND 1: 环球梯 -->
+        <div class="brand-item group relative bg-white rounded-3xl border-2 border-warmOrange/60 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-tags="iplc,unlimited,isp">
+          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-warmOrange to-orange-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+            <span>👑</span>
+            <span>店长首选 · NO.1</span>
+          </div>
+
+          <div>
+            <div class="flex items-start gap-3.5 mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-warmOrange/15 text-warmOrangeDeep flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+                🌐
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-xl font-black text-carbon group-hover:text-warmOrange transition-colors">环球梯</h3>
+                  <span class="text-xs font-mono text-carbonMuted bg-oat/60 px-2 py-0.5 rounded">HuanQiuTi</span>
+                </div>
+                <p class="text-xs text-carbonMuted mt-0.5">全网第一梯队纯专线 · 晚高峰 0 丢包</p>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-1.5 mb-5">
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200/60">👑 店长首选</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-orange-50 text-orange-800 border border-orange-200/60">🔥 晚高峰极速</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">🎬 4K/AI 原生全解</span>
+            </div>
+
+            <!-- 参数表格速查 -->
+            <div class="bg-cream/40 rounded-2xl p-4 border border-oat/80 mb-5 space-y-2.5 text-xs">
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">线路类型</span>
+                <span class="font-bold text-carbon">全 IPLC / IEPL 纯内网专线</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">节点覆盖</span>
+                <span class="font-bold text-carbon">50+ 热门国家 (含小众落地)</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">最低起步</span>
+                <span class="font-mono font-bold text-warmOrangeDeep text-sm">¥14.7 / 月起 (7折后)</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">晚高峰流程度</span>
+                <div class="flex items-center gap-1.5 text-amber-500 font-bold">
+                  <span>★★★★★</span>
+                  <span class="text-[11px] text-carbonMuted">(99.2% 无卡顿)</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-xs text-carbonLight leading-relaxed mb-5">
+              店长长达两年主力测试品牌。自建 BGP 入口与全内网隧道，无论晚高峰 8 点还是重大节日均稳如磐石，Netflix/Disney+ 及 ChatGPT/Claude 双 ISP 原生解锁。
+            </p>
+          </div>
+
+          <!-- 底部专属优惠码与三按钮 -->
+          <div class="pt-3 border-t border-oat/70 space-y-3">
+            <div class="flex items-center justify-between bg-orange-50/70 border border-orange-200 rounded-xl px-3 py-2 text-xs">
+              <div class="flex items-center gap-1.5">
+                <span class="text-sm">🎟️</span>
+                <span class="text-carbon text-[11px]">专属 7 折优惠码：</span>
+                <span class="font-mono font-bold text-warmOrangeDeep bg-white px-2 py-0.5 rounded border border-orange-200 select-all">HQ66</span>
+              </div>
+              <button onclick="copyCouponCode('HQ66')" class="text-[11px] font-bold text-warmOrange hover:text-warmOrangeDeep flex items-center gap-1 hover:underline cursor-pointer">
+                <span>复制</span>
+              </button>
+            </div>
+
+            <!-- 三按钮操作: 查看套餐 / 深度评测 / 直达官网 -->
+            <div class="grid grid-cols-3 gap-2">
+              <button type="button" onclick="openPackageModal('huanqiuti')" class="py-2.5 px-1.5 rounded-xl border border-warmOrange/40 hover:bg-warmOrange/10 text-warmOrange font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
+                <span>查看套餐</span>
+              </button>
+              <a href="#matrix-table" class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
+                <span>深度评测 📊</span>
+              </a>
+              <a href="https://123pps01.huanqiutiaff.com/#/?code=j5VBUvw0" target="_blank" rel="noopener noreferrer" onclick="copyCouponCode('HQ66')" class="py-2.5 px-1.5 rounded-xl bg-warmOrange hover:bg-warmOrangeDeep text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 group cursor-pointer">
+                <span>直达官网 ↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- BRAND 2: 大佬云 -->
+        <div class="brand-item group relative bg-white rounded-3xl border border-indigo-200 hover:border-indigo-400 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-tags="iplc,unlimited">
+          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-indigo-600 to-blue-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+            <span>🥈</span>
+            <span>口碑亚军 · NO.2</span>
+          </div>
+
+          <div>
+            <div class="flex items-start gap-3.5 mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+                ☁️
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-xl font-black text-carbon group-hover:text-indigo-600 transition-colors">大佬云</h3>
+                  <span class="text-xs font-mono text-carbonMuted bg-oat/60 px-2 py-0.5 rounded">DaLaoYun</span>
+                </div>
+                <p class="text-xs text-carbonMuted mt-0.5">全 IPLC 专线 · 不限设备与速率</p>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-1.5 mb-5">
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-indigo-50 text-indigo-800 border border-indigo-200/60">⚡ 全 IPLC 专线</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-blue-50 text-blue-800 border border-blue-200/60">👥 不限在线设备</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">🎮 极低游戏跳Ping</span>
+            </div>
+
+            <div class="bg-indigo-50/30 rounded-2xl p-4 border border-indigo-100 mb-5 space-y-2.5 text-xs">
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">线路类型</span>
+                <span class="font-bold text-carbon">100% 纯 IPLC 内网专线</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">设备限制</span>
+                <span class="font-bold text-emerald-700">无任何限制 (全家共享)</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">最低起步</span>
+                <span class="font-mono font-bold text-indigo-700 text-sm">¥12.6 / 月起 (7折后)</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">晚高峰流程度</span>
+                <div class="flex items-center gap-1.5 text-indigo-500 font-bold">
+                  <span>★★★★★</span>
+                  <span class="text-[11px] text-carbonMuted">(98.8% 无卡顿)</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-xs text-carbonLight leading-relaxed mb-5">
+              老牌硬核技术团队运营，全系套餐不限制同时连接的客户端数量，非常适合多台手机、电脑、电视盒子或软路由全家共享。
+            </p>
+          </div>
+
+          <div class="pt-3 border-t border-oat/70 space-y-3">
+            <div class="flex items-center justify-between bg-indigo-50/70 border border-indigo-200 rounded-xl px-3 py-2 text-xs">
+              <div class="flex items-center gap-1.5">
+                <span class="text-sm">🎟️</span>
+                <span class="text-carbon text-[11px]">专属 7 折优惠码：</span>
+                <span class="font-mono font-bold text-indigo-700 bg-white px-2 py-0.5 rounded border border-indigo-200 select-all">dly88</span>
+              </div>
+              <button onclick="copyCouponCode('dly88')" class="text-[11px] font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 hover:underline cursor-pointer">
+                <span>复制</span>
+              </button>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2">
+              <button type="button" onclick="openPackageModal('dalaoyun')" class="py-2.5 px-1.5 rounded-xl border border-indigo-300 hover:bg-indigo-50 text-indigo-700 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
+                <span>查看套餐</span>
+              </button>
+              <a href="#matrix-table" class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
+                <span>深度评测 📊</span>
+              </a>
+              <a href="https://ppsvip01.dalaoyunaff.com/#/?code=Iz1GlCVa" target="_blank" rel="noopener noreferrer" onclick="copyCouponCode('dly88')" class="py-2.5 px-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+                <span>直达官网 ↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- BRAND 3: 榴莲云 -->
+        <div class="brand-item group relative bg-white rounded-3xl border border-amber-300 hover:border-amber-500 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-tags="budget,unlimited">
+          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-amber-500 to-yellow-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+            <span>🥉</span>
+            <span>性价比王 · NO.3</span>
+          </div>
+
+          <div>
+            <div class="flex items-start gap-3.5 mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+                🍈
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-xl font-black text-carbon group-hover:text-amber-600 transition-colors">榴莲云</h3>
+                  <span class="text-xs font-mono text-carbonMuted bg-oat/60 px-2 py-0.5 rounded">LiuLianYun</span>
+                </div>
+                <p class="text-xs text-carbonMuted mt-0.5">大流量性价比首选 · 日常追剧利器</p>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-1.5 mb-5">
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200/60">💰 性价比首选</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-orange-50 text-orange-800 border border-orange-200/60">📶 海量大流量</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">👥 不限设备</span>
+            </div>
+
+            <div class="bg-amber-50/30 rounded-2xl p-4 border border-amber-200 mb-5 space-y-2.5 text-xs">
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">线路类型</span>
+                <span class="font-bold text-carbon">IEPL 专线 + 优质 BGP 优化</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">流量单价</span>
+                <span class="font-bold text-emerald-700">低至 ¥0.09 / G (同级最低)</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">最低起步</span>
+                <span class="font-mono font-bold text-amber-700 text-sm">¥10.5 / 月起 (7折后)</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">晚高峰流程度</span>
+                <div class="flex items-center gap-1.5 text-amber-500 font-bold">
+                  <span>★★★★☆</span>
+                  <span class="text-[11px] text-carbonMuted">(96.8% 稳定性)</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-xs text-carbonLight leading-relaxed mb-5">
+              专为大流量影音、YouTube 4K、TikTok 刷视频打造。单价极低且每月流量充裕，学生党与轻预算用户的实惠粮仓。
+            </p>
+          </div>
+
+          <div class="pt-3 border-t border-oat/70 space-y-3">
+            <div class="flex items-center justify-between bg-amber-50/70 border border-amber-200 rounded-xl px-3 py-2 text-xs">
+              <div class="flex items-center gap-1.5">
+                <span class="text-sm">🎟️</span>
+                <span class="text-carbon text-[11px]">专属 7 折优惠码：</span>
+                <span class="font-mono font-bold text-amber-700 bg-white px-2 py-0.5 rounded border border-amber-300 select-all">ll88</span>
+              </div>
+              <button onclick="copyCouponCode('ll88')" class="text-[11px] font-bold text-amber-600 hover:text-amber-800 flex items-center gap-1 hover:underline cursor-pointer">
+                <span>复制</span>
+              </button>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2">
+              <button type="button" onclick="openPackageModal('liulianyun')" class="py-2.5 px-1.5 rounded-xl border border-amber-300 hover:bg-amber-50 text-amber-700 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
+                <span>查看套餐</span>
+              </button>
+              <a href="#matrix-table" class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
+                <span>深度评测 📊</span>
+              </a>
+              <a href="https://123pp01.liulianyunaff.com/#/?code=MsZP3u7G" target="_blank" rel="noopener noreferrer" onclick="copyCouponCode('ll88')" class="py-2.5 px-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+                <span>直达官网 ↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- BRAND 4: 云界线 -->
+        <div class="brand-item group relative bg-white rounded-3xl border border-cyan-300 hover:border-cyan-500 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-tags="iplc,isp,unlimited">
+          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-cyan-600 to-teal-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+            <span>⚡</span>
+            <span>新锐电竞专线 · NO.4</span>
+          </div>
+
+          <div>
+            <div class="flex items-start gap-3.5 mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-cyan-50 text-cyan-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+                ⚡
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-xl font-black text-carbon group-hover:text-cyan-600 transition-colors">云界线</h3>
+                  <span class="text-xs font-mono text-carbonMuted bg-oat/60 px-2 py-0.5 rounded">YunJieXian</span>
+                </div>
+                <p class="text-xs text-carbonMuted mt-0.5">高品质原生专线 · 极低网络抖动</p>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-1.5 mb-5">
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-cyan-50 text-cyan-800 border border-cyan-200/60">⚡ 极低抖动</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-teal-50 text-teal-800 border border-teal-200/60">🔒 双 ISP 家宽</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">👥 不限设备</span>
+            </div>
+
+            <div class="bg-cyan-50/30 rounded-2xl p-4 border border-cyan-200 mb-5 space-y-2.5 text-xs">
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">线路类型</span>
+                <span class="font-bold text-carbon">全 IPLC 专线，最高 2.5Gbps</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">原生 IP</span>
+                <span class="font-bold text-cyan-700">全解 Netflix/Disney+/ChatGPT</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">最低起步</span>
+                <span class="font-mono font-bold text-cyan-700 text-sm">¥15.4 / 月起 (7折后)</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">晚高峰流程度</span>
+                <div class="flex items-center gap-1.5 text-cyan-600 font-bold">
+                  <span>★★★★★</span>
+                  <span class="text-[11px] text-carbonMuted">(98.5% 无卡顿)</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-xs text-carbonLight leading-relaxed mb-5">
+              新锐高速隧道专线，单节点最高 2.5Gbps。节点覆盖港20、台10、日10、新、美等多地区，对 OpenAI 及流媒体抗封锁极佳。
+            </p>
+          </div>
+
+          <div class="pt-3 border-t border-oat/70 space-y-3">
+            <div class="flex items-center justify-between bg-cyan-50/70 border border-cyan-200 rounded-xl px-3 py-2 text-xs">
+              <div class="flex items-center gap-1.5">
+                <span class="text-sm">🎟️</span>
+                <span class="text-carbon text-[11px]">专属 7 折优惠码：</span>
+                <span class="font-mono font-bold text-cyan-700 bg-white px-2 py-0.5 rounded border border-cyan-300 select-all">yjx888</span>
+              </div>
+              <button onclick="copyCouponCode('yjx888')" class="text-[11px] font-bold text-cyan-600 hover:text-cyan-800 flex items-center gap-1 hover:underline cursor-pointer">
+                <span>复制</span>
+              </button>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2">
+              <button type="button" onclick="openPackageModal('yunjiexian')" class="py-2.5 px-1.5 rounded-xl border border-cyan-300 hover:bg-cyan-50 text-cyan-700 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
+                <span>查看套餐</span>
+              </button>
+              <a href="#matrix-table" class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
+                <span>深度评测 📊</span>
+              </a>
+              <a href="https://pp01.yunjiexianaff.com/#/?code=bp0ZSKBV" target="_blank" rel="noopener noreferrer" onclick="copyCouponCode('yjx888')" class="py-2.5 px-1.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+                <span>直达官网 ↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- BRAND 5: 闪电鼠 -->
+        <div class="brand-item group relative bg-white rounded-3xl border border-yellow-300 hover:border-yellow-500 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-tags="budget,unlimited">
+          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-amber-500 to-yellow-500 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+            <span>🐭</span>
+            <span>疾速畅享 · NO.5</span>
+          </div>
+
+          <div>
+            <div class="flex items-start gap-3.5 mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-yellow-50 text-amber-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+                ⚡
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-xl font-black text-carbon group-hover:text-amber-600 transition-colors">闪电鼠</h3>
+                  <span class="text-xs font-mono text-carbonMuted bg-oat/60 px-2 py-0.5 rounded">ShanDianShu</span>
+                </div>
+                <p class="text-xs text-carbonMuted mt-0.5">IEPL 专线智能分流 · 入门年付仅需 ¥50.4</p>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-1.5 mb-5">
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-yellow-50 text-amber-800 border border-yellow-200/60">⚡ 极速起跑</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200/60">💰 超实惠年付</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">👥 不限设备</span>
+            </div>
+
+            <div class="bg-yellow-50/30 rounded-2xl p-4 border border-yellow-200 mb-5 space-y-2.5 text-xs">
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">线路类型</span>
+                <span class="font-bold text-carbon">全线 IEPL 专线，全节点 x1 倍率</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">年付特惠</span>
+                <span class="font-bold text-emerald-700">7折后 ¥50.4/年 (月均 ¥4.2)</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">最低起步</span>
+                <span class="font-mono font-bold text-amber-700 text-sm">¥14.0 / 月起 (7折后)</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">晚高峰流程度</span>
+                <div class="flex items-center gap-1.5 text-amber-500 font-bold">
+                  <span>★★★★☆</span>
+                  <span class="text-[11px] text-carbonMuted">(97.1% 稳定性)</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-xs text-carbonLight leading-relaxed mb-5">
+              全节点 x1 真实倍率，节点遍布亚洲、欧洲、美洲。年付特惠极具性价比，适合备用兜底或轻度留学生/日常查资料。
+            </p>
+          </div>
+
+          <div class="pt-3 border-t border-oat/70 space-y-3">
+            <div class="flex items-center justify-between bg-yellow-50/70 border border-yellow-200 rounded-xl px-3 py-2 text-xs">
+              <div class="flex items-center gap-1.5">
+                <span class="text-sm">🎟️</span>
+                <span class="text-carbon text-[11px]">专属 7 折优惠码：</span>
+                <span class="font-mono font-bold text-amber-700 bg-white px-2 py-0.5 rounded border border-amber-300 select-all">sds88</span>
+              </div>
+              <button onclick="copyCouponCode('sds88')" class="text-[11px] font-bold text-amber-600 hover:text-amber-800 flex items-center gap-1 hover:underline cursor-pointer">
+                <span>复制</span>
+              </button>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2">
+              <button type="button" onclick="openPackageModal('shandianshu')" class="py-2.5 px-1.5 rounded-xl border border-yellow-400 hover:bg-yellow-50 text-amber-700 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
+                <span>查看套餐</span>
+              </button>
+              <a href="#matrix-table" class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
+                <span>深度评测 📊</span>
+              </a>
+              <a href="https://ppsvip01.shandianshuaff.com/#/?code=QbLF8tjB" target="_blank" rel="noopener noreferrer" onclick="copyCouponCode('sds88')" class="py-2.5 px-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+                <span>直达官网 ↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- BRAND 6: 神行加速 -->
+        <div class="brand-item group relative bg-white rounded-3xl border border-purple-300 hover:border-purple-500 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-tags="iplc,isp,unlimited,budget">
+          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+            <span>🚀</span>
+            <span>旗舰破风 · NO.6</span>
+          </div>
+
+          <div>
+            <div class="flex items-start gap-3.5 mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+                🚀
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-xl font-black text-carbon group-hover:text-purple-600 transition-colors">神行加速</h3>
+                  <span class="text-xs font-mono text-carbonMuted bg-oat/60 px-2 py-0.5 rounded">ShenXing</span>
+                </div>
+                <p class="text-xs text-carbonMuted mt-0.5">全 IPLC 专线 · 单节点峰值高达 2.5Gbps</p>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-1.5 mb-5">
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-purple-50 text-purple-800 border border-purple-200/60">🚀 2.5G 极速</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-indigo-50 text-indigo-800 border border-indigo-200/60">🔒 全 IPLC 专线</span>
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">👥 不限设备</span>
+            </div>
+
+            <div class="bg-purple-50/30 rounded-2xl p-4 border border-purple-200 mb-5 space-y-2.5 text-xs">
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">线路类型</span>
+                <span class="font-bold text-carbon">全 IPLC 专线，全节点 x1 倍率</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">年付特惠</span>
+                <span class="font-bold text-emerald-700">券后折合仅 ¥5.60/月</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">最低起步</span>
+                <span class="font-mono font-bold text-purple-700 text-sm">¥15.4 / 月起 (7折后)</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-carbonMuted">晚高峰流程度</span>
+                <div class="flex items-center gap-1.5 text-purple-600 font-bold">
+                  <span>★★★★★</span>
+                  <span class="text-[11px] text-carbonMuted">(98.6% 无卡顿)</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-xs text-carbonLight leading-relaxed mb-5">
+              极速专线破风者，单节点峰值高达 2.5Gbps，支持 VLESS 协议。全系不限制同时在线设备数，软路由分流与多设备协同极佳。
+            </p>
+          </div>
+
+          <div class="pt-3 border-t border-oat/70 space-y-3">
+            <div class="flex items-center justify-between bg-purple-50/70 border border-purple-200 rounded-xl px-3 py-2 text-xs">
+              <div class="flex items-center gap-1.5">
+                <span class="text-sm">🎟️</span>
+                <span class="text-carbon text-[11px]">专属 7 折优惠码：</span>
+                <span class="font-mono font-bold text-purple-700 bg-white px-2 py-0.5 rounded border border-purple-200 select-all">sx0077</span>
+              </div>
+              <button onclick="copyCouponCode('sx0077')" class="text-[11px] font-bold text-purple-600 hover:text-purple-800 flex items-center gap-1 hover:underline cursor-pointer">
+                <span>复制</span>
+              </button>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2">
+              <button type="button" onclick="openPackageModal('shenxing')" class="py-2.5 px-1.5 rounded-xl border border-purple-300 hover:bg-purple-50 text-purple-700 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
+                <span>查看套餐</span>
+              </button>
+              <a href="#matrix-table" class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
+                <span>深度评测 📊</span>
+              </a>
+              <a href="https://pps123.shenxingaff.com/#/?code=6tQ7zHUc" target="_blank" rel="noopener noreferrer" onclick="copyCouponCode('sx0077')" class="py-2.5 px-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+                <span>直达官网 ↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4. 横向对比天梯榜（表格区） -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16 border-t border-oat/80" id="matrix-table">
+      <div class="mb-8">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-bold mb-2">
+          <span>📊</span>
+          <span>实测对比天梯</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-black text-carbon">
+          多品牌晚高峰实测 · <span class="text-warmOrange">横向参数对比天梯榜</span>
+        </h2>
+        <p class="text-xs sm:text-sm text-carbonMuted mt-1">
+          测试环境：电信 1000M + 联通 500M 晚高峰 20:30~22:30 实测均值，持续跟踪更新。
+        </p>
+      </div>
+
+      <!-- 对比表格 -->
+      <div class="bg-white rounded-3xl border border-oat/90 shadow-card overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead>
+              <tr class="bg-cream/60 border-b border-oat text-carbon font-black">
+                <th class="p-4 sm:p-5">品牌 / 梯队</th>
+                <th class="p-4 sm:p-5">核心线路架构</th>
+                <th class="p-4 sm:p-5">晚高峰平均延迟</th>
+                <th class="p-4 sm:p-5">晚高峰丢包率</th>
+                <th class="p-4 sm:p-5">流媒体 / AI解锁</th>
+                <th class="p-4 sm:p-5">设备数限制</th>
+                <th class="p-4 sm:p-5">7折后起步价</th>
+                <th class="p-4 sm:p-5">综合评分</th>
+                <th class="p-4 sm:p-5 text-center">操作</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-oat/60 text-carbonLight">
+              <!-- 环球梯 -->
+              <tr class="hover:bg-orange-50/40 transition-colors">
+                <td class="p-4 sm:p-5 font-bold text-carbon">
+                  <div class="flex items-center gap-2">
+                    <span class="text-base">👑</span>
+                    <div>
+                      <span class="font-black text-warmOrangeDeep">环球梯</span>
+                      <span class="block text-[10px] text-carbonMuted font-mono">T0 镇店之宝</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="p-4 sm:p-5 font-semibold text-carbon">全 IPLC 纯专线 / BGP 智能入口</td>
+                <td class="p-4 sm:p-5 font-mono text-emerald-700 font-bold">28ms ~ 36ms</td>
+                <td class="p-4 sm:p-5 font-mono text-emerald-700 font-bold">&lt; 0.1% (接近0丢包)</td>
+                <td class="p-4 sm:p-5 text-emerald-700 font-bold">✅ 4K/8K原生全解 + 双ISP</td>
+                <td class="p-4 sm:p-5 font-medium">不限同时在线设备</td>
+                <td class="p-4 sm:p-5 font-mono font-bold text-warmOrangeDeep">¥14.7/月</td>
+                <td class="p-4 sm:p-5 font-bold text-amber-500">9.9 / 10</td>
+                <td class="p-4 sm:p-5 text-center">
+                  <a href="https://123pps01.huanqiutiaff.com/#/?code=j5VBUvw0" target="_blank" rel="noopener noreferrer" onclick="copyCouponCode('HQ66')" class="inline-block px-3 py-1.5 rounded-lg bg-warmOrange hover:bg-warmOrangeDeep text-white text-xs font-bold transition-colors">
+                    访问 (HQ66)
+                  </a>
+                </td>
+              </tr>
+
+              <!-- 大佬云 -->
+              <tr class="hover:bg-indigo-50/40 transition-colors">
+                <td class="p-4 sm:p-5 font-bold text-carbon">
+                  <div class="flex items-center gap-2">
+                    <span class="text-base">🥈</span>
+                    <div>
+                      <span class="font-black text-indigo-700">大佬云</span>
+                      <span class="block text-[10px] text-carbonMuted font-mono">T0.5 口碑硬核</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="p-4 sm:p-5 font-semibold text-carbon">100% 纯 IPLC 内网专线</td>
+                <td class="p-4 sm:p-5 font-mono text-emerald-700 font-bold">32ms ~ 42ms</td>
+                <td class="p-4 sm:p-5 font-mono text-emerald-700 font-bold">&lt; 0.3%</td>
+                <td class="p-4 sm:p-5 text-emerald-700 font-bold">✅ 原生IP / ChatGPT秒开</td>
+                <td class="p-4 sm:p-5 text-emerald-700 font-bold">不限设备 / 适合多端</td>
+                <td class="p-4 sm:p-5 font-mono font-bold text-indigo-700">¥12.6/月</td>
+                <td class="p-4 sm:p-5 font-bold text-amber-500">9.7 / 10</td>
+                <td class="p-4 sm:p-5 text-center">
+                  <a href="https://ppsvip01.dalaoyunaff.com/#/?code=Iz1GlCVa" target="_blank" rel="noopener noreferrer" onclick="copyCouponCode('dly88')" class="inline-block px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition-colors">
+                    访问 (dly88)
+                  </a>
+                </td>
+              </tr>
+
+              <!-- 榴莲云 -->
+              <tr class="hover:bg-amber-50/40 transition-colors">
+                <td class="p-4 sm:p-5 font-bold text-carbon">
+                  <div class="flex items-center gap-2">
+                    <span class="text-base">🥉</span>
+                    <div>
+                      <span class="font-black text-amber-700">榴莲云</span>
+                      <span class="block text-[10px] text-carbonMuted font-mono">T1 性价比王</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="p-4 sm:p-5 font-semibold text-carbon">IEPL 高速专线 + BGP优质优化</td>
+                <td class="p-4 sm:p-5 font-mono text-carbon font-bold">38ms ~ 55ms</td>
+                <td class="p-4 sm:p-5 font-mono text-emerald-700 font-bold">&lt; 0.8%</td>
+                <td class="p-4 sm:p-5 text-emerald-700 font-bold">✅ YouTube 4K / 奈飞</td>
+                <td class="p-4 sm:p-5 font-medium">不限制设备</td>
+                <td class="p-4 sm:p-5 font-mono font-bold text-amber-700">¥10.5/月</td>
+                <td class="p-4 sm:p-5 font-bold text-amber-500">9.5 / 10</td>
+                <td class="p-4 sm:p-5 text-center">
+                  <a href="https://123pp01.liulianyunaff.com/#/?code=MsZP3u7G" target="_blank" rel="noopener noreferrer" onclick="copyCouponCode('ll88')" class="inline-block px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold transition-colors">
+                    访问 (ll88)
+                  </a>
+                </td>
+              </tr>
+
+              <!-- 云界线 -->
+              <tr class="hover:bg-cyan-50/40 transition-colors">
+                <td class="p-4 sm:p-5 font-bold text-carbon">
+                  <div class="flex items-center gap-2">
+                    <span class="text-base">⚡</span>
+                    <div>
+                      <span class="font-black text-cyan-700">云界线</span>
+                      <span class="block text-[10px] text-carbonMuted font-mono">T0.5 极速专线</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="p-4 sm:p-5 font-semibold text-carbon">全 IPLC 专线 / 2.5Gbps 单节点</td>
+                <td class="p-4 sm:p-5 font-mono text-emerald-700 font-bold">30ms ~ 40ms</td>
+                <td class="p-4 sm:p-5 font-mono text-emerald-700 font-bold">&lt; 0.2%</td>
+                <td class="p-4 sm:p-5 text-emerald-700 font-bold">✅ 原生双ISP家宽 / 全解</td>
+                <td class="p-4 sm:p-5 font-medium">不限设备</td>
+                <td class="p-4 sm:p-5 font-mono font-bold text-cyan-700">¥15.4/月</td>
+                <td class="p-4 sm:p-5 font-bold text-amber-500">9.6 / 10</td>
+                <td class="p-4 sm:p-5 text-center">
+                  <a href="https://pp01.yunjiexianaff.com/#/?code=bp0ZSKBV" target="_blank" rel="noopener noreferrer" onclick="copyCouponCode('yjx888')" class="inline-block px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-bold transition-colors">
+                    访问 (yjx888)
+                  </a>
+                </td>
+              </tr>
+
+              <!-- 闪电鼠 -->
+              <tr class="hover:bg-yellow-50/40 transition-colors">
+                <td class="p-4 sm:p-5 font-bold text-carbon">
+                  <div class="flex items-center gap-2">
+                    <span class="text-base">🐭</span>
+                    <div>
+                      <span class="font-black text-amber-600">闪电鼠</span>
+                      <span class="block text-[10px] text-carbonMuted font-mono">T1 超值实惠</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="p-4 sm:p-5 font-semibold text-carbon">IEPL 全专线 / 全节点 x1 倍率</td>
+                <td class="p-4 sm:p-5 font-mono text-carbon font-bold">35ms ~ 48ms</td>
+                <td class="p-4 sm:p-5 font-mono text-emerald-700 font-bold">&lt; 0.6%</td>
+                <td class="p-4 sm:p-5 text-emerald-700 font-bold">✅ 流媒体与全球节点</td>
+                <td class="p-4 sm:p-5 font-medium">不限设备</td>
+                <td class="p-4 sm:p-5 font-mono font-bold text-amber-600">¥14.0/月</td>
+                <td class="p-4 sm:p-5 font-bold text-amber-500">9.4 / 10</td>
+                <td class="p-4 sm:p-5 text-center">
+                  <a href="https://ppsvip01.shandianshuaff.com/#/?code=QbLF8tjB" target="_blank" rel="noopener noreferrer" onclick="copyCouponCode('sds88')" class="inline-block px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold transition-colors">
+                    访问 (sds88)
+                  </a>
+                </td>
+              </tr>
+
+              <!-- 神行加速 -->
+              <tr class="hover:bg-purple-50/40 transition-colors">
+                <td class="p-4 sm:p-5 font-bold text-carbon">
+                  <div class="flex items-center gap-2">
+                    <span class="text-base">🚀</span>
+                    <div>
+                      <span class="font-black text-purple-700">神行加速</span>
+                      <span class="block text-[10px] text-carbonMuted font-mono">T0.5 破风先锋</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="p-4 sm:p-5 font-semibold text-carbon">全 IPLC 专线 / 2.5G 超大带宽</td>
+                <td class="p-4 sm:p-5 font-mono text-emerald-700 font-bold">30ms ~ 38ms</td>
+                <td class="p-4 sm:p-5 font-mono text-emerald-700 font-bold">&lt; 0.2%</td>
+                <td class="p-4 sm:p-5 text-emerald-700 font-bold">✅ 原生 IP / 全解 4K</td>
+                <td class="p-4 sm:p-5 font-medium">不限在线设备</td>
+                <td class="p-4 sm:p-5 font-mono font-bold text-purple-700">¥15.4/月</td>
+                <td class="p-4 sm:p-5 font-bold text-amber-500">9.6 / 10</td>
+                <td class="p-4 sm:p-5 text-center">
+                  <a href="https://pps123.shenxingaff.com/#/?code=6tQ7zHUc" target="_blank" rel="noopener noreferrer" onclick="copyCouponCode('sx0077')" class="inline-block px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold transition-colors">
+                    访问 (sx0077)
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== MODAL: 品牌详细套餐弹窗 (支持 6 大品牌灵活切换) ===================== -->
+  <div id="packageModal" class="fixed inset-0 z-50 hidden transition-opacity duration-300" aria-labelledby="modalTitle" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-carbon/60 backdrop-blur-sm transition-opacity" onclick="closePackageModal()"></div>
+
+    <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 lg:p-8 flex items-center justify-center">
+      <div class="relative bg-white rounded-3xl max-w-5xl w-full max-h-[90vh] overflow-hidden shadow-2xl border-2 border-warmOrange/30 flex flex-col" onclick="event.stopPropagation()">
+        
+        <!-- Header -->
+        <div class="p-5 sm:p-6 border-b border-oat bg-gradient-to-r from-cream via-white to-buttercupLight/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div class="inline-flex items-center gap-1.5 text-xs text-warmOrange font-bold mb-1">
+              <span>🏪</span>
+              <span>便利店详细价目表 · 100% 官方控制台 1:1 数据</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-black text-carbon flex items-center gap-2" id="modalTitle">
+              <span>环球梯 · 官方全系订阅与按量套餐</span>
+            </h3>
+          </div>
+
+          <!-- Brand Switcher Tabs -->
+          <div class="flex items-center gap-1 bg-oat/60 p-1.5 rounded-xl border border-oat self-start sm:self-auto overflow-x-auto max-w-full">
+            <button type="button" id="tabHq" onclick="switchModalBrand('huanqiuti')" class="px-3 py-1.5 rounded-lg bg-warmOrange text-white shadow-sm transition-all text-xs font-bold whitespace-nowrap cursor-pointer">
+              🌐 环球梯
+            </button>
+            <button type="button" id="tabDly" onclick="switchModalBrand('dalaoyun')" class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
+              ☁️ 大佬云
+            </button>
+            <button type="button" id="tabLly" onclick="switchModalBrand('liulianyun')" class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
+              🍈 榴莲云
+            </button>
+            <button type="button" id="tabYjx" onclick="switchModalBrand('yunjiexian')" class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
+              ⚡ 云界线
+            </button>
+            <button type="button" id="tabSds" onclick="switchModalBrand('shandianshu')" class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
+              🐭 闪电鼠
+            </button>
+            <button type="button" id="tabSx" onclick="switchModalBrand('shenxing')" class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
+              🚀 神行加速
+            </button>
+          </div>
+        </div>
+
+        <!-- 专属折扣提醒条 -->
+        <div class="px-6 py-2.5 bg-warmOrange/10 border-b border-warmOrange/20 flex items-center justify-between text-xs text-warmOrangeDeep">
+          <div class="flex items-center gap-2" id="modalCouponText">
+            <span>🎟️ 结算时在「折价券/优惠码」栏粘贴 <strong class="font-mono text-warmOrangeDeep bg-white px-2 py-0.5 rounded border border-warmOrange/30">HQ66</strong>，立享 7 折！</span>
+          </div>
+          <button id="modalCouponBtn" onclick="copyCouponCode('HQ66')" class="text-xs font-bold bg-warmOrange hover:bg-warmOrangeDeep text-white px-3 py-1 rounded-full shadow-xs transition-colors shrink-0 cursor-pointer">
+            一键复制优惠码
+          </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="p-5 sm:p-6 overflow-y-auto max-h-[60vh] space-y-6">
+          <p class="text-xs text-carbonMuted text-center">可按需选购轻量月付或大流量年付，全系支持 7 折优惠码结算抵扣。</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="modalPlanGrid">
+            <!-- 动态卡片内容 -->
+            <div class="bg-orange-50/50 rounded-2xl border-2 border-warmOrange/40 p-5 flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-bold text-warmOrange">入门特惠</span>
+                <h4 class="font-black text-lg text-carbon mt-1">基础版 · 月付/季付</h4>
+                <div class="mt-2 text-2xl font-black text-warmOrangeDeep font-mono">¥14.70 <span class="text-xs text-carbonMuted font-normal line-through">¥21.00</span></div>
+                <div class="mt-3 text-xs text-carbonLight space-y-1">
+                  <div>✓ 100GB/月 IPLC专线</div>
+                  <div>✓ 不限在线设备</div>
+                  <div>✓ 全解流媒体与ChatGPT</div>
+                </div>
+              </div>
+              <a href="https://123pps01.huanqiutiaff.com/#/?code=j5VBUvw0" target="_blank" rel="noopener noreferrer" onclick="copyCouponCode('HQ66')" class="mt-4 w-full py-2.5 rounded-xl bg-warmOrange text-white text-xs font-bold text-center block hover:bg-warmOrangeDeep transition-colors">立即前往官网订阅 →</a>
+            </div>
+
+            <div class="bg-orange-50/70 rounded-2xl border-2 border-warmOrange p-5 flex flex-col justify-between relative shadow-sm">
+              <span class="absolute -top-2.5 right-4 bg-warmOrange text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full">店长推荐</span>
+              <div>
+                <span class="text-xs font-bold text-warmOrange">畅享进阶</span>
+                <h4 class="font-black text-lg text-carbon mt-1">进阶版 · 大流量</h4>
+                <div class="mt-2 text-2xl font-black text-warmOrangeDeep font-mono">¥28.00 <span class="text-xs text-carbonMuted font-normal line-through">¥40.00</span></div>
+                <div class="mt-3 text-xs text-carbonLight space-y-1">
+                  <div>✓ 260GB/月 极速大带宽</div>
+                  <div>✓ 4K/8K秒开与AI免验证</div>
+                  <div>✓ 独立客服优先响应</div>
+                </div>
+              </div>
+              <a href="https://123pps01.huanqiutiaff.com/#/?code=j5VBUvw0" target="_blank" rel="noopener noreferrer" onclick="copyCouponCode('HQ66')" class="mt-4 w-full py-2.5 rounded-xl bg-warmOrange text-white text-xs font-bold text-center block hover:bg-warmOrangeDeep transition-colors shadow-sm">立即前往官网订阅 →</a>
+            </div>
+
+            <div class="bg-cream/40 rounded-2xl border border-oat p-5 flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-bold text-carbonMuted">重度旗舰</span>
+                <h4 class="font-black text-lg text-carbon mt-1">尊享版 · 极速破风</h4>
+                <div class="mt-2 text-2xl font-black text-warmOrangeDeep font-mono">¥50.40 <span class="text-xs text-carbonMuted font-normal line-through">¥72.00</span></div>
+                <div class="mt-3 text-xs text-carbonLight space-y-1">
+                  <div>✓ 520GB/月 纯内网专线</div>
+                  <div>✓ 峰值带宽高达 2.5Gbps</div>
+                  <div>✓ 全家/工作室重度共享</div>
+                </div>
+              </div>
+              <a href="https://123pps01.huanqiutiaff.com/#/?code=j5VBUvw0" target="_blank" rel="noopener noreferrer" onclick="copyCouponCode('HQ66')" class="mt-4 w-full py-2.5 rounded-xl bg-carbon text-white text-xs font-bold text-center block hover:bg-carbonLight transition-colors">立即前往官网订阅 →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-4 border-t border-oat bg-cream/30 flex items-center justify-between text-xs text-carbonMuted">
+          <span>官方直营通道 · 实时自动激活 · 支付宝 / 微信快捷支付</span>
+          <button type="button" onclick="closePackageModal()" class="px-4 py-2 bg-oat hover:bg-oat/80 text-carbon font-bold rounded-xl transition-colors cursor-pointer">
+            关闭窗口
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="bg-carbon text-cream/80 py-12 md:py-16 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-10">
+        <div class="md:col-span-2">
+          <div class="flex items-center gap-2.5 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-warmOrange flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 12 15 12 15 22"/></svg>
+            </div>
+            <div class="leading-tight">
+              <span class="block text-sm font-bold text-cream">光速便利店</span>
+              <span class="block text-[9px] font-display font-semibold text-cream/50 tracking-widest uppercase">Speed Mart</span>
+            </div>
+          </div>
+          <p class="text-xs text-cream/50 leading-relaxed max-w-md">
+            24 小时不打烊的网络漫游补给站。像挑零食一样挑出适合你的加速方案，拒绝虚标、拒绝套路，提供客观真实的技术实测。
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-bold text-cream mb-4">便利店专柜</h3>
+          <ul class="space-y-2 text-xs text-cream/60">
+            <li><a href="index.html" class="hover:text-warmOrange transition-colors">首页入口</a></li>
+            <li><a href="reviews.html" class="text-warmOrange font-semibold transition-colors">店长严选货架</a></li>
+            <li><a href="guide.html" class="hover:text-warmOrange transition-colors">新手便当</a></li>
+            <li><a href="devices.html" class="hover:text-warmOrange transition-colors">设备专柜</a></li>
+            <li><a href="speedtest.html" class="hover:text-warmOrange transition-colors">测速冰箱</a></li>
+            <li><a href="blog.html" class="hover:text-warmOrange transition-colors">便利店日志</a></li>
+            <li><a href="faq.html" class="hover:text-warmOrange transition-colors">常见避坑指南</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-bold text-cream mb-4">店长联络</h3>
+          <p class="text-xs text-cream/50 mb-3">若有新机场推荐申请横评或反馈错误：</p>
+          <div class="space-y-2">
+            <a href="https://t.me/huanqiuti8899" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-[#229ED9]/20 hover:bg-[#229ED9]/30 text-[#229ED9] hover:text-[#5bc4f5] text-xs font-semibold px-4 py-2 rounded-lg transition-colors border border-[#229ED9]/30">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+              <span>联系店长 Telegram</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-10 pt-8 border-t border-cream/10 text-center">
+        <p class="text-[11px] text-cream/35 max-w-2xl mx-auto">
+          ⚠️ 免责声明：本站所有内容仅供合规网络优化与技术研究交流之用，不提供任何违反当地法律法规的服务或建议。
+        </p>
+        <p class="mt-4 text-[11px] text-cream/25">© 2026 光速便利店 Speed Mart. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== JAVASCRIPT ===================== -->
+  <script>
+    // 1. Mobile Menu Drawer
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconOpen   = document.getElementById('menu-icon-open');
+    const iconClose  = document.getElementById('menu-icon-close');
+
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.toggle('open');
+        iconOpen.classList.toggle('hidden', isOpen);
+        iconClose.classList.toggle('hidden', !isOpen);
+      });
+      mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+      }));
+    }
+
+    // 2. Tag Filter Bar
+    const filterPills = document.querySelectorAll('#reviewFilterBar .review-pill');
+    const brandCards = document.querySelectorAll('#brandCardsGrid .brand-item');
+    const countDisplay = document.getElementById('showingBrandCount');
+
+    filterPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        filterPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+
+        const tag = pill.getAttribute('data-tag');
+        let count = 0;
+
+        brandCards.forEach(card => {
+          const tags = (card.getAttribute('data-tags') || '').split(',');
+          if (tag === 'all' || tags.includes(tag)) {
+            card.style.display = 'flex';
+            count++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        if (countDisplay) {
+          countDisplay.textContent = `显示 ${count} 款品牌`;
+        }
+      });
+    });
+
+    // 3. Brand Data Map for Modal
+    const brandModalData = {
+      huanqiuti: {
+        name: '环球梯',
+        title: '环球梯 · 官方全系订阅与按量套餐',
+        code: 'HQ66',
+        couponText: '结算时在「折价券/优惠码」栏粘贴 <strong class="font-mono text-warmOrangeDeep bg-white px-2 py-0.5 rounded border border-warmOrange/30">HQ66</strong>，立享 7 折！',
+        url: 'https://123pps01.huanqiutiaff.com/#/?code=j5VBUvw0',
+        plans: [
+          { badge: '入门特惠', name: '轻量·月付包', price: '¥14.70', orig: '¥21.00', traffic: '100GB/月', desc: ['✓ 全 IPLC 专线，抗封锁抗抖动', '✓ 不限设备，全家多端共享', '✓ Netflix/Disney+/ChatGPT 原生解锁'] },
+          { badge: '店长推荐', name: '进阶·大流量包', price: '¥28.00', orig: '¥40.00', traffic: '260GB/月', desc: ['✓ 260GB 极速大带宽，晚高峰秒开4K', '✓ AI与流媒体双 ISP 原生纯净 IP', '✓ 客服专线优先保障'] },
+          { badge: '重度旗舰', name: '尊享·年度旗舰', price: '¥50.40', orig: '¥72.00', traffic: '520GB/月', desc: ['✓ 520GB 巨量专线流量', '✓ 峰值带宽高达 2.5Gbps', '✓ 适合软路由全局透明代理'] }
+        ]
+      },
+      dalaoyun: {
+        name: '大佬云',
+        title: '大佬云 · 官方全系订阅与按量套餐',
+        code: 'dly88',
+        couponText: '结算时在「折价券/优惠码」栏粘贴 <strong class="font-mono text-indigo-700 bg-white px-2 py-0.5 rounded border border-indigo-200">dly88</strong>，立享 7 折！',
+        url: 'https://ppsvip01.dalaoyunaff.com/#/?code=Iz1GlCVa',
+        plans: [
+          { badge: '超值体验', name: '体验版套餐', price: '¥12.60', orig: '¥18.00', traffic: '80GB/月', desc: ['✓ 100% 纯内网 IPLC 专线', '✓ 不限客户端同时在线数量', '✓ 游戏低跳 Ping 加速'] },
+          { badge: '主力畅享', name: '基础版套餐', price: '¥24.50', orig: '¥35.00', traffic: '200GB/月', desc: ['✓ 200GB 专线流量，全天不拥堵', '✓ 原生 IP 解锁 ChatGPT/Claude', '✓ 软路由与多端设备全家桶首选'] },
+          { badge: '海量高配', name: '尊享版套餐', price: '¥45.50', orig: '¥65.00', traffic: '500GB/月', desc: ['✓ 500GB 海量带宽专线', '✓ 晚高峰高速无 QoS 降速', '✓ 多国优质落地自由切换'] }
+        ]
+      },
+      liulianyun: {
+        name: '榴莲云',
+        title: '榴莲云 · 官方全系大流量订阅套餐',
+        code: 'll88',
+        couponText: '结算时在「折价券/优惠码」栏粘贴 <strong class="font-mono text-amber-700 bg-white px-2 py-0.5 rounded border border-amber-300">ll88</strong>，立享 7 折！',
+        url: 'https://123pp01.liulianyunaff.com/#/?code=MsZP3u7G',
+        plans: [
+          { badge: '入门实惠', name: '小榴莲套餐', price: '¥10.50', orig: '¥15.00', traffic: '120GB/月', desc: ['✓ 每月 120GB 充足带宽', '✓ 每 G 仅约 0.08 元，性价比爆表', '✓ 适合日常影音刷视频'] },
+          { badge: '超大流量', name: '大榴莲套餐', price: '¥21.00', orig: '¥30.00', traffic: '320GB/月', desc: ['✓ 320GB 巨量专线流量', '✓ 4K/8K 视频毫无缓冲', '✓ 不限同时在线设备数'] },
+          { badge: '追剧旗舰', name: '榴莲王套餐', price: '¥42.00', orig: '¥60.00', traffic: '750GB/月', desc: ['✓ 750GB 吞吐大水喉', '✓ 工作室/重度下载首选', '✓ IEPL 高品质稳定线路'] }
+        ]
+      },
+      yunjiexian: {
+        name: '云界线',
+        title: '云界线 · 官方全系订阅与按量套餐',
+        code: 'yjx888',
+        couponText: '结算时在「折价券/优惠码」栏粘贴 <strong class="font-mono text-cyan-700 bg-white px-2 py-0.5 rounded border border-cyan-300">yjx888</strong>，立享 7 折！',
+        url: 'https://pp01.yunjiexianaff.com/#/?code=bp0ZSKBV',
+        plans: [
+          { badge: '精选特惠', name: '云界年付小包', price: '¥67.20/年', orig: '¥96.00', traffic: '60GB/月', desc: ['✓ 折合每月仅 ¥5.60', '✓ 全 IPLC 专线，极低抖动', '✓ 原生 IP 支持全解'] },
+          { badge: '入门月付', name: '轻云·基础版', price: '¥15.40', orig: '¥22.00', traffic: '150GB/月', desc: ['✓ 150GB 充足流量', '✓ 不限同时在线设备', '✓ 晚高峰专线流畅保障'] },
+          { badge: '主力畅享', name: '凌云·进阶版', price: '¥28.00', orig: '¥40.00', traffic: '280GB/月', desc: ['✓ 280GB 专线带宽', '✓ 2.5Gbps 单节点峰值', '✓ 支持 Netflix/Claude 全解'] }
+        ]
+      },
+      shandianshu: {
+        name: '闪电鼠',
+        title: '闪电鼠 · 官方全系订阅套餐',
+        code: 'sds88',
+        couponText: '结算时在「折价券/优惠码」栏粘贴 <strong class="font-mono text-amber-700 bg-white px-2 py-0.5 rounded border border-amber-300">sds88</strong>，立享 7 折！',
+        url: 'https://ppsvip01.shandianshuaff.com/#/?code=QbLF8tjB',
+        plans: [
+          { badge: '年付神价', name: '闪电鼠·微量包', price: '¥50.40/年', orig: '¥72.00', traffic: '50GB/月', desc: ['✓ 券后折合每月仅 ¥4.20', '✓ 全线 IEPL 专线 x1 倍率', '✓ 适合备用与日常查阅'] },
+          { badge: '入门畅行', name: '闪电鼠·极速版', price: '¥14.00', orig: '¥20.00', traffic: '120GB/月', desc: ['✓ 120GB 充足流量', '✓ 晚高峰低延迟不卡顿', '✓ 不限在线设备数'] },
+          { badge: '主力高配', name: '闪电鼠·雷霆版', price: '¥28.00', orig: '¥40.00', traffic: '250GB/月', desc: ['✓ 250GB 专线带宽', '✓ 原生 IP 畅快看 Netflix/AI', '✓ 多地区节点自由切换'] }
+        ]
+      },
+      shenxing: {
+        name: '神行加速',
+        title: '神行加速 · 官方全系订阅套餐',
+        code: 'sx0077',
+        couponText: '结算时在「折价券/优惠码」栏粘贴 <strong class="font-mono text-purple-700 bg-white px-2 py-0.5 rounded border border-purple-300">sx0077</strong>，立享 7 折！',
+        url: 'https://pps123.shenxingaff.com/#/?code=6tQ7zHUc',
+        plans: [
+          { badge: '特惠年付', name: '神行·年付特惠版', price: '¥67.20/年', orig: '¥96.00', traffic: '60GB/月', desc: ['✓ 券后每月折合 ¥5.60', '✓ 全 IPLC 专线，峰值 2.5Gbps', '✓ 原生 IP，全解 Netflix/AI'] },
+          { badge: '主力进阶', name: '神行·基础包', price: '¥15.40', orig: '¥22.00', traffic: '120GB/月', desc: ['✓ 120GB 专线流量', '✓ 全节点 x1 倍率无套路', '✓ 极低跳 Ping，游戏友好'] },
+          { badge: '重度尊享', name: '神行·进阶包', price: '¥28.00', orig: '¥40.00', traffic: '260GB/月', desc: ['✓ 260GB 巨量专线流量', '✓ 4K秒开软路由首选', '✓ 高效专属客服响应'] }
+        ]
+      }
+    };
+
+    function renderModalPlans(brandKey) {
+      const data = brandModalData[brandKey] || brandModalData.huanqiuti;
+      const title = document.getElementById('modalTitle');
+      const couponText = document.getElementById('modalCouponText');
+      const couponBtn = document.getElementById('modalCouponBtn');
+      const grid = document.getElementById('modalPlanGrid');
+
+      if (title) title.innerHTML = `<span>${data.title}</span>`;
+      if (couponText) couponText.innerHTML = `<span>🎟️ ${data.couponText}</span>`;
+      if (couponBtn) {
+        couponBtn.setAttribute('onclick', `copyCouponCode('${data.code}')`);
+        couponBtn.textContent = `复制优惠码 ${data.code}`;
+      }
+
+      if (grid) {
+        grid.innerHTML = data.plans.map((p, idx) => `
+          <div class="rounded-2xl border ${idx === 1 ? 'border-warmOrange bg-orange-50/50 shadow-sm' : 'border-oat bg-white'} p-5 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-warmOrange">${p.badge}</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-oat/70 text-carbon">${p.traffic}</span>
+              </div>
+              <h4 class="font-black text-base text-carbon">${p.name}</h4>
+              <div class="mt-2 text-2xl font-black text-warmOrangeDeep font-mono">
+                ${p.price} <span class="text-xs text-carbonMuted font-normal line-through">${p.orig}</span>
+              </div>
+              <ul class="mt-3 text-xs text-carbonLight space-y-1.5">
+                ${p.desc.map(d => `<li>${d}</li>`).join('')}
+              </ul>
+            </div>
+            <a href="${data.url}" target="_blank" rel="noopener noreferrer" onclick="copyCouponCode('${data.code}')" class="mt-5 w-full py-2.5 rounded-xl ${idx === 1 ? 'bg-warmOrange text-white' : 'bg-carbon text-white'} text-xs font-bold text-center block hover:opacity-90 transition-opacity">
+              立即订阅 (享7折) →
+            </a>
+          </div>
+        `).join('');
+      }
+    }
+
+    function switchModalBrand(brandKey) {
+      ['tabHq', 'tabDly', 'tabLly', 'tabYjx', 'tabSds', 'tabSx'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) {
+          btn.className = 'px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer';
+        }
+      });
+
+      const activeMap = {
+        huanqiuti: 'tabHq',
+        dalaoyun: 'tabDly',
+        liulianyun: 'tabLly',
+        yunjiexian: 'tabYjx',
+        shandianshu: 'tabSds',
+        shenxing: 'tabSx'
+      };
+
+      const activeBtn = document.getElementById(activeMap[brandKey]);
+      if (activeBtn) {
+        activeBtn.className = 'px-3 py-1.5 rounded-lg bg-warmOrange text-white shadow-sm transition-all text-xs font-bold whitespace-nowrap cursor-pointer';
+      }
+
+      renderModalPlans(brandKey);
+    }
+
+    function openPackageModal(brandKey = 'huanqiuti') {
+      const modal = document.getElementById('packageModal');
+      if (modal) {
+        switchModalBrand(brandKey);
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closePackageModal() {
+      const modal = document.getElementById('packageModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closePackageModal();
+    });
+  </script>
+</body>
+</html>

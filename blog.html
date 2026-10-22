@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>便利店日志 · Speed Mart Daily — 光速便利店</title>
+  <meta name="description" content="光速便利店日志专栏：记录网络漫游技巧、协议杂谈、流媒体解锁与店长折腾心得，24小时不打烊的硬核网络补给站。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream:    '#FFF8F0',
+            oat:      '#F5EDE3',
+            oatWhite: '#FDFBF7',
+            warmOrange:  '#E8935A',
+            warmOrangeLight: '#F4B88A',
+            warmOrangeDeep: '#D47A3F',
+            buttercup: '#F5D78E',
+            buttercupLight: '#FBE9B7',
+            carbon:    '#2E2A27',
+            carbonLight: '#4A4541',
+            carbonMuted: '#8A8480',
+            mintFresh: '#A8D5BA',
+            skyBlue:   '#9ECFEA',
+            blushPink: '#F2B8B5',
+          },
+          fontFamily: {
+            sans: ['"Noto Sans SC"', '"Outfit"', 'system-ui', 'sans-serif'],
+            display: ['"Outfit"', '"Noto Sans SC"', 'sans-serif'],
+          },
+          borderRadius: { 'shelf': '1rem', 'pill': '9999px' },
+          boxShadow: {
+            'card': '0 2px 16px 0 rgba(46,42,39,0.06)',
+            'card-hover': '0 12px 32px 0 rgba(232,147,90,0.14)',
+            'shelf': '0 4px 24px 0 rgba(46,42,39,0.08)',
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'slide-up': 'slideUp 0.5s ease-out forwards',
+          },
+          keyframes: {
+            float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-8px)' } },
+            slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #F5EDE3; }
+    ::-webkit-scrollbar-thumb { background: #E8935A; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #D47A3F; }
+    html { scroll-behavior: smooth; }
+
+    .dots-pattern { background-image: radial-gradient(circle, #E8935A 1.2px, transparent 1.2px); background-size: 24px 24px; opacity: .06; }
+    .navbar-blur { backdrop-filter: blur(16px) saturate(1.6); -webkit-backdrop-filter: blur(16px) saturate(1.6); }
+
+    .mobile-menu-enter { max-height: 0; opacity: 0; overflow: hidden; transition: max-height .4s ease, opacity .3s ease; }
+    .mobile-menu-enter.open { max-height: 500px; opacity: 1; }
+
+    /* Category Pill Filter */
+    .pill-filter { transition: all .25s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; user-select: none; }
+    .pill-filter.active { background-color: #E8935A; color: #ffffff; box-shadow: 0 4px 14px rgba(232,147,90,.38); font-weight: 600; }
+    .pill-filter:not(.active):hover { background-color: #FCEBD5; color: #2E2A27; }
+
+    /* Nav active state */
+    .nav-link { position: relative; }
+    .nav-link.active { color: #E8935A; font-weight: 600; }
+    .nav-link.active::after { content: ''; position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%); width: 18px; height: 3px; background: #E8935A; border-radius: 9999px; }
+    .mobile-nav-link.active { color: #E8935A; background: rgba(232,147,90,.08); font-weight: 600; }
+
+    /* Line Clamp */
+    .clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body class="bg-[#FDFBF7] text-carbon font-sans antialiased min-h-screen flex flex-col">
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="fixed top-0 left-0 right-0 z-50 navbar-blur bg-[#FFF8F0]/90 border-b border-oat/70" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 lg:h-[72px]">
+        <!-- Brand Logo -->
+        <a href="index.html" class="flex items-center gap-2.5 group">
+          <svg class="h-10 w-auto" viewBox="0 0 160 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="光速便利店 Speed Mart">
+            <rect width="160" height="48" rx="8" fill="none"/>
+            <g transform="translate(6, 4)">
+              <rect x="0" y="2" width="36" height="36" rx="9" fill="#E8935A" class="group-hover:fill-warmOrangeDeep transition-colors"/>
+              <path d="M7 11h22v18a3 3 0 0 1-3 3H10a3 3 0 0 1-3-3V11z" fill="#FFF8F0"/>
+              <path d="M5 8a3 3 0 0 1 3-3h20a3 3 0 0 1 3 3v4H5V8z" fill="#F5D78E"/>
+              <path d="M5 12h5l-2 5h-3z" fill="#E8935A"/>
+              <path d="M12 12h5l-2 5h-3z" fill="#E8935A"/>
+              <path d="M19 12h5l-2 5h-3z" fill="#E8935A"/>
+              <path d="M26 12h5l-2 5h-3z" fill="#E8935A"/>
+              <circle cx="27" cy="7" r="1.5" fill="#FFF8F0"/>
+              <polygon points="19,15 15,24 18,24 16,30 22,21 19,21" fill="#E8935A"/>
+            </g>
+            <g transform="translate(48, 6)">
+              <text x="0" y="22" fill="#2E2A27" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="17" font-weight="900" letter-spacing="-0.3">
+                光速便利店
+              </text>
+              <text x="94" y="14" fill="#E8935A" font-family="'Outfit', system-ui, sans-serif" font-size="10" font-weight="700">
+                24H
+              </text>
+              <text x="0" y="34" fill="#8A8480" font-family="'Outfit', system-ui, sans-serif" font-size="9" font-weight="600" letter-spacing="1.2">
+                SPEED MART
+              </text>
+            </g>
+          </svg>
+        </a>
+
+        <!-- Desktop Nav (全便利店风 7 项组合) -->
+        <nav class="hidden lg:flex items-center gap-1" aria-label="主导航">
+          <a href="index.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="home">首页</a>
+          <a href="reviews.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="reviews">店长严选</a>
+          <a href="guide.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="guide">新手便当</a>
+          <a href="devices.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="devices">设备专柜</a>
+          <a href="speedtest.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="speedtest">测速冰箱</a>
+          <a href="blog.html" class="nav-link active px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="blog">便利店日志</a>
+          <a href="faq.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="faq">常见避坑</a>
+        </nav>
+
+        <!-- Search + Hamburger -->
+        <div class="flex items-center gap-2">
+          <div class="hidden md:flex items-center bg-oat/70 rounded-full px-3.5 py-2 gap-2 focus-within:ring-2 focus-within:ring-warmOrange/40 transition-shadow">
+            <svg class="w-4 h-4 text-carbonMuted flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="blogSearchInput" placeholder="搜索文章或知识点..." class="bg-transparent outline-none text-sm text-carbon placeholder-carbonMuted w-36 lg:w-44" />
+          </div>
+          <button class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-oat/60 transition-colors" id="menu-toggle" aria-label="打开菜单" aria-expanded="false">
+            <svg class="w-5 h-5 text-carbon" id="menu-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            <svg class="w-5 h-5 text-carbon hidden" id="menu-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Drawer (同步全便利店风组合) -->
+    <div class="lg:hidden mobile-menu-enter bg-cream/95 navbar-blur border-t border-oat/40" id="mobile-menu">
+      <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
+        <div class="flex items-center bg-oat/70 rounded-full px-3.5 py-2.5 gap-2 mb-3 md:hidden">
+          <svg class="w-4 h-4 text-carbonMuted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="blogMobileSearchInput" placeholder="搜索文章或知识点..." class="bg-transparent outline-none text-sm text-carbon placeholder-carbonMuted w-full" />
+        </div>
+        <a href="index.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="home">首页</a>
+        <a href="reviews.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="reviews">店长严选</a>
+        <a href="guide.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="guide">新手便当</a>
+        <a href="devices.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="devices">设备专柜</a>
+        <a href="speedtest.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="speedtest">测速冰箱</a>
+        <a href="blog.html" class="mobile-nav-link active block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="blog">便利店日志</a>
+        <a href="faq.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="faq">常见避坑</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== MAIN CONTENT ===================== -->
+  <main class="pt-20 lg:pt-[76px] flex-grow">
+
+    <!-- 1. 专栏头部 (Breadcrumb & Header) -->
+    <section class="relative bg-gradient-to-b from-[#FFF8F0] via-[#FAF3EC] to-[#FDFBF7] border-b border-oat/70 py-10 md:py-14 overflow-hidden">
+      <div class="absolute inset-0 dots-pattern pointer-events-none"></div>
+      <div class="absolute -top-12 -right-12 w-64 h-64 rounded-full bg-warmOrangeLight/15 blur-3xl pointer-events-none"></div>
+      <div class="absolute bottom-0 left-10 w-48 h-48 rounded-full bg-buttercup/20 blur-3xl pointer-events-none"></div>
+
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- 面包屑导航 -->
+        <nav class="mb-4" aria-label="面包屑导航">
+          <ol class="flex items-center gap-1.5 text-xs text-carbonMuted">
+            <li><a href="index.html" class="hover:text-warmOrange transition-colors">首页</a></li>
+            <li>
+              <svg class="w-3.5 h-3.5 text-carbonMuted/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </li>
+            <li class="text-warmOrange font-semibold">便利店日志</li>
+          </ol>
+        </nav>
+
+        <!-- 专栏标题与副标题 -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-bold mb-3 shadow-xs">
+              <span>☕</span>
+              <span>店长值班笔记 · 每周更新</span>
+            </div>
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-black text-carbon tracking-tight">
+              便利店日志 · <span class="text-warmOrange">Speed Mart Daily</span>
+            </h1>
+            <p class="mt-2.5 text-sm sm:text-base text-carbonMuted max-w-2xl leading-relaxed">
+              记录网络漫游技巧、协议杂谈、流媒体解锁与店长折腾心得。
+            </p>
+          </div>
+
+          <!-- 便捷统计徽章 -->
+          <div class="flex items-center gap-3">
+            <div class="bg-white/80 backdrop-blur rounded-2xl border border-oat px-4 py-2.5 shadow-xs flex items-center gap-3">
+              <span class="text-2xl">📰</span>
+              <div>
+                <div class="text-[11px] text-carbonMuted font-medium">已收录日志</div>
+                <div class="text-base font-black text-carbon" id="totalArticleCounter">12 篇实战笔记</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. 分类药丸筛选栏 (Category Tabs) -->
+        <div class="mt-8 pt-6 border-t border-oat/60 flex flex-wrap items-center gap-2 sm:gap-3" id="categoryFilterBar">
+          <button class="pill-filter active px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight transition-all" data-category="all">
+            全部文章 (12)
+          </button>
+          <button class="pill-filter px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight transition-all" data-category="protocol">
+            协议与测速 (4)
+          </button>
+          <button class="pill-filter px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight transition-all" data-category="streaming">
+            流媒体与AI (3)
+          </button>
+          <button class="pill-filter px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight transition-all" data-category="rules">
+            分流与规则 (3)
+          </button>
+          <button class="pill-filter px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight transition-all" data-category="memo">
+            折腾备忘 (2)
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 主体内容区 -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
+
+      <!-- 3. 置顶推荐大卡片 (Featured Post) -->
+      <div class="mb-12" id="featuredPostContainer">
+        <div class="text-xs font-bold text-carbonMuted uppercase tracking-wider mb-3 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-warmOrange"></span>
+          <span>Featured Story · 本期头条</span>
+        </div>
+
+        <article class="group relative bg-white rounded-3xl border-2 border-warmOrange/50 shadow-card hover:shadow-card-hover overflow-hidden transition-all duration-300 hover:-translate-y-1">
+          <div class="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+            
+            <!-- 左侧宽幅视觉区 -->
+            <div class="lg:col-span-5 bg-gradient-to-br from-[#FFF5EA] via-[#FCEAD2] to-[#F5D78E]/40 p-8 sm:p-10 flex flex-col justify-between relative overflow-hidden">
+              <div class="absolute -right-10 -bottom-10 w-44 h-44 rounded-full bg-warmOrange/20 blur-2xl pointer-events-none"></div>
+              
+              <!-- 顶部角标 -->
+              <div class="flex items-center gap-2 z-10">
+                <span class="inline-flex items-center gap-1 bg-warmOrange text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">
+                  <span>🔥</span> 店长推荐
+                </span>
+                <span class="inline-flex items-center bg-white/90 text-warmOrangeDeep text-xs font-bold px-3 py-1 rounded-full shadow-xs">
+                  必读干货
+                </span>
+                <span class="hidden sm:inline-flex items-center bg-carbon/5 text-carbonLight text-xs font-semibold px-2.5 py-1 rounded-full">
+                  协议选型
+                </span>
+              </div>
+
+              <!-- 插画视觉元素 -->
+              <div class="my-6 lg:my-0 flex items-center justify-center py-6">
+                <div class="relative w-48 h-40 flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                  <div class="w-36 h-36 rounded-2xl bg-white/80 shadow-md flex flex-col items-center justify-center p-4 text-center border border-warmOrange/30">
+                    <span class="text-5xl mb-2">⚡</span>
+                    <span class="text-xs font-black text-carbon">晚高峰防断流</span>
+                    <span class="text-[10px] text-warmOrange font-semibold tracking-wider uppercase">BBR · QoS · IPLC</span>
+                  </div>
+                  <!-- 飘浮便签徽章 -->
+                  <div class="absolute -top-2 -right-2 bg-gradient-to-r from-warmOrange to-orange-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg shadow-sm animate-float">
+                    实测调优
+                  </div>
+                  <div class="absolute -bottom-2 -left-2 bg-white text-carbonLight text-[10px] font-bold px-2 py-0.5 rounded-lg border border-oat shadow-xs">
+                    0 丢包策略
+                  </div>
+                </div>
+              </div>
+
+              <!-- 底部标签 -->
+              <div class="text-[11px] text-carbonMuted font-medium z-10 flex items-center gap-2">
+                <span>🏪 光速便利店 · 专栏特供</span>
+                <span>•</span>
+                <span class="text-warmOrange font-semibold">2026 年度旗舰指导</span>
+              </div>
+            </div>
+
+            <!-- 右侧文章详情区 -->
+            <div class="lg:col-span-7 p-6 sm:p-8 lg:p-10 flex flex-col justify-between bg-white">
+              <div>
+                <div class="flex items-center gap-2 text-xs text-carbonMuted mb-3">
+                  <span class="px-2.5 py-0.5 rounded-md bg-warmOrange/10 text-warmOrange font-semibold">分流与规则 / 协议</span>
+                  <span>•</span>
+                  <span>置顶推荐</span>
+                </div>
+
+                <a href="article.html" class="block group-hover:text-warmOrange transition-colors">
+                  <h2 class="text-xl sm:text-2xl lg:text-3xl font-black text-carbon group-hover:text-warmOrange transition-colors leading-snug">
+                    《2026 晚高峰防断流终极指南：从协议选型到分流规则调优》
+                  </h2>
+                </a>
+
+                <p class="mt-4 text-sm sm:text-base text-carbonMuted leading-relaxed">
+                  为什么一到晚上 8 点就频繁卡顿？详解直连线路 QoS 机制，以及 Hysteria2、IPLC 专线与分流规则的最佳调优方案。手把手带你从客户端缓冲策略配置到透明网关分流，告别断流焦虑。
+                </p>
+
+                <!-- 文章速览小要点 -->
+                <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-carbonLight">
+                  <div class="flex items-center gap-1.5 bg-oat/40 rounded-lg px-3 py-2">
+                    <span class="text-warmOrange">✓</span> 晚高峰直连骨干网 QoS 降速成因深度剖析
+                  </div>
+                  <div class="flex items-center gap-1.5 bg-oat/40 rounded-lg px-3 py-2">
+                    <span class="text-warmOrange">✓</span> Hysteria2 单边抗丢包与 IPLC 内网专线对比
+                  </div>
+                  <div class="flex items-center gap-1.5 bg-oat/40 rounded-lg px-3 py-2">
+                    <span class="text-warmOrange">✓</span> GEOIP 规则集实战：国内大流量零绕路
+                  </div>
+                  <div class="flex items-center gap-1.5 bg-oat/40 rounded-lg px-3 py-2">
+                    <span class="text-warmOrange">✓</span> 客户端 TCP/UDP 缓冲区参数黄金推荐值
+                  </div>
+                </div>
+              </div>
+
+              <!-- 底部作者与元信息 -->
+              <div class="mt-8 pt-6 border-t border-oat/80 flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full bg-buttercupLight border border-warmOrange/30 flex items-center justify-center text-lg">
+                    👨‍🍳
+                  </div>
+                  <div>
+                    <div class="text-xs font-bold text-carbon flex items-center gap-1">
+                      <span>店长小光</span>
+                      <span class="text-[10px] text-warmOrange bg-warmOrange/10 px-1.5 py-0.5 rounded">值班店长</span>
+                    </div>
+                    <div class="text-[11px] text-carbonMuted">
+                      2026-10-20 · 8 分钟阅读 · 1.8k 阅读
+                    </div>
+                  </div>
+                </div>
+
+                <a href="article.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-warmOrange hover:bg-warmOrangeDeep text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all">
+                  <span>阅读全文</span>
+                  <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </article>
+      </div>
+
+      <!-- 4. 常规文章图文网格 (Article Grid) -->
+      <div class="mb-8">
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">📚</span>
+            <h3 class="text-lg sm:text-xl font-black text-carbon">最新文章陈列架</h3>
+            <span class="text-xs text-carbonMuted font-normal" id="currentCategoryTitle">（全部文章）</span>
+          </div>
+          <span class="text-xs text-carbonMuted" id="showingCount">显示 6 篇精选</span>
+        </div>
+
+        <!-- 2~3 列文章卡片网格 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="blogCardsContainer">
+
+          <!-- CARD 1: 协议与测速 -->
+          <article class="blog-card group bg-white rounded-2xl border border-oat shadow-card hover:shadow-card-hover overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-category="protocol">
+            <div>
+              <!-- 封面图视觉 -->
+              <div class="relative h-44 bg-gradient-to-tr from-[#FFF5EC] to-[#FCE6D0] overflow-hidden flex items-center justify-center border-b border-oat/60">
+                <div class="text-6xl group-hover:scale-110 transition-transform duration-500 select-none">
+                  🚀
+                </div>
+                <div class="absolute top-3 left-3 bg-white/90 backdrop-blur text-warmOrangeDeep text-[11px] font-bold px-2.5 py-1 rounded-full shadow-xs">
+                  协议与测速
+                </div>
+                <div class="absolute top-3 right-3 bg-carbon/80 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+                  4K 极速
+                </div>
+                <div class="absolute bottom-2 right-3 text-[10px] text-carbonMuted/70 font-mono">
+                  UDP / HYSTERIA2
+                </div>
+              </div>
+
+              <!-- 卡片正文 -->
+              <div class="p-5 sm:p-6">
+                <a href="article.html" class="block group">
+                  <h4 class="text-base sm:text-lg font-bold text-carbon group-hover:text-warmOrange transition-colors leading-snug line-clamp-2">
+                    从 Shadowsocks 到 Hysteria2：十年代理协议演进史与原理解析
+                  </h4>
+                </a>
+                <p class="mt-2.5 text-xs sm:text-sm text-carbonMuted leading-relaxed clamp-2">
+                  从单线程 Socks5 加密到基于 UDP 的自研 BBR 单边加速，深度剖析十年代理协议对抗封锁与拥塞丢包的演进脉络与技术本质。
+                </p>
+              </div>
+            </div>
+
+            <!-- 卡片底栏 -->
+            <div class="px-5 pb-5 sm:px-6 sm:pb-6 pt-3 border-t border-oat/50 flex items-center justify-between text-[11px] text-carbonMuted">
+              <div class="flex items-center gap-1.5">
+                <span>👨‍🍳 店长小光</span>
+                <span>•</span>
+                <span>10-18</span>
+              </div>
+              <div class="flex items-center gap-1 text-warmOrange font-medium group-hover:translate-x-0.5 transition-transform">
+                <span>6 分钟阅读</span>
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 2: 流媒体与AI -->
+          <article class="blog-card group bg-white rounded-2xl border border-oat shadow-card hover:shadow-card-hover overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-category="streaming">
+            <div>
+              <!-- 封面图视觉 -->
+              <div class="relative h-44 bg-gradient-to-tr from-[#F0F7FF] to-[#DCEBFF] overflow-hidden flex items-center justify-center border-b border-oat/60">
+                <div class="text-6xl group-hover:scale-110 transition-transform duration-500 select-none">
+                  🍿
+                </div>
+                <div class="absolute top-3 left-3 bg-white/90 backdrop-blur text-sky-600 text-[11px] font-bold px-2.5 py-1 rounded-full shadow-xs">
+                  流媒体与AI
+                </div>
+                <div class="absolute top-3 right-3 bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+                  解锁教程
+                </div>
+                <div class="absolute bottom-2 right-3 text-[10px] text-carbonMuted/70 font-mono">
+                  RESIDENTIAL / ISP
+                </div>
+              </div>
+
+              <!-- 卡片正文 -->
+              <div class="p-5 sm:p-6">
+                <a href="article.html" class="block group">
+                  <h4 class="text-base sm:text-lg font-bold text-carbon group-hover:text-warmOrange transition-colors leading-snug line-clamp-2">
+                    Netflix / Disney+ 原生解锁与住宅双 ISP 避坑指南
+                  </h4>
+                </a>
+                <p class="mt-2.5 text-xs sm:text-sm text-carbonMuted leading-relaxed clamp-2">
+                  为什么有些节点能看油管 4K 却看不了奈飞非自制剧？深度解析 DNS 分流解锁与双 ISP 纯净原生 IP 的选购机密与防封技巧。
+                </p>
+              </div>
+            </div>
+
+            <!-- 卡片底栏 -->
+            <div class="px-5 pb-5 sm:px-6 sm:pb-6 pt-3 border-t border-oat/50 flex items-center justify-between text-[11px] text-carbonMuted">
+              <div class="flex items-center gap-1.5">
+                <span>🔧 运维阿明</span>
+                <span>•</span>
+                <span>10-15</span>
+              </div>
+              <div class="flex items-center gap-1 text-warmOrange font-medium group-hover:translate-x-0.5 transition-transform">
+                <span>5 分钟阅读</span>
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 3: 分流与规则 -->
+          <article class="blog-card group bg-white rounded-2xl border border-oat shadow-card hover:shadow-card-hover overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-category="rules">
+            <div>
+              <!-- 封面图视觉 -->
+              <div class="relative h-44 bg-gradient-to-tr from-[#FFFDF0] to-[#FBE8B5] overflow-hidden flex items-center justify-center border-b border-oat/60">
+                <div class="text-6xl group-hover:scale-110 transition-transform duration-500 select-none">
+                  🧭
+                </div>
+                <div class="absolute top-3 left-3 bg-white/90 backdrop-blur text-warmOrangeDeep text-[11px] font-bold px-2.5 py-1 rounded-full shadow-xs">
+                  分流与规则
+                </div>
+                <div class="absolute top-3 right-3 bg-amber-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+                  规则进阶
+                </div>
+                <div class="absolute bottom-2 right-3 text-[10px] text-carbonMuted/70 font-mono">
+                  CLASH / SING-BOX
+                </div>
+              </div>
+
+              <!-- 卡片正文 -->
+              <div class="p-5 sm:p-6">
+                <a href="article.html" class="block group">
+                  <h4 class="text-base sm:text-lg font-bold text-carbon group-hover:text-warmOrange transition-colors leading-snug line-clamp-2">
+                    Clash Verge & Sing-box 分流配置秘籍：国内直连与 AI 智能分流
+                  </h4>
+                </a>
+                <p class="mt-2.5 text-xs sm:text-sm text-carbonMuted leading-relaxed clamp-2">
+                  避免访问国内网站绕路降速，手把手教你编写 GEOIP、GEOSITE 规则集，实现 ChatGPT 走专线而微信淘宝毫秒直连。
+                </p>
+              </div>
+            </div>
+
+            <!-- 卡片底栏 -->
+            <div class="px-5 pb-5 sm:px-6 sm:pb-6 pt-3 border-t border-oat/50 flex items-center justify-between text-[11px] text-carbonMuted">
+              <div class="flex items-center gap-1.5">
+                <span>👨‍🍳 店长小光</span>
+                <span>•</span>
+                <span>10-12</span>
+              </div>
+              <div class="flex items-center gap-1 text-warmOrange font-medium group-hover:translate-x-0.5 transition-transform">
+                <span>7 分钟阅读</span>
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 4: 流媒体与AI -->
+          <article class="blog-card group bg-white rounded-2xl border border-oat shadow-card hover:shadow-card-hover overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-category="streaming">
+            <div>
+              <!-- 封面图视觉 -->
+              <div class="relative h-44 bg-gradient-to-tr from-[#FFF0F2] to-[#FED7DE] overflow-hidden flex items-center justify-center border-b border-oat/60">
+                <div class="text-6xl group-hover:scale-110 transition-transform duration-500 select-none">
+                  🤖
+                </div>
+                <div class="absolute top-3 left-3 bg-white/90 backdrop-blur text-pink-600 text-[11px] font-bold px-2.5 py-1 rounded-full shadow-xs">
+                  流媒体与AI
+                </div>
+                <div class="absolute top-3 right-3 bg-rose-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+                  故障避坑
+                </div>
+                <div class="absolute bottom-2 right-3 text-[10px] text-carbonMuted/70 font-mono">
+                  OPENAI / CLAUDE
+                </div>
+              </div>
+
+              <!-- 卡片正文 -->
+              <div class="p-5 sm:p-6">
+                <a href="article.html" class="block group">
+                  <h4 class="text-base sm:text-lg font-bold text-carbon group-hover:text-warmOrange transition-colors leading-snug line-clamp-2">
+                    ChatGPT 与 Claude 频繁报错 403 / Access Denied 终极排查手册
+                  </h4>
+                </a>
+                <p class="mt-2.5 text-xs sm:text-sm text-carbonMuted leading-relaxed clamp-2">
+                  深入浅出分析 Cloudflare Turnstile 验证码拦截与 OpenAI IP 风控权重，教你如何精准判断落地机是否处于黑名单并快速解封。
+                </p>
+              </div>
+            </div>
+
+            <!-- 卡片底栏 -->
+            <div class="px-5 pb-5 sm:px-6 sm:pb-6 pt-3 border-t border-oat/50 flex items-center justify-between text-[11px] text-carbonMuted">
+              <div class="flex items-center gap-1.5">
+                <span>🍎 测评员果果</span>
+                <span>•</span>
+                <span>10-09</span>
+              </div>
+              <div class="flex items-center gap-1 text-warmOrange font-medium group-hover:translate-x-0.5 transition-transform">
+                <span>4 分钟阅读</span>
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 5: 折腾备忘 -->
+          <article class="blog-card group bg-white rounded-2xl border border-oat shadow-card hover:shadow-card-hover overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-category="memo">
+            <div>
+              <!-- 封面图视觉 -->
+              <div class="relative h-44 bg-gradient-to-tr from-[#F1FAF5] to-[#D5EFE3] overflow-hidden flex items-center justify-center border-b border-oat/60">
+                <div class="text-6xl group-hover:scale-110 transition-transform duration-500 select-none">
+                  🏠
+                </div>
+                <div class="absolute top-3 left-3 bg-white/90 backdrop-blur text-emerald-700 text-[11px] font-bold px-2.5 py-1 rounded-full shadow-xs">
+                  折腾备忘
+                </div>
+                <div class="absolute top-3 right-3 bg-teal-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+                  软路由全屋
+                </div>
+                <div class="absolute bottom-2 right-3 text-[10px] text-carbonMuted/70 font-mono">
+                  ISTOREOS / OPENWRT
+                </div>
+              </div>
+
+              <!-- 卡片正文 -->
+              <div class="p-5 sm:p-6">
+                <a href="article.html" class="block group">
+                  <h4 class="text-base sm:text-lg font-bold text-carbon group-hover:text-warmOrange transition-colors leading-snug line-clamp-2">
+                    家庭软路由全屋透明代理指南：iStoreOS + PassWall 极简实战
+                  </h4>
+                </a>
+                <p class="mt-2.5 text-xs sm:text-sm text-carbonMuted leading-relaxed clamp-2">
+                  让家里的 Apple TV、PS5、电视盒子无需单独安装客户端即可享用全屋高速漫游，旁路由与主路由拓扑最全避坑指南。
+                </p>
+              </div>
+            </div>
+
+            <!-- 卡片底栏 -->
+            <div class="px-5 pb-5 sm:px-6 sm:pb-6 pt-3 border-t border-oat/50 flex items-center justify-between text-[11px] text-carbonMuted">
+              <div class="flex items-center gap-1.5">
+                <span>👓 折腾大师老陈</span>
+                <span>•</span>
+                <span>10-05</span>
+              </div>
+              <div class="flex items-center gap-1 text-warmOrange font-medium group-hover:translate-x-0.5 transition-transform">
+                <span>9 分钟阅读</span>
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 6: 协议与测速 -->
+          <article class="blog-card group bg-white rounded-2xl border border-oat shadow-card hover:shadow-card-hover overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-category="protocol">
+            <div>
+              <!-- 封面图视觉 -->
+              <div class="relative h-44 bg-gradient-to-tr from-[#FFF8E8] to-[#FCE3B4] overflow-hidden flex items-center justify-center border-b border-oat/60">
+                <div class="text-6xl group-hover:scale-110 transition-transform duration-500 select-none">
+                  ⏱️
+                </div>
+                <div class="absolute top-3 left-3 bg-white/90 backdrop-blur text-warmOrangeDeep text-[11px] font-bold px-2.5 py-1 rounded-full shadow-xs">
+                  协议与测速
+                </div>
+                <div class="absolute top-3 right-3 bg-carbon/80 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+                  网络调优
+                </div>
+                <div class="absolute bottom-2 right-3 text-[10px] text-carbonMuted/70 font-mono">
+                  BUFFERBLOAT / CAKE
+                </div>
+              </div>
+
+              <!-- 卡片正文 -->
+              <div class="p-5 sm:p-6">
+                <a href="article.html" class="block group">
+                  <h4 class="text-base sm:text-lg font-bold text-carbon group-hover:text-warmOrange transition-colors leading-snug line-clamp-2">
+                    明明测速跑满 500M 依然卡顿？浅谈 Bufferbloat 缓冲膨胀与延迟调优
+                  </h4>
+                </a>
+                <p class="mt-2.5 text-xs sm:text-sm text-carbonMuted leading-relaxed clamp-2">
+                  带宽大不等于网络好！深入探讨路由器队列管理算法（CAKE/FQ-CoDel），彻底告别看视频拖动缓冲与打游戏跳 ping。
+                </p>
+              </div>
+            </div>
+
+            <!-- 卡片底栏 -->
+            <div class="px-5 pb-5 sm:px-6 sm:pb-6 pt-3 border-t border-oat/50 flex items-center justify-between text-[11px] text-carbonMuted">
+              <div class="flex items-center gap-1.5">
+                <span>👨‍🍳 店长小光</span>
+                <span>•</span>
+                <span>09-28</span>
+              </div>
+              <div class="flex items-center gap-1 text-warmOrange font-medium group-hover:translate-x-0.5 transition-transform">
+                <span>6 分钟阅读</span>
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- 空数据提示状态 -->
+        <div id="noMatchAlert" class="hidden py-16 text-center bg-white rounded-3xl border border-oat p-8 my-6">
+          <div class="text-5xl mb-3">🔍</div>
+          <h4 class="text-base font-bold text-carbon">没有找到相关日志</h4>
+          <p class="text-xs text-carbonMuted mt-1">换个搜索关键词，或者点击“全部文章”查看完整货架吧。</p>
+          <button id="resetFilterBtn" class="mt-4 px-4 py-2 rounded-full bg-warmOrange text-white text-xs font-bold hover:bg-warmOrangeDeep transition-colors">
+            查看全部文章
+          </button>
+        </div>
+      </div>
+
+        <!-- 便利店到底温馨小贴士 (单页平铺底栏) -->
+        <div class="mt-12 flex justify-center">
+          <div class="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-oat/40 border border-oat text-carbonMuted text-xs sm:text-sm font-medium shadow-2xs">
+            <span class="text-base">🎉</span>
+            <span>已经见底啦！店长正在全力备货新干货，敬请期待下一期上架。</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 便利店小黑板：温馨订阅条 -->
+      <div class="mt-12 bg-gradient-to-r from-[#FFF8F0] via-[#FAF1E6] to-[#FCEBD5] rounded-3xl border border-warmOrange/30 p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+        <div class="flex items-center gap-4 text-center md:text-left">
+          <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center text-2xl shadow-xs flex-shrink-0">
+            📮
+          </div>
+          <div>
+            <h4 class="text-base sm:text-lg font-black text-carbon">订阅「便利店周刊 · 店长漫游信」</h4>
+            <p class="text-xs text-carbonMuted mt-0.5">每周日晚发送，包含最新协议动向、流媒体解锁测试与专享折扣优惠码。</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 w-full md:w-auto">
+          <input type="email" placeholder="输入常用邮箱..." class="bg-white rounded-full px-4 py-2.5 text-xs text-carbon placeholder-carbonMuted border border-oat focus:outline-none focus:ring-2 focus:ring-warmOrange/40 w-full sm:w-64" />
+          <button onclick="alert('感谢订阅！店长已将最新一期周刊发送至您的邮箱。')" class="flex-shrink-0 px-5 py-2.5 rounded-full bg-warmOrange hover:bg-warmOrangeDeep text-white text-xs font-bold shadow-sm transition-colors">
+            立即订阅
+          </button>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="bg-carbon text-cream/80 py-12 border-t border-oat/20 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-10">
+        <!-- 品牌简介 -->
+        <div class="md:col-span-2">
+          <div class="flex items-center gap-2.5 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-warmOrange flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 12 15 12 15 22"/></svg>
+            </div>
+            <div class="leading-tight">
+              <span class="block text-sm font-bold text-cream">光速便利店</span>
+              <span class="block text-[9px] font-display font-semibold text-cream/50 tracking-widest uppercase">Speed Mart</span>
+            </div>
+          </div>
+          <p class="text-xs text-cream/50 leading-relaxed max-w-md">
+            24 小时不打烊的网络漫游补给站。像挑零食一样挑出适合你的加速方案，拒绝虚标、拒绝套路，提供客观真实的技术实测。
+          </p>
+          <div class="mt-4 flex items-center gap-2 text-[11px] text-cream/40">
+            <span class="inline-block w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+            <span>店长值班中 · 客观公正独立测评</span>
+          </div>
+        </div>
+
+        <!-- 货架专柜快捷导航 -->
+        <div>
+          <h3 class="text-sm font-bold text-cream mb-4">便利店专柜</h3>
+          <ul class="space-y-2.5 text-xs text-cream/60">
+            <li><a href="index.html" class="hover:text-warmOrange transition-colors">首页入口</a></li>
+            <li><a href="reviews.html" class="hover:text-warmOrange transition-colors">店长严选货架</a></li>
+            <li><a href="guide.html" class="hover:text-warmOrange transition-colors">新手便当 (入门手册)</a></li>
+            <li><a href="devices.html" class="hover:text-warmOrange transition-colors">设备专柜 (全平台客户端)</a></li>
+            <li><a href="speedtest.html" class="hover:text-warmOrange transition-colors">测速冰箱 (节点监控)</a></li>
+            <li><a href="blog.html" class="text-warmOrange font-semibold transition-colors">便利店日志 (技术专栏)</a></li>
+            <li><a href="faq.html" class="hover:text-warmOrange transition-colors">常见避坑指南</a></li>
+          </ul>
+        </div>
+
+        <!-- 保持联络 -->
+        <div>
+          <h3 class="text-sm font-bold text-cream mb-4">店长联络</h3>
+          <p class="text-xs text-cream/50 mb-3">技术交流、投稿或商务反馈：</p>
+          <div class="space-y-2">
+            <a href="https://t.me/huanqiuti8899" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-[#229ED9]/20 hover:bg-[#229ED9]/30 text-[#229ED9] hover:text-[#5bc4f5] text-xs font-semibold px-4 py-2 rounded-lg transition-colors border border-[#229ED9]/30">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+              <span>联系店长 Telegram</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 版权与免责声明 -->
+      <div class="mt-10 pt-8 border-t border-cream/10">
+        <p class="text-[11px] text-cream/35 leading-relaxed text-center max-w-2xl mx-auto">
+          ⚠️ 免责声明：本站所有内容仅供合规网络优化与技术研究交流之用，不提供任何违反当地法律法规的服务或建议。用户应自行确保其使用行为符合所在地区的法律法规要求。
+        </p>
+        <p class="mt-4 text-[11px] text-cream/25 text-center">
+          © 2026 光速便利店 Speed Mart. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== JAVASCRIPT ===================== -->
+  <script>
+    // 1. Mobile Menu Drawer Toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconOpen   = document.getElementById('menu-icon-open');
+    const iconClose  = document.getElementById('menu-icon-close');
+
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.toggle('open');
+        iconOpen.classList.toggle('hidden', isOpen);
+        iconClose.classList.toggle('hidden', !isOpen);
+        menuToggle.setAttribute('aria-expanded', isOpen);
+      });
+
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('open');
+          iconOpen.classList.remove('hidden');
+          iconClose.classList.add('hidden');
+        });
+      });
+    }
+
+    // 2. Category Tab Filtering
+    const categoryButtons = document.querySelectorAll('#categoryFilterBar .pill-filter');
+    const blogCards = document.querySelectorAll('#blogCardsContainer .blog-card');
+    const currentCategoryTitle = document.getElementById('currentCategoryTitle');
+    const showingCount = document.getElementById('showingCount');
+    const noMatchAlert = document.getElementById('noMatchAlert');
+    const resetFilterBtn = document.getElementById('resetFilterBtn');
+
+    const catNameMap = {
+      'all': '全部文章',
+      'protocol': '协议与测速',
+      'streaming': '流媒体与AI',
+      'rules': '分流与规则',
+      'memo': '折腾备忘'
+    };
+
+    function filterCards(cat, searchQuery = '') {
+      let count = 0;
+      const normalizedQuery = searchQuery.trim().toLowerCase();
+
+      blogCards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        const cardText = card.textContent.toLowerCase();
+
+        const matchCat = (cat === 'all' || cardCategory === cat);
+        const matchSearch = (!normalizedQuery || cardText.includes(normalizedQuery));
+
+        if (matchCat && matchSearch) {
+          card.style.display = 'flex';
+          count++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (currentCategoryTitle) {
+        currentCategoryTitle.textContent = `（${catNameMap[cat] || '精选'}）`;
+      }
+      if (showingCount) {
+        showingCount.textContent = `显示 ${count} 篇日志`;
+      }
+
+      if (noMatchAlert) {
+        if (count === 0) {
+          noMatchAlert.classList.remove('hidden');
+        } else {
+          noMatchAlert.classList.add('hidden');
+        }
+      }
+    }
+
+    categoryButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        categoryButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const cat = btn.getAttribute('data-category');
+        filterCards(cat);
+      });
+    });
+
+    if (resetFilterBtn) {
+      resetFilterBtn.addEventListener('click', () => {
+        categoryButtons.forEach(b => {
+          if (b.getAttribute('data-category') === 'all') {
+            b.classList.add('active');
+          } else {
+            b.classList.remove('active');
+          }
+        });
+        filterCards('all');
+      });
+    }
+
+    // 3. Search Inputs
+    const searchInputs = [document.getElementById('blogSearchInput'), document.getElementById('blogMobileSearchInput')];
+    searchInputs.forEach(input => {
+      if (input) {
+        input.addEventListener('input', (e) => {
+          const activeBtn = document.querySelector('#categoryFilterBar .pill-filter.active');
+          const cat = activeBtn ? activeBtn.getAttribute('data-category') : 'all';
+          filterCards(cat, e.target.value);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

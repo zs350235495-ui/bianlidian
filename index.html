@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>光速便利店 Speed Mart — 24小时不打烊的网络漫游补给站</title>
+  <meta name="description" content="光速便利店：告别卡顿与断流，像挑零食一样挑出适合你的网络加速配置方案。精选推荐、新手教程、设备专柜、测速监控一站式网络优化指南。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // 优惠码一键复制
+    window.copyCouponCode = function(code) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(code).then(() => {
+          showTip();
+        }).catch(() => {
+          fallbackCopy(code);
+        });
+      } else {
+        fallbackCopy(code);
+      }
+
+      function showTip() {
+        const tip = document.getElementById('copySuccessTip');
+        if (tip) {
+          tip.classList.remove('hidden');
+          setTimeout(() => tip.classList.add('hidden'), 4000);
+        }
+      }
+
+      function fallbackCopy(text) {
+        const input = document.createElement('textarea');
+        input.value = text;
+        input.style.position = 'fixed';
+        input.style.opacity = '0';
+        document.body.appendChild(input);
+        input.select();
+        try {
+          document.execCommand('copy');
+          showTip();
+        } catch (e) {
+          alert('专属优惠码为：' + text + '，请手动复制使用');
+        }
+        document.body.removeChild(input);
+      }
+    };
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream:    '#FFF8F0',
+            oat:      '#F5EDE3',
+            warmOrange:  '#E8935A',
+            warmOrangeLight: '#F4B88A',
+            warmOrangeDeep: '#D47A3F',
+            buttercup: '#F5D78E',
+            buttercupLight: '#FBE9B7',
+            carbon:    '#2E2A27',
+            carbonLight: '#4A4541',
+            carbonMuted: '#8A8480',
+            mintFresh: '#A8D5BA',
+            skyBlue:   '#9ECFEA',
+            blushPink: '#F2B8B5',
+          },
+          fontFamily: {
+            sans: ['"Noto Sans SC"', '"Outfit"', 'system-ui', 'sans-serif'],
+            display: ['"Outfit"', '"Noto Sans SC"', 'sans-serif'],
+          },
+          borderRadius: { 'shelf': '1rem', 'pill': '9999px' },
+          boxShadow: {
+            'card': '0 2px 16px 0 rgba(46,42,39,0.07)',
+            'card-hover': '0 8px 32px 0 rgba(46,42,39,0.13)',
+            'shelf': '0 4px 24px 0 rgba(46,42,39,0.09)',
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'float-delayed': 'float 6s ease-in-out 2s infinite',
+            'shimmer': 'shimmer 2.5s ease-in-out infinite',
+            'slide-up': 'slideUp 0.6s ease-out forwards',
+            'slide-up-delayed': 'slideUp 0.6s ease-out 0.15s forwards',
+            'pulse-soft': 'pulseSoft 3s ease-in-out infinite',
+          },
+          keyframes: {
+            float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-12px)' } },
+            shimmer: { '0%,100%': { opacity: '1' }, '50%': { opacity: '0.7' } },
+            slideUp: { '0%': { opacity: '0', transform: 'translateY(30px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+            pulseSoft: { '0%,100%': { transform: 'scale(1)' }, '50%': { transform: 'scale(1.05)' } },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #F5EDE3; }
+    ::-webkit-scrollbar-thumb { background: #E8935A; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #D47A3F; }
+    html { scroll-behavior: smooth; }
+
+    .gradient-hero { background: linear-gradient(160deg, #FFF8F0 0%, #F5EDE3 40%, #FBE9B7 70%, #F4B88A 100%); }
+    .gradient-card-hot  { background: linear-gradient(135deg, #FCEBD5 0%, #FDDCBB 100%); }
+    .gradient-card-cool { background: linear-gradient(135deg, #E8F4EC 0%, #D5ECE0 100%); }
+    .gradient-card-blue { background: linear-gradient(135deg, #E3F0F9 0%, #CFDFEB 100%); }
+    .gradient-card-pink { background: linear-gradient(135deg, #FCEEF0 0%, #F5D9DC 100%); }
+
+    .tag-badge { position: absolute; top: -10px; left: 16px; z-index: 10; padding: 4px 14px; font-size: .75rem; font-weight: 700; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,.10); letter-spacing: .02em; }
+    .store-icon-shadow { filter: drop-shadow(0 3px 8px rgba(232,147,90,.35)); }
+    .dots-pattern { background-image: radial-gradient(circle, #E8935A 1px, transparent 1px); background-size: 24px 24px; opacity: .06; }
+    .neon-text { text-shadow: 0 0 8px rgba(232,147,90,.4), 0 0 20px rgba(232,147,90,.15); }
+    .navbar-blur { backdrop-filter: blur(16px) saturate(1.6); -webkit-backdrop-filter: blur(16px) saturate(1.6); }
+    .star-rating { display: inline-flex; gap: 2px; }
+    .star-rating .star { color: #F5D78E; }
+    .star-rating .star.empty { color: #E0D8CF; }
+
+    .mobile-menu-enter { max-height: 0; opacity: 0; overflow: hidden; transition: max-height .4s ease, opacity .3s ease; }
+    .mobile-menu-enter.open { max-height: 500px; opacity: 1; }
+
+    .observe-fade { opacity: 0; transform: translateY(30px); transition: opacity .7s ease-out, transform .7s ease-out; }
+    .observe-fade.visible { opacity: 1; transform: translateY(0); }
+
+    .pill-filter { transition: all .25s ease; }
+    .pill-filter.active { background-color: #E8935A; color: #fff; box-shadow: 0 2px 12px rgba(232,147,90,.35); }
+    .pill-filter:not(.active):hover { background-color: #F4B88A; color: #2E2A27; }
+
+    /* === Nav active state === */
+    .nav-link { position: relative; }
+    .nav-link.active { color: #E8935A; font-weight: 600; }
+    .nav-link.active::after { content: ''; position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%); width: 18px; height: 3px; background: #E8935A; border-radius: 9999px; }
+    .mobile-nav-link.active { color: #E8935A; background: rgba(232,147,90,.08); font-weight: 600; }
+  </style>
+</head>
+<body class="bg-cream text-carbon font-sans antialiased">
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="fixed top-0 left-0 right-0 z-50 navbar-blur bg-cream/80 border-b border-oat/60" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 lg:h-[72px]">
+        <!-- Brand (Logo 方案 A) -->
+        <a href="index.html" class="flex items-center group py-1" aria-label="光速便利店首页">
+          <svg class="h-10 sm:h-11 w-auto drop-shadow-sm select-none group-hover:scale-[1.02] transition-transform duration-300" viewBox="0 0 320 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="c1-bg-grad" x1="8" y1="8" x2="68" y2="72" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FF8A3D"/>
+                <stop offset="100%" stop-color="#EA580C"/>
+              </linearGradient>
+              <linearGradient id="c1-bolt-grad" x1="28" y1="20" x2="52" y2="60" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FEF08A"/>
+                <stop offset="100%" stop-color="#FBBF24"/>
+              </linearGradient>
+              <filter id="c1-soft-shadow" x="0" y="4" width="80" height="80" filterUnits="userSpaceOnUse">
+                <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#EA580C" flood-opacity="0.25"/>
+              </filter>
+            </defs>
+            <g filter="url(#c1-soft-shadow)">
+              <rect x="8" y="8" width="64" height="64" rx="20" fill="url(#c1-bg-grad)"/>
+              <rect x="9.5" y="9.5" width="61" height="61" rx="18.5" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1.5"/>
+            </g>
+            <path d="M16 28 C16 23.58 19.58 20 24 20 H56 C60.42 20 64 23.58 64 28 L62 33 C61.2 35 59 36.5 56.5 36.5 C54 36.5 52 35 51.5 33 C50.5 35 48.5 36.5 46 36.5 C43.5 36.5 41.5 35 40.5 33 C39.5 35 37.5 36.5 35 36.5 C32.5 36.5 30.5 35 29.5 33 C28.5 35 26.5 36.5 24 36.5 C21.5 36.5 19.5 35 18.5 33 L16 28 Z" fill="#FFFBEB" fill-opacity="0.95"/>
+            <path d="M26 20 L27 34 M38 20 L37 34 M49 20 L48 34" stroke="#F97316" stroke-width="2.5" stroke-linecap="round" stroke-opacity="0.85"/>
+            <path d="M44 26 L26 44 H38 L32 58 L54 38 H40 L44 26 Z" fill="url(#c1-bolt-grad)" stroke="#7C2D12" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+            <text x="88" y="44" fill="#0F172A" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="25" font-weight="900" letter-spacing="1.5">
+              光速便利店
+            </text>
+            <g transform="translate(89, 53)">
+              <circle cx="4" cy="9" r="3" fill="#10B981"/>
+              <circle cx="4" cy="9" r="5" stroke="#10B981" stroke-width="1" stroke-opacity="0.4"/>
+              <text x="13" y="12" fill="#64748B" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10.5" font-weight="700" letter-spacing="2.2">
+                SPEED MART
+              </text>
+              <rect x="94" y="6" width="1" height="8" fill="#CBD5E1"/>
+              <text x="102" y="12" fill="#94A3B8" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="9" font-weight="500">
+                24H 网络漫游
+              </text>
+            </g>
+          </svg>
+        </a>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden lg:flex items-center gap-1" aria-label="主导航">
+          <a href="index.html" class="nav-link active px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="home">首页</a>
+          <a href="reviews.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="reviews">店长严选</a>
+          <a href="guide.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="guide">新手便当</a>
+          <a href="devices.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="devices">设备专柜</a>
+          <a href="speedtest.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="speedtest">测速冰箱</a>
+          <a href="blog.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="blog">便利店日志</a>
+          <a href="faq.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="faq">常见避坑</a>
+        </nav>
+
+        <!-- Search + Hamburger -->
+        <div class="flex items-center gap-2">
+          <div class="hidden md:flex items-center bg-oat/70 rounded-full px-3.5 py-2 gap-2 focus-within:ring-2 focus-within:ring-warmOrange/40 transition-shadow">
+            <svg class="w-4 h-4 text-carbonMuted flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="搜索教程或工具..." class="bg-transparent outline-none text-sm text-carbon placeholder-carbonMuted w-36 lg:w-44" id="search-input" />
+          </div>
+          <button class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-oat/60 transition-colors" id="menu-toggle" aria-label="打开菜单" aria-expanded="false">
+            <svg class="w-5 h-5 text-carbon" id="menu-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            <svg class="w-5 h-5 text-carbon hidden" id="menu-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="lg:hidden mobile-menu-enter bg-cream/95 navbar-blur border-t border-oat/40" id="mobile-menu">
+      <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
+        <div class="flex items-center bg-oat/70 rounded-full px-3.5 py-2.5 gap-2 mb-3 md:hidden">
+          <svg class="w-4 h-4 text-carbonMuted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" placeholder="搜索教程或工具..." class="bg-transparent outline-none text-sm text-carbon placeholder-carbonMuted w-full" />
+        </div>
+        <a href="index.html" class="mobile-nav-link active block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="home">首页</a>
+        <a href="reviews.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="reviews">店长严选</a>
+        <a href="guide.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="guide">新手便当</a>
+        <a href="devices.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="devices">设备专柜</a>
+        <a href="speedtest.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="speedtest">测速冰箱</a>
+        <a href="blog.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="blog">便利店日志</a>
+        <a href="faq.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="faq">常见避坑</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===================== HERO ===================== -->
+    <section class="relative gradient-hero pt-28 pb-20 md:pt-36 md:pb-28 lg:pt-40 lg:pb-32 overflow-hidden" id="hero">
+      <div class="absolute inset-0 dots-pattern pointer-events-none"></div>
+      <div class="absolute top-20 right-10 w-56 h-56 rounded-full bg-warmOrangeLight/20 blur-3xl animate-float pointer-events-none"></div>
+      <div class="absolute bottom-10 left-10 w-44 h-44 rounded-full bg-buttercup/20 blur-3xl animate-float-delayed pointer-events-none"></div>
+
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto text-center">
+          <div class="inline-flex items-center gap-2 bg-white/70 backdrop-blur rounded-full px-4 py-1.5 mb-6 shadow-sm animate-slide-up">
+            <span class="relative flex h-2.5 w-2.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span></span>
+            <span class="text-xs font-semibold text-carbonLight tracking-wide">OPEN 24 H — 全天在线</span>
+          </div>
+          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-[3.4rem] font-black leading-tight tracking-tight neon-text animate-slide-up">
+            24小时不打烊的<br class="hidden sm:block"/><span class="text-warmOrange">网络漫游补给站</span>
+          </h1>
+          <p class="mt-5 md:mt-6 text-base md:text-lg text-carbonLight leading-relaxed max-w-xl mx-auto animate-slide-up-delayed" style="opacity:0;">
+            告别卡顿与断流，像挑零食一样<br class="hidden sm:block"/>挑出适合你的网络加速配置方案。
+          </p>
+          <div class="mt-8 md:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 animate-slide-up-delayed" style="opacity:0;">
+            <a href="#top-picks" class="group inline-flex items-center justify-center gap-2 bg-warmOrange hover:bg-warmOrangeDeep text-white font-semibold text-sm md:text-base px-7 py-3.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 w-full sm:w-auto">
+              <span class="text-base">👑</span>
+              查看爆款橱窗 · 本季精选
+            </a>
+            <a href="reviews.html" class="group inline-flex items-center justify-center gap-2 bg-white/70 hover:bg-white text-carbon font-semibold text-sm md:text-base px-7 py-3.5 rounded-full shadow hover:shadow-lg border border-oat/60 transition-all duration-300 hover:-translate-y-0.5 w-full sm:w-auto">
+              <span class="text-base">📊</span>
+              进入店长严选专柜 (全品牌与天梯)
+            </a>
+          </div>
+          <div class="hidden md:block absolute top-8 left-8 lg:left-20 text-4xl animate-float select-none" aria-hidden="true">🏪</div>
+          <div class="hidden md:block absolute bottom-12 right-8 lg:right-16 text-3xl animate-float-delayed select-none" aria-hidden="true">🛒</div>
+          <div class="hidden lg:block absolute top-28 right-32 text-2xl animate-shimmer select-none" aria-hidden="true">⚡</div>
+        </div>
+      </div>
+    </section>
+
+        <!-- ===================== 本季三大爆款速览 (橱窗速览) ===================== -->
+    <section class="bg-gradient-to-b from-cream via-white to-oat/30 py-12 md:py-16 border-b border-oat/60" id="top-picks">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Section Header -->
+        <div class="text-center mb-10 md:mb-12 observe-fade">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs sm:text-sm font-bold mb-3 shadow-sm">
+            <span>🏪</span>
+            <span>便利店爆款橱窗 · 场景精准选型</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-black text-carbon tracking-tight">
+            本季三大爆款速览 · <span class="text-warmOrange">1 分钟闭眼选</span>
+          </h2>
+          <p class="mt-2 text-xs sm:text-sm md:text-base text-carbonMuted max-w-2xl mx-auto leading-relaxed">
+            告别繁琐挑选，店长从 6+ 家品牌中精选出本季最具代表性的 3 款场景方案，满足稳定、实惠与极速需求。
+          </p>
+        </div>
+
+        <!-- 3 Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+
+          <!-- CARD 1: 环球梯 (🔥 镇店之宝) -->
+          <div class="group relative bg-white rounded-3xl border-2 border-warmOrange/70 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 observe-fade">
+            <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-warmOrange to-orange-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+              <span>👑</span>
+              <span>🔥 镇店之宝 · NO.1</span>
+            </div>
+
+            <div>
+              <div class="flex items-start gap-3.5 mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-warmOrange/15 text-warmOrangeDeep flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+                  🌐
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h3 class="text-xl font-black text-carbon group-hover:text-warmOrange transition-colors">环球梯</h3>
+                    <span class="text-xs font-mono text-carbonMuted bg-oat/60 px-2 py-0.5 rounded">HuanQiuTi</span>
+                  </div>
+                  <p class="text-xs text-carbonMuted mt-0.5">适合追求极致稳定 · 晚高峰 0 丢包专线</p>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap gap-1.5 mb-4">
+                <span class="px-2.5 py-0.5 rounded-full bg-warmOrange/10 text-warmOrangeDeep text-[11px] font-bold">晚高峰专线</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-bold">IPLC内网专线</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-purple-50 text-purple-700 text-[11px] font-bold">4K/AI 原生全解</span>
+              </div>
+
+              <div class="bg-cream/50 rounded-2xl p-4 border border-oat/80 mb-5 space-y-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-carbonMuted">线路特点</span>
+                  <span class="font-bold text-carbon">全 IPLC 纯内网专线</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-carbonMuted">晚高峰流程度</span>
+                  <span class="font-bold text-amber-500">★★★★★ (99.2% 无卡顿)</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-carbonMuted">最低起步</span>
+                  <span class="font-mono font-bold text-warmOrangeDeep text-sm">¥14.7 / 月起 (7折后)</span>
+                </div>
+              </div>
+
+              <p class="text-xs text-carbonLight leading-relaxed mb-5">
+                店长长达两年主力测试品牌。自建 BGP 入口与全内网隧道，无论晚高峰 8 点还是重大节日均稳如磐石，适合追求省心不折腾的用户。
+              </p>
+            </div>
+
+            <div class="pt-3 border-t border-oat/70 space-y-3">
+              <div class="flex items-center justify-between bg-orange-50/70 border border-orange-200 rounded-xl px-3 py-2 text-xs">
+                <div class="flex items-center gap-1.5">
+                  <span class="text-sm">🎟️</span>
+                  <span class="text-carbon text-[11px]">专属 7 折码：</span>
+                  <span class="font-mono font-bold text-warmOrangeDeep bg-white px-2 py-0.5 rounded border border-orange-200 select-all">HQ66</span>
+                </div>
+                <button onclick="copyCouponCode('HQ66')" class="text-[11px] font-bold text-warmOrange hover:text-warmOrangeDeep flex items-center gap-1 hover:underline cursor-pointer">
+                  <span>复制</span>
+                </button>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2">
+                <a href="reviews.html" class="py-2.5 px-3 rounded-xl border border-warmOrange/50 hover:bg-warmOrange/10 text-warmOrange font-bold text-xs text-center transition-all flex items-center justify-center gap-1">
+                  <span>查看完整横评</span>
+                </a>
+                <a href="https://123pps01.huanqiutiaff.com/#/?code=j5VBUvw0" target="_blank" rel="noopener noreferrer" onclick="copyCouponCode('HQ66')" class="py-2.5 px-3 rounded-xl bg-warmOrange hover:bg-warmOrangeDeep text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 group cursor-pointer">
+                  <span>直达官网 ↗</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 2: 榴莲云 (💰 性价比王) -->
+          <div class="group relative bg-white rounded-3xl border-2 border-amber-300 hover:border-amber-400 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 observe-fade">
+            <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-amber-500 to-yellow-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+              <span>🍈</span>
+              <span>💰 性价比王 · 粮仓</span>
+            </div>
+
+            <div>
+              <div class="flex items-start gap-3.5 mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+                  🍈
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h3 class="text-xl font-black text-carbon group-hover:text-amber-600 transition-colors">榴莲云</h3>
+                    <span class="text-xs font-mono text-carbonMuted bg-oat/60 px-2 py-0.5 rounded">LiuLianYun</span>
+                  </div>
+                  <p class="text-xs text-carbonMuted mt-0.5">大流量、低门槛 · 适合日常与学生党</p>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap gap-1.5 mb-4">
+                <span class="px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 text-[11px] font-bold">大流量粮仓</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-orange-50 text-orange-800 text-[11px] font-bold">单价极低</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-bold">不限同时在线设备</span>
+              </div>
+
+              <div class="bg-amber-50/30 rounded-2xl p-4 border border-amber-200 mb-5 space-y-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-carbonMuted">流量单价</span>
+                  <span class="font-bold text-emerald-700">低至 ¥0.09 / G (全网最低档)</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-carbonMuted">晚高峰流程度</span>
+                  <span class="font-bold text-amber-500">★★★★☆ (96.8% 稳定性)</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-carbonMuted">最低起步</span>
+                  <span class="font-mono font-bold text-amber-700 text-sm">¥10.5 / 月起 (7折后)</span>
+                </div>
+              </div>
+
+              <p class="text-xs text-carbonLight leading-relaxed mb-5">
+                专为大流量影音、YouTube 4K、TikTok 刷视频打造。单价极低且每月流量充裕，学生党与轻预算用户的实惠首选。
+              </p>
+            </div>
+
+            <div class="pt-3 border-t border-oat/70 space-y-3">
+              <div class="flex items-center justify-between bg-amber-50/70 border border-amber-200 rounded-xl px-3 py-2 text-xs">
+                <div class="flex items-center gap-1.5">
+                  <span class="text-sm">🎟️</span>
+                  <span class="text-carbon text-[11px]">专属 7 折码：</span>
+                  <span class="font-mono font-bold text-amber-700 bg-white px-2 py-0.5 rounded border border-amber-300 select-all">ll88</span>
+                </div>
+                <button onclick="copyCouponCode('ll88')" class="text-[11px] font-bold text-amber-600 hover:text-amber-800 flex items-center gap-1 hover:underline cursor-pointer">
+                  <span>复制</span>
+                </button>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2">
+                <a href="reviews.html" class="py-2.5 px-3 rounded-xl border border-amber-400 hover:bg-amber-50 text-amber-700 font-bold text-xs text-center transition-all flex items-center justify-center gap-1">
+                  <span>查看完整横评</span>
+                </a>
+                <a href="https://123pp01.liulianyunaff.com/#/?code=MsZP3u7G" target="_blank" rel="noopener noreferrer" onclick="copyCouponCode('ll88')" class="py-2.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+                  <span>直达官网 ↗</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 3: 云界线 (⚡ 极速电竞) -->
+          <div class="group relative bg-white rounded-3xl border-2 border-cyan-300 hover:border-cyan-400 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 observe-fade">
+            <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-cyan-600 to-teal-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+              <span>⚡</span>
+              <span>极速电竞 · 破风</span>
+            </div>
+
+            <div>
+              <div class="flex items-start gap-3.5 mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-cyan-50 text-cyan-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+                  ⚡
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h3 class="text-xl font-black text-carbon group-hover:text-cyan-600 transition-colors">云界线</h3>
+                    <span class="text-xs font-mono text-carbonMuted bg-oat/60 px-2 py-0.5 rounded">YunJieXian</span>
+                  </div>
+                  <p class="text-xs text-carbonMuted mt-0.5">低延迟，适合游戏与 4K 秒开</p>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap gap-1.5 mb-4">
+                <span class="px-2.5 py-0.5 rounded-full bg-cyan-50 text-cyan-800 text-[11px] font-bold">2.5G 峰值</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-teal-50 text-teal-800 text-[11px] font-bold">极低网络抖动</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-800 text-[11px] font-bold">双 ISP 家宽纯净 IP</span>
+              </div>
+
+              <div class="bg-cyan-50/30 rounded-2xl p-4 border border-cyan-200 mb-5 space-y-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-carbonMuted">网络延迟</span>
+                  <span class="font-bold text-cyan-700">平均 30ms ~ 40ms 超低抖动</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-carbonMuted">晚高峰流程度</span>
+                  <span class="font-bold text-cyan-600">★★★★★ (98.5% 无卡顿)</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-carbonMuted">最低起步</span>
+                  <span class="font-mono font-bold text-cyan-700 text-sm">¥15.4 / 月起 (7折后)</span>
+                </div>
+              </div>
+
+              <p class="text-xs text-carbonLight leading-relaxed mb-5">
+                新锐高速隧道专线，单节点最高 2.5Gbps。对 Steam、外服手游加速极佳，同时全解 Netflix/ChatGPT，低延迟秒开。
+              </p>
+            </div>
+
+            <div class="pt-3 border-t border-oat/70 space-y-3">
+              <div class="flex items-center justify-between bg-cyan-50/70 border border-cyan-200 rounded-xl px-3 py-2 text-xs">
+                <div class="flex items-center gap-1.5">
+                  <span class="text-sm">🎟️</span>
+                  <span class="text-carbon text-[11px]">专属 7 折码：</span>
+                  <span class="font-mono font-bold text-cyan-700 bg-white px-2 py-0.5 rounded border border-cyan-300 select-all">yjx888</span>
+                </div>
+                <button onclick="copyCouponCode('yjx888')" class="text-[11px] font-bold text-cyan-600 hover:text-cyan-800 flex items-center gap-1 hover:underline cursor-pointer">
+                  <span>复制</span>
+                </button>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2">
+                <a href="reviews.html" class="py-2.5 px-3 rounded-xl border border-cyan-400 hover:bg-cyan-50 text-cyan-700 font-bold text-xs text-center transition-all flex items-center justify-center gap-1">
+                  <span>查看完整横评</span>
+                </a>
+                <a href="https://pp01.yunjiexianaff.com/#/?code=bp0ZSKBV" target="_blank" rel="noopener noreferrer" onclick="copyCouponCode('yjx888')" class="py-2.5 px-3 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+                  <span>直达官网 ↗</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 醒目跳转横幅 -->
+        <div class="mt-12 p-6 sm:p-8 bg-gradient-to-r from-[#FFF8F0] via-[#FAF1E6] to-[#FCEBD5] rounded-3xl border-2 border-warmOrange/40 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 observe-fade">
+          <div class="flex items-center gap-4 text-center md:text-left">
+            <div class="w-14 h-14 rounded-2xl bg-warmOrange text-white flex items-center justify-center text-3xl shadow-md shrink-0">
+              📊
+            </div>
+            <div>
+              <div class="inline-flex items-center gap-1.5 text-xs text-warmOrangeDeep font-bold mb-1">
+                <span>🏆 独立二级专柜已上线</span>
+              </div>
+              <h4 class="text-base sm:text-xl font-black text-carbon">想看更全面的 6+ 品牌深度实测与晚高峰天梯对比？</h4>
+              <p class="text-xs sm:text-sm text-carbonMuted mt-1">涵盖大佬云、闪电鼠、神行加速等全系品牌，支持多维专线筛选、专属优惠券与晚高峰丢包延迟表格横评。</p>
+            </div>
+          </div>
+          <a href="reviews.html" class="shrink-0 px-6 py-3.5 rounded-full bg-warmOrange hover:bg-warmOrangeDeep text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-2 group">
+            <span>进入「店长严选」货架，查看全部 6+ 款深度实测与横向天梯榜</span>
+            <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================== CATEGORY GRID ===================== -->
+    <section class="relative bg-oat/50 py-14 md:py-20 overflow-hidden" id="categories">
+      <div class="absolute inset-0 dots-pattern pointer-events-none"></div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10 md:mb-14 observe-fade">
+          <h2 class="text-2xl md:text-3xl font-bold tracking-tight"><span class="text-warmOrange">🏬</span> 便利店货架导航</h2>
+          <p class="mt-2 text-sm md:text-base text-carbonMuted">四大专区 · 按需选购 · 从入门到精通</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
+          <!-- 新手便当 -->
+          <a href="guide.html" class="group relative bg-white rounded-shelf shadow-card hover:shadow-shelf p-6 md:p-7 transition-all duration-300 hover:-translate-y-1.5 observe-fade block">
+            <div class="w-14 h-14 rounded-xl bg-buttercupLight flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform duration-300">🍱</div>
+            <h3 class="text-lg font-bold mb-1.5 group-hover:text-warmOrange transition-colors">新手便当</h3>
+            <p class="text-sm text-carbonMuted leading-relaxed">全平台客户端 5 分钟极速上手，零基础友好的保姆级教程。</p>
+            <div class="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-warmOrange opacity-0 group-hover:opacity-100 translate-x-0 group-hover:translate-x-1 transition-all duration-300">
+              立即查看 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </a>
+          <!-- 测速冰箱 -->
+          <a href="speedtest.html" class="group relative bg-white rounded-shelf shadow-card hover:shadow-shelf p-6 md:p-7 transition-all duration-300 hover:-translate-y-1.5 observe-fade block">
+            <div class="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform duration-300">🧊</div>
+            <h3 class="text-lg font-bold mb-1.5 group-hover:text-warmOrange transition-colors">测速冰箱</h3>
+            <p class="text-sm text-carbonMuted leading-relaxed">全天候节点延迟与丢包率监控，数据驱动你的节点选择。</p>
+            <div class="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-warmOrange opacity-0 group-hover:opacity-100 translate-x-0 group-hover:translate-x-1 transition-all duration-300">
+              立即查看 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </a>
+          <!-- 设备专柜 -->
+          <a href="devices.html" class="group relative bg-white rounded-shelf shadow-card hover:shadow-shelf p-6 md:p-7 transition-all duration-300 hover:-translate-y-1.5 observe-fade block">
+            <div class="w-14 h-14 rounded-xl bg-green-50 flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform duration-300">📱</div>
+            <h3 class="text-lg font-bold mb-1.5 group-hover:text-warmOrange transition-colors">设备专柜</h3>
+            <p class="text-sm text-carbonMuted leading-relaxed">Windows / Mac / iOS / Android / 软路由，全平台配置详解。</p>
+            <div class="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-warmOrange opacity-0 group-hover:opacity-100 translate-x-0 group-hover:translate-x-1 transition-all duration-300">
+              立即查看 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </a>
+          <!-- 避坑指南 -->
+          <a href="faq.html" class="group relative bg-white rounded-shelf shadow-card hover:shadow-shelf p-6 md:p-7 transition-all duration-300 hover:-translate-y-1.5 observe-fade block">
+            <div class="w-14 h-14 rounded-xl bg-red-50 flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform duration-300">🛡️</div>
+            <h3 class="text-lg font-bold mb-1.5 group-hover:text-warmOrange transition-colors">避坑指南</h3>
+            <p class="text-sm text-carbonMuted leading-relaxed">DNS 污染、分流规则与连接排错，踩过的坑帮你一一避开。</p>
+            <div class="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-warmOrange opacity-0 group-hover:opacity-100 translate-x-0 group-hover:translate-x-1 transition-all duration-300">
+              立即查看 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== 最新博客文章 (便利店日志) ===================== -->
+    <section class="py-14 md:py-20 bg-white border-t border-oat/70" id="latest-blog">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10 observe-fade">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-bold mb-2">
+              <span>☕</span>
+              <span>店长值班日志 · 每周实测心得</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-carbon">
+              便利店日志 · <span class="text-warmOrange">最新漫游技巧</span>
+            </h2>
+            <p class="text-xs sm:text-sm text-carbonMuted mt-1">记录晚高峰防断流经验、分流规则配置与流媒体/AI 解锁深度教程。</p>
+          </div>
+          <a href="blog.html" class="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-warmOrange hover:text-warmOrangeDeep transition-colors">
+            <span>翻阅全部 12 篇日志</span>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Post 1 -->
+          <article class="group bg-[#FDFBF7] rounded-2xl border border-oat shadow-xs hover:shadow-card p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1">
+            <div>
+              <div class="flex items-center justify-between text-xs text-carbonMuted mb-3">
+                <span class="px-2 py-0.5 rounded-md bg-warmOrange/15 text-warmOrangeDeep font-bold">协议与分流</span>
+                <span>2026-10-20</span>
+              </div>
+              <a href="article.html" class="block group-hover:text-warmOrange transition-colors">
+                <h3 class="text-base sm:text-lg font-bold text-carbon group-hover:text-warmOrange leading-snug">
+                  《2026 晚高峰防断流终极指南：从协议选型到分流规则调优》
+                </h3>
+              </a>
+              <p class="mt-2.5 text-xs text-carbonMuted leading-relaxed line-clamp-2">
+                为什么一到晚上 8 点就频繁卡顿？详解直连线路 QoS 机制，以及 Hysteria2、IPLC 专线与分流规则的最佳调优方案。
+              </p>
+            </div>
+            <div class="mt-5 pt-4 border-t border-oat/70 flex items-center justify-between text-xs text-carbonMuted">
+              <span>店长小光 · 8 分钟阅读</span>
+              <a href="article.html" class="font-bold text-warmOrange hover:underline flex items-center gap-0.5">阅读全文 →</a>
+            </div>
+          </article>
+
+          <!-- Post 2 -->
+          <article class="group bg-[#FDFBF7] rounded-2xl border border-oat shadow-xs hover:shadow-card p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1">
+            <div>
+              <div class="flex items-center justify-between text-xs text-carbonMuted mb-3">
+                <span class="px-2 py-0.5 rounded-md bg-sky-100 text-sky-800 font-bold">流媒体与AI</span>
+                <span>2026-10-15</span>
+              </div>
+              <a href="article.html" class="block group-hover:text-warmOrange transition-colors">
+                <h3 class="text-base sm:text-lg font-bold text-carbon group-hover:text-warmOrange leading-snug">
+                  《Netflix / Disney+ 原生解锁与住宅双 ISP 避坑指南》
+                </h3>
+              </a>
+              <p class="mt-2.5 text-xs text-carbonMuted leading-relaxed line-clamp-2">
+                为什么有些节点能看油管 4K 却看不了奈飞非自制剧？深度解析 DNS 分流解锁与双 ISP 纯净原生 IP 的选购机密。
+              </p>
+            </div>
+            <div class="mt-5 pt-4 border-t border-oat/70 flex items-center justify-between text-xs text-carbonMuted">
+              <span>运维阿明 · 5 分钟阅读</span>
+              <a href="article.html" class="font-bold text-warmOrange hover:underline flex items-center gap-0.5">阅读全文 →</a>
+            </div>
+          </article>
+
+          <!-- Post 3 -->
+          <article class="group bg-[#FDFBF7] rounded-2xl border border-oat shadow-xs hover:shadow-card p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1">
+            <div>
+              <div class="flex items-center justify-between text-xs text-carbonMuted mb-3">
+                <span class="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 font-bold">折腾备忘</span>
+                <span>2026-10-05</span>
+              </div>
+              <a href="article.html" class="block group-hover:text-warmOrange transition-colors">
+                <h3 class="text-base sm:text-lg font-bold text-carbon group-hover:text-warmOrange leading-snug">
+                  《家庭软路由全屋透明代理指南：iStoreOS + PassWall 极简实战》
+                </h3>
+              </a>
+              <p class="mt-2.5 text-xs text-carbonMuted leading-relaxed line-clamp-2">
+                让家里的 Apple TV、PS5、电视盒子无需单独安装客户端即可享用全屋高速漫游，旁路由与主路由拓扑最全避坑指南。
+              </p>
+            </div>
+            <div class="mt-5 pt-4 border-t border-oat/70 flex items-center justify-between text-xs text-carbonMuted">
+              <span>折腾大师老陈 · 9 分钟阅读</span>
+              <a href="article.html" class="font-bold text-warmOrange hover:underline flex items-center gap-0.5">阅读全文 →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+  <footer class="bg-carbon text-cream/80 py-12 md:py-16" id="footer">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
+        <div>
+          <div class="flex items-center gap-2.5 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-warmOrange flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div class="leading-tight">
+              <span class="block text-sm font-bold text-cream">光速便利店</span>
+              <span class="block text-[9px] font-display font-semibold text-cream/50 tracking-widest uppercase">Speed Mart</span>
+            </div>
+          </div>
+          <p class="text-xs text-cream/50 leading-relaxed max-w-xs">24 小时不打烊的网络漫游补给站。<br/>我们专注于提供客观、专业的网络优化技术内容。</p>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold text-cream mb-4">站点地图</h3>
+          <ul class="space-y-2.5">
+            <li><a href="index.html" class="text-xs text-cream/60 hover:text-warmOrange transition-colors">首页</a></li>
+            <li><a href="reviews.html" class="text-xs text-cream/60 hover:text-warmOrange transition-colors">店长严选</a></li>
+            <li><a href="guide.html" class="text-xs text-cream/60 hover:text-warmOrange transition-colors">新手便当</a></li>
+            <li><a href="devices.html" class="text-xs text-cream/60 hover:text-warmOrange transition-colors">设备专柜</a></li>
+            <li><a href="speedtest.html" class="text-xs text-cream/60 hover:text-warmOrange transition-colors">测速冰箱</a></li>
+            <li><a href="blog.html" class="text-xs text-cream/60 hover:text-warmOrange transition-colors">便利店日志</a></li>
+            <li><a href="faq.html" class="text-xs text-cream/60 hover:text-warmOrange transition-colors">常见避坑</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold text-cream mb-4">保持联络</h3>
+          <p class="text-xs text-cream/50 mb-3">订阅 RSS 或直接联络店长获取专属建议。</p>
+          <div class="flex flex-wrap items-center gap-2">
+            <a href="https://t.me/huanqiuti8899" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-[#229ED9]/20 hover:bg-[#229ED9]/30 text-[#229ED9] hover:text-[#5bc4f5] text-xs font-semibold px-4 py-2.5 rounded-lg transition-colors border border-[#229ED9]/30">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+              <span>联系店长</span>
+            </a>
+            <a href="#" class="inline-flex items-center gap-1.5 bg-warmOrange/15 hover:bg-warmOrange/25 text-warmOrangeLight text-xs font-semibold px-3 py-2.5 rounded-lg transition-colors">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+              <span>RSS</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="mt-10 pt-8 border-t border-cream/10">
+        <p class="text-[11px] text-cream/35 leading-relaxed text-center max-w-2xl mx-auto">⚠️ 免责声明：本站所有内容仅供合规网络优化与技术研究交流之用，不提供任何违反当地法律法规的服务或建议。用户应自行确保其使用行为符合所在地区的法律法规要求。</p>
+        <p class="mt-4 text-[11px] text-cream/25 text-center">© 2026 光速便利店 Speed Mart. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile Menu
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconOpen   = document.getElementById('menu-icon-open');
+    const iconClose  = document.getElementById('menu-icon-close');
+    menuToggle.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      iconOpen.classList.toggle('hidden', isOpen);
+      iconClose.classList.toggle('hidden', !isOpen);
+      menuToggle.setAttribute('aria-expanded', isOpen);
+    });
+    mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      iconOpen.classList.remove('hidden');
+      iconClose.classList.add('hidden');
+    }));
+
+
+
+    
+    
+    // Modal Open / Close helpers
+    function switchModalBrand(brandId) {
+      const plansHq = document.getElementById('plansHuanqiuti');
+      const plansDly = document.getElementById('plansDalaoyun');
+      const plansLly = document.getElementById('plansLiulianyun');
+      const plansYjx = document.getElementById('plansYunjiexian');
+      const plansSds = document.getElementById('plansShandianshu');
+      const plansSx = document.getElementById('plansShenxing');
+      const tabHq = document.getElementById('tabHq');
+      const tabDly = document.getElementById('tabDly');
+      const tabLly = document.getElementById('tabLly');
+      const tabYjx = document.getElementById('tabYjx');
+      const tabSds = document.getElementById('tabSds');
+      const tabSx = document.getElementById('tabSx');
+      const title = document.getElementById('modalTitle');
+      const tipText = document.getElementById('modalCouponText');
+      const tipBtn = document.getElementById('modalCouponBtn');
+
+      plansHq.classList.add('hidden');
+      plansDly.classList.add('hidden');
+      if (plansLly) plansLly.classList.add('hidden');
+      if (plansYjx) plansYjx.classList.add('hidden');
+      if (plansSds) plansSds.classList.add('hidden');
+      if (plansSx) plansSx.classList.add('hidden');
+
+      tabHq.className = 'px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs';
+      tabDly.className = 'px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs';
+      if (tabLly) tabLly.className = 'px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs';
+      if (tabYjx) tabYjx.className = 'px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs';
+      if (tabSds) tabSds.className = 'px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs';
+      if (tabSx) tabSx.className = 'px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs';
+
+      if (brandId === 'huanqiuti') {
+        plansHq.classList.remove('hidden');
+        tabHq.className = 'px-3 py-1.5 rounded-lg bg-warmOrange text-white shadow-sm transition-all text-xs';
+        title.innerHTML = '<span>环球梯 · 官方全系订阅与按量套餐</span>';
+        tipText.innerHTML = '结算时在「折价券/优惠码」栏粘贴 <strong class="font-mono text-warmOrangeDeep bg-white px-2 py-0.5 rounded border border-warmOrange/30">HQ66</strong>，立享 7 折！';
+        tipBtn.setAttribute('onclick', "copyCouponCode('HQ66')");
+      } else if (brandId === 'dalaoyun') {
+        plansDly.classList.remove('hidden');
+        tabDly.className = 'px-3 py-1.5 rounded-lg bg-indigo-600 text-white shadow-sm transition-all text-xs';
+        title.innerHTML = '<span>大佬云 · 官方全系订阅与按量套餐</span>';
+        tipText.innerHTML = '结算时在「折价券/优惠码」栏粘贴 <strong class="font-mono text-indigo-700 bg-white px-2 py-0.5 rounded border border-indigo-200">dly88</strong>，立享 7 折！';
+        tipBtn.setAttribute('onclick', "copyCouponCode('dly88')");
+      } else if (brandId === 'liulianyun') {
+        if (plansLly) plansLly.classList.remove('hidden');
+        if (tabLly) tabLly.className = 'px-3 py-1.5 rounded-lg bg-amber-500 text-white shadow-sm transition-all text-xs';
+        title.innerHTML = '<span>榴莲云 · 官方全系订阅套餐</span>';
+        tipText.innerHTML = '结算时在「折价券/优惠码」栏粘贴 <strong class="font-mono text-amber-700 bg-white px-2 py-0.5 rounded border border-amber-300">ll88</strong>，立享 7 折！';
+        tipBtn.setAttribute('onclick', "copyCouponCode('ll88')");
+      } else if (brandId === 'yunjiexian') {
+        if (plansYjx) plansYjx.classList.remove('hidden');
+        if (tabYjx) tabYjx.className = 'px-3 py-1.5 rounded-lg bg-cyan-600 text-white shadow-sm transition-all text-xs';
+        title.innerHTML = '<span>云界线 · 官方全系订阅与按量套餐</span>';
+        tipText.innerHTML = '结算时在「折价券/优惠码」栏粘贴 <strong class="font-mono text-cyan-700 bg-white px-2 py-0.5 rounded border border-cyan-300">yjx888</strong>，立享 7 折！';
+        tipBtn.setAttribute('onclick', "copyCouponCode('yjx888')");
+      } else if (brandId === 'shandianshu') {
+        if (plansSds) plansSds.classList.remove('hidden');
+        if (tabSds) tabSds.className = 'px-3 py-1.5 rounded-lg bg-amber-500 text-white shadow-sm transition-all text-xs';
+        title.innerHTML = '<span>闪电鼠 · 官方全系订阅套餐</span>';
+        tipText.innerHTML = '结算时在「折价券/优惠码」栏粘贴 <strong class="font-mono text-amber-700 bg-white px-2 py-0.5 rounded border border-amber-300">sds88</strong>，立享 7 折！';
+        tipBtn.setAttribute('onclick', "copyCouponCode('sds88')");
+      } else if (brandId === 'shenxing') {
+        if (plansSx) plansSx.classList.remove('hidden');
+        if (tabSx) tabSx.className = 'px-3 py-1.5 rounded-lg bg-purple-600 text-white shadow-sm transition-all text-xs';
+        title.innerHTML = '<span>神行加速 · 官方全系订阅套餐</span>';
+        tipText.innerHTML = '结算时在「折价券/优惠码」栏粘贴 <strong class="font-mono text-purple-700 bg-white px-2 py-0.5 rounded border border-purple-300">sx0077</strong>，立享 7 折！';
+        tipBtn.setAttribute('onclick', "copyCouponCode('sx0077')");
+      }
+    }
+
+    function openPackageModal(brandId = 'huanqiuti') {
+      const modal = document.getElementById('packageModal');
+      if (modal) {
+        switchModalBrand(brandId);
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closePackageModal() {
+      const modal = document.getElementById('packageModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closePackageModal();
+    });
+
+    // Copy Coupon Code helper
+    function copyCouponCode(code = 'HQ66') {
+      const tip = document.getElementById('copySuccessTip');
+      navigator.clipboard.writeText(code).then(() => {
+        if (tip) {
+          tip.classList.remove('hidden');
+          setTimeout(() => tip.classList.add('hidden'), 3500);
+        } else {
+          alert('🎉 优惠码 ' + code + ' 已复制到剪贴板！');
+        }
+      }).catch(() => {
+        const ta = document.createElement('textarea');
+        ta.value = code;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        if (tip) {
+          tip.classList.remove('hidden');
+          setTimeout(() => tip.classList.add('hidden'), 3500);
+        } else {
+          alert('🎉 优惠码 ' + code + ' 已复制到剪贴板！');
+        }
+      });
+    }
+
+    // Filter Plans Function
+    function filterPlans(type) {
+      document.querySelectorAll('.plan-filter-btn').forEach(btn => {
+        const isActive = btn.getAttribute('data-type') === type;
+        btn.classList.toggle('bg-warmOrange', isActive);
+        btn.classList.toggle('text-white', isActive);
+        btn.classList.toggle('text-carbonMuted', !isActive);
+      });
+
+      const cards = document.querySelectorAll('.plan-card');
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-category');
+        if (type === 'all' || cat === type) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    // Intersection Observer
+    const obs = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { const idx = Array.from(e.target.parentElement?.children||[]).indexOf(e.target); e.target.style.transitionDelay = `${idx*.08}s`; e.target.classList.add('visible'); obs.unobserve(e.target); }
+    }), { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.observe-fade').forEach(el => obs.observe(el));
+
+    // Navbar scroll shadow
+    window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('shadow-md', window.scrollY > 10); }, { passive: true });
+  </script>
+</body>
+</html>

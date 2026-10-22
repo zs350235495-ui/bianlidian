@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>常见避坑 — 光速便利店 Speed Mart</title>
+  <meta name="description" content="光速便利店·常见避坑指南：收集整理各种断流、连不上、DNS泄漏、节点超时与订阅失败等排查秘籍，助你快速避雷。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#FFF8F0',
+            oat: '#F5EDE3',
+            warmOrange: '#E8935A',
+            warmOrangeLight: '#F4B88A',
+            warmOrangeDeep: '#D47A3F',
+            buttercup: '#F5D78E',
+            buttercupLight: '#FBE9B7',
+            carbon: '#2E2A27',
+            carbonLight: '#4A4541',
+            carbonMuted: '#8A8480',
+            mintFresh: '#A8D5BA',
+            skyBlue: '#9ECFEA',
+            blushPink: '#F2B8B5',
+            alertRed: '#EF4444',
+          },
+          fontFamily: {
+            sans: ['"Noto Sans SC"', '"Outfit"', 'system-ui', 'sans-serif'],
+            display: ['"Outfit"', '"Noto Sans SC"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          borderRadius: {
+            'shelf': '1rem',
+            'pill': '9999px',
+          },
+          boxShadow: {
+            'card': '0 2px 16px 0 rgba(46,42,39,.07)',
+            'card-hover': '0 8px 32px 0 rgba(46,42,39,.13)',
+            'receipt': '0 10px 30px -5px rgba(46,42,39,0.12)',
+          },
+          animation: {
+            'pulse-soft': 'pulseSoft 3s ease-in-out infinite',
+          },
+          keyframes: {
+            pulseSoft: { '0%,100%': { transform: 'scale(1)' }, '50%': { transform: 'scale(1.05)' } },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #F5EDE3; }
+    ::-webkit-scrollbar-thumb { background: #E8935A; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #D47A3F; }
+    html { scroll-behavior: smooth; }
+
+    .navbar-blur { backdrop-filter: blur(16px) saturate(1.6); -webkit-backdrop-filter: blur(16px) saturate(1.6); }
+    .store-icon-shadow { filter: drop-shadow(0 3px 8px rgba(232,147,90,.35)); }
+
+    .mobile-menu-enter { max-height: 0; opacity: 0; overflow: hidden; transition: max-height .4s ease, opacity .3s ease; }
+    .mobile-menu-enter.open { max-height: 500px; opacity: 1; }
+
+    .nav-link { position: relative; }
+    .nav-link.active { color: #E8935A; font-weight: 600; }
+    .nav-link.active::after { content: ''; position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%); width: 18px; height: 3px; background: #E8935A; border-radius: 9999px; }
+    .mobile-nav-link.active { color: #E8935A; background: rgba(232,147,90,.08); font-weight: 600; }
+
+    .observe-fade { opacity: 0; transform: translateY(24px); transition: opacity .6s ease-out, transform .6s ease-out; }
+    .observe-fade.visible { opacity: 1; transform: translateY(0); }
+
+    /* Zigzag receipt tear pattern */
+    .receipt-edge {
+      background: linear-gradient(135deg, transparent 5px, #FFFFFF 5px), linear-gradient(225deg, transparent 5px, #FFFFFF 5px);
+      background-size: 14px 14px;
+      background-repeat: repeat-x;
+    }
+
+    /* Accordion styling */
+    .faq-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, opacity 0.25s ease;
+      opacity: 0;
+    }
+    .faq-item.active .faq-content {
+      max-height: 800px;
+      opacity: 1;
+    }
+    .faq-item.active .faq-arrow {
+      transform: rotate(180deg);
+    }
+  </style>
+</head>
+<body class="bg-cream text-carbon font-sans antialiased min-h-screen flex flex-col justify-between">
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="fixed top-0 left-0 right-0 z-50 navbar-blur bg-cream/80 border-b border-oat/60" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 lg:h-[72px]">
+        <a href="index.html" class="flex items-center group py-1" aria-label="光速便利店首页">
+          <svg class="h-10 sm:h-11 w-auto drop-shadow-sm select-none group-hover:scale-[1.02] transition-transform duration-300" viewBox="0 0 320 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="c1-bg-grad-f" x1="8" y1="8" x2="68" y2="72" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FF8A3D"/>
+                <stop offset="100%" stop-color="#EA580C"/>
+              </linearGradient>
+              <linearGradient id="c1-bolt-grad-f" x1="28" y1="20" x2="52" y2="60" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FEF08A"/>
+                <stop offset="100%" stop-color="#FBBF24"/>
+              </linearGradient>
+              <filter id="c1-soft-shadow-f" x="0" y="4" width="80" height="80" filterUnits="userSpaceOnUse">
+                <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#EA580C" flood-opacity="0.25"/>
+              </filter>
+            </defs>
+            <g filter="url(#c1-soft-shadow-f)">
+              <rect x="8" y="8" width="64" height="64" rx="20" fill="url(#c1-bg-grad-f)"/>
+              <rect x="9.5" y="9.5" width="61" height="61" rx="18.5" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1.5"/>
+            </g>
+            <path d="M16 28 C16 23.58 19.58 20 24 20 H56 C60.42 20 64 23.58 64 28 L62 33 C61.2 35 59 36.5 56.5 36.5 C54 36.5 52 35 51.5 33 C50.5 35 48.5 36.5 46 36.5 C43.5 36.5 41.5 35 40.5 33 C39.5 35 37.5 36.5 35 36.5 C32.5 36.5 30.5 35 29.5 33 C28.5 35 26.5 36.5 24 36.5 C21.5 36.5 19.5 35 18.5 33 L16 28 Z" fill="#FFFBEB" fill-opacity="0.95"/>
+            <path d="M26 20 L27 34 M38 20 L37 34 M49 20 L48 34" stroke="#F97316" stroke-width="2.5" stroke-linecap="round" stroke-opacity="0.85"/>
+            <path d="M44 26 L26 44 H38 L32 58 L54 38 H40 L44 26 Z" fill="url(#c1-bolt-grad-f)" stroke="#7C2D12" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+            <text x="88" y="44" fill="#0F172A" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="25" font-weight="900" letter-spacing="1.5">
+              光速便利店
+            </text>
+            <g transform="translate(89, 53)">
+              <circle cx="4" cy="9" r="3" fill="#10B981"/>
+              <circle cx="4" cy="9" r="5" stroke="#10B981" stroke-width="1" stroke-opacity="0.4"/>
+              <text x="13" y="12" fill="#64748B" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10.5" font-weight="700" letter-spacing="2.2">
+                SPEED MART
+              </text>
+              <rect x="94" y="6" width="1" height="8" fill="#CBD5E1"/>
+              <text x="102" y="12" fill="#94A3B8" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="9" font-weight="500">
+                24H 网络漫游
+              </text>
+            </g>
+          </svg>
+        </a>
+
+        <nav class="hidden lg:flex items-center gap-1" aria-label="主导航">
+          <a href="index.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="home">首页</a>
+          <a href="reviews.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="reviews">店长严选</a>
+          <a href="guide.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="guide">新手便当</a>
+          <a href="devices.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="devices">设备专柜</a>
+          <a href="speedtest.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="speedtest">测速冰箱</a>
+          <a href="blog.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="blog">便利店日志</a>
+          <a href="faq.html" class="nav-link active px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="faq">常见避坑</a>
+        </nav>
+
+        <div class="flex items-center gap-2">
+          <div class="hidden md:flex items-center bg-oat/70 rounded-full px-3.5 py-2 gap-2 focus-within:ring-2 focus-within:ring-warmOrange/40 transition-shadow">
+            <svg class="w-4 h-4 text-carbonMuted flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="faqSearchInput" placeholder="搜索报错代码或踩坑..." class="bg-transparent outline-none text-sm text-carbon placeholder-carbonMuted w-36 lg:w-44" />
+          </div>
+          <button class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-oat/60 transition-colors" id="menu-toggle" aria-label="打开菜单">
+            <svg class="w-5 h-5 text-carbon" id="menu-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            <svg class="w-5 h-5 text-carbon hidden" id="menu-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div class="lg:hidden mobile-menu-enter bg-cream/95 navbar-blur border-t border-oat/40" id="mobile-menu">
+      <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
+        <a href="index.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="home">首页</a>
+        <a href="reviews.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="reviews">店长严选</a>
+        <a href="guide.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="guide">新手便当</a>
+        <a href="devices.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="devices">设备专柜</a>
+        <a href="speedtest.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="speedtest">测速冰箱</a>
+        <a href="blog.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="blog">便利店日志</a>
+        <a href="faq.html" class="mobile-nav-link active block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="faq">常见避坑</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== MAIN CONTENT ===================== -->
+  <main class="pt-20 lg:pt-[76px] flex-grow">
+    <!-- Breadcrumb & Header -->
+    <section class="bg-gradient-to-b from-oat/50 to-cream py-8 border-b border-oat/60">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Breadcrumb -->
+        <nav class="flex items-center gap-2 text-xs text-carbonMuted mb-3" aria-label="面包屑导航">
+          <a href="index.html" class="hover:text-warmOrange transition-colors">首页</a>
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          <span class="text-carbon font-medium">常见避坑</span>
+        </nav>
+
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blushPink/30 text-red-700 text-xs font-semibold mb-2">
+              <span>🛡️</span>
+              <span>便利店应急防雷清单 · 拒绝卡顿断流</span>
+            </div>
+            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-carbon tracking-tight">
+              常见避坑 <span class="text-warmOrange font-display font-medium text-xl sm:text-2xl">FAQ & Troubleshooting</span>
+            </h1>
+            <p class="text-sm sm:text-base text-carbonMuted mt-1.5 max-w-2xl leading-relaxed">
+              这里汇总了新手与老玩家最常遇到的网络排查痛点。像看退货小票一样对号入座，5 分钟排查解决！
+            </p>
+          </div>
+
+          <!-- Quick Stat Badge -->
+          <div class="flex items-center gap-4 bg-white/80 border border-oat rounded-xl px-4 py-2.5 shadow-sm text-xs">
+            <div>
+              <div class="text-carbonMuted">已整理避坑词条</div>
+              <div class="text-base font-bold text-warmOrange">15 条实战避坑</div>
+            </div>
+            <div class="w-px h-8 bg-oat"></div>
+            <div>
+              <div class="text-carbonMuted">解决率评估</div>
+              <div class="text-base font-bold text-emerald-600">98.6%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content Area -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      
+      <!-- Category Filter Pills -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-6 text-xs scrollbar-none" id="faqFilter">
+        <button data-cat="all" class="faq-filter-btn px-4 py-2 rounded-full font-bold bg-warmOrange text-white shadow-sm transition-all whitespace-nowrap">
+          全部
+        </button>
+        <button data-cat="connect" class="faq-filter-btn px-4 py-2 rounded-full font-medium bg-white border border-oat text-carbonLight hover:border-warmOrange hover:text-warmOrange transition-all whitespace-nowrap">
+          连接异常
+        </button>
+        <button data-cat="dns" class="faq-filter-btn px-4 py-2 rounded-full font-medium bg-white border border-oat text-carbonLight hover:border-warmOrange hover:text-warmOrange transition-all whitespace-nowrap">
+          DNS与分流
+        </button>
+        <button data-cat="speed" class="faq-filter-btn px-4 py-2 rounded-full font-medium bg-white border border-oat text-carbonLight hover:border-warmOrange hover:text-warmOrange transition-all whitespace-nowrap">
+          节点测速
+        </button>
+        <button data-cat="client" class="faq-filter-btn px-4 py-2 rounded-full font-medium bg-white border border-oat text-carbonLight hover:border-warmOrange hover:text-warmOrange transition-all whitespace-nowrap">
+          客户端设置
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Accordion Question List (Left 8 Cols) -->
+        <div class="lg:col-span-8 space-y-4" id="faqAccordionList">
+
+          <!-- Q01: 节点连接超时 / 所有节点 Pi... (默认展开) -->
+          <div class="faq-item active bg-white rounded-2xl border border-oat p-5 md:p-6 shadow-card transition-all" data-category="connect">
+            <button class="w-full flex items-start justify-between gap-4 text-left group" onclick="toggleFaq(this)">
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-mono font-bold flex items-center justify-center flex-shrink-0 mt-0.5">Q01</span>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                    <span class="px-2 py-0.5 rounded-full bg-red-100 text-red-700 font-bold text-[10px]">高频问题</span>
+                    <span class="px-2 py-0.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep font-semibold text-[10px]">连接异常</span>
+                    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-medium text-[10px]">小白必看</span>
+                  </div>
+                  <h3 class="font-bold text-base md:text-lg text-carbon group-hover:text-warmOrange transition-colors leading-snug">
+                    节点连接超时 / 所有节点 Ping 显示 Timeout 怎么办？
+                  </h3>
+                </div>
+              </div>
+              <svg class="faq-arrow w-5 h-5 text-carbonMuted flex-shrink-0 transform transition-transform duration-300 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              <div class="pt-4 mt-4 border-t border-oat/70 text-sm text-carbonLight space-y-3 leading-relaxed">
+                <!-- 简明结论 -->
+                <div class="p-3 bg-cream/70 rounded-xl border border-oat/70 text-xs text-carbon">
+                  <span class="font-bold text-warmOrangeDeep">💡 简明结论：</span>
+                  绝大多数节点超时是由于本地设备系统时间不准（TLS 握手校验硬要求）或代理内核未被系统防火墙放行。
+                </div>
+                <!-- 分步排查 -->
+                <div class="bg-oat/30 rounded-xl p-4 space-y-2.5 text-xs">
+                  <div class="font-bold text-carbon flex items-center gap-1.5">
+                    <span>🛠️</span><span>快速排查步骤：</span>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">1</span>
+                    <div>
+                      <strong class="text-carbon">检查系统本地时间：</strong>时间不同步会导致 TLS 握手失败，误差需在 60 秒以内；进入系统设置点击「立即同步时间」。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">2</span>
+                    <div>
+                      <strong class="text-carbon">检查客户端核心与系统代理：</strong>确认核心状态处于 Running，且系统代理开关（System Proxy）或 TUN 虚拟网卡已正常开启。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">3</span>
+                    <div>
+                      <strong class="text-carbon">更新订阅链接排查域名变更：</strong>服务商可能已更换解析域名或连接端口，点击客户端「Update Subscription (更新订阅)」重新获取最新节点。
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q02: 导入订阅时提示「订阅解析失败 /... (默认展开) -->
+          <div class="faq-item active bg-white rounded-2xl border border-oat p-5 md:p-6 shadow-card transition-all" data-category="connect">
+            <button class="w-full flex items-start justify-between gap-4 text-left group" onclick="toggleFaq(this)">
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-mono font-bold flex items-center justify-center flex-shrink-0 mt-0.5">Q02</span>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                    <span class="px-2 py-0.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep font-semibold text-[10px]">连接异常</span>
+                    <span class="px-2 py-0.5 rounded-full bg-mintFresh/30 text-green-800 font-bold text-[10px]">客户端设置</span>
+                    <span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-medium text-[10px]">新手避坑</span>
+                  </div>
+                  <h3 class="font-bold text-base md:text-lg text-carbon group-hover:text-warmOrange transition-colors leading-snug">
+                    导入订阅时提示「订阅解析失败 / 格式不兼容」？
+                  </h3>
+                </div>
+              </div>
+              <svg class="faq-arrow w-5 h-5 text-carbonMuted flex-shrink-0 transform transition-transform duration-300 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              <div class="pt-4 mt-4 border-t border-oat/70 text-sm text-carbonLight space-y-3 leading-relaxed">
+                <!-- 简明结论 -->
+                <div class="p-3 bg-cream/70 rounded-xl border border-oat/70 text-xs text-carbon">
+                  <span class="font-bold text-warmOrangeDeep">💡 简明结论：</span>
+                  通常是客户端版本过旧不支持新协议链接，或订阅源被运营商本地阻断。
+                </div>
+                <!-- 分步排查 -->
+                <div class="bg-oat/30 rounded-xl p-4 space-y-2.5 text-xs">
+                  <div class="font-bold text-carbon flex items-center gap-1.5">
+                    <span>🛠️</span><span>快速排查步骤：</span>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">1</span>
+                    <div>
+                      <strong class="text-carbon">开启系统已有网络全局访问：</strong>开启系统已有可用网络或热点后再尝试更新订阅，排查本地运营商对订阅分发域名的 DNS 阻断。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">2</span>
+                    <div>
+                      <strong class="text-carbon">升级客户端至最新内核版本：</strong>老版本客户端不支持最新的 VLESS-Reality、Hysteria2 或 Sing-box 订阅语法，请升级至最新版。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">3</span>
+                    <div>
+                      <strong class="text-carbon">在服务商后台转换订阅格式：</strong>在服务商后台选择客户端专属一键导入，或使用订阅转换工具（如将 V2Ray 转换为 Clash/Sing-box 规则格式）。
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q03: 出现 WSAECONNREFUS...  -->
+          <div class="faq-item bg-white rounded-2xl border border-oat p-5 md:p-6 shadow-card transition-all" data-category="connect">
+            <button class="w-full flex items-start justify-between gap-4 text-left group" onclick="toggleFaq(this)">
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-mono font-bold flex items-center justify-center flex-shrink-0 mt-0.5">Q03</span>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                    <span class="px-2 py-0.5 rounded-full bg-red-100 text-red-700 font-bold text-[10px]">高频问题</span>
+                    <span class="px-2 py-0.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep font-semibold text-[10px]">连接异常</span>
+                    <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-medium text-[10px]">端口冲突</span>
+                  </div>
+                  <h3 class="font-bold text-base md:text-lg text-carbon group-hover:text-warmOrange transition-colors leading-snug">
+                    出现 WSAECONNREFUSED (10061) 报错无法上网？
+                  </h3>
+                </div>
+              </div>
+              <svg class="faq-arrow w-5 h-5 text-carbonMuted flex-shrink-0 transform transition-transform duration-300 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              <div class="pt-4 mt-4 border-t border-oat/70 text-sm text-carbonLight space-y-3 leading-relaxed">
+                <!-- 简明结论 -->
+                <div class="p-3 bg-cream/70 rounded-xl border border-oat/70 text-xs text-carbon">
+                  <span class="font-bold text-warmOrangeDeep">💡 简明结论：</span>
+                  本地系统代理端口被其他软件占用，或者客户端内核异常崩溃退出。
+                </div>
+                <!-- 分步排查 -->
+                <div class="bg-oat/30 rounded-xl p-4 space-y-2.5 text-xs">
+                  <div class="font-bold text-carbon flex items-center gap-1.5">
+                    <span>🛠️</span><span>快速排查步骤：</span>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">1</span>
+                    <div>
+                      <strong class="text-carbon">重启客户端确认核心进程：</strong>重启客户端，确认内核进程（clash-core/sing-box）未被 Windows Defender 或第三方杀毒软件误杀。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">2</span>
+                    <div>
+                      <strong class="text-carbon">检查本地混合端口占用：</strong>检查默认端口（如 7890 / 10808）是否被其他下载器、虚拟机或抓包软件占用，可在设置中改为其他端口。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">3</span>
+                    <div>
+                      <strong class="text-carbon">重置网络套接字与代理残留：</strong>在管理员终端执行 <code>netsh winsock reset</code>，或在 Windows 网络设置中关闭并重置手动代理服务器。
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q04: 报错 CERTIFICATE_V...  -->
+          <div class="faq-item bg-white rounded-2xl border border-oat p-5 md:p-6 shadow-card transition-all" data-category="connect">
+            <button class="w-full flex items-start justify-between gap-4 text-left group" onclick="toggleFaq(this)">
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-mono font-bold flex items-center justify-center flex-shrink-0 mt-0.5">Q04</span>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                    <span class="px-2 py-0.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep font-semibold text-[10px]">连接异常</span>
+                    <span class="px-2 py-0.5 rounded-full bg-mintFresh/30 text-green-800 font-bold text-[10px]">客户端设置</span>
+                    <span class="px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 font-medium text-[10px]">证书校验</span>
+                  </div>
+                  <h3 class="font-bold text-base md:text-lg text-carbon group-hover:text-warmOrange transition-colors leading-snug">
+                    报错 CERTIFICATE_VERIFY_FAILED (SSL 证书错误)？
+                  </h3>
+                </div>
+              </div>
+              <svg class="faq-arrow w-5 h-5 text-carbonMuted flex-shrink-0 transform transition-transform duration-300 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              <div class="pt-4 mt-4 border-t border-oat/70 text-sm text-carbonLight space-y-3 leading-relaxed">
+                <!-- 简明结论 -->
+                <div class="p-3 bg-cream/70 rounded-xl border border-oat/70 text-xs text-carbon">
+                  <span class="font-bold text-warmOrangeDeep">💡 简明结论：</span>
+                  系统根证书库过期、开启了 MITM 抓包拦截、或内网存在 HTTP 代理劫持。
+                </div>
+                <!-- 分步排查 -->
+                <div class="bg-oat/30 rounded-xl p-4 space-y-2.5 text-xs">
+                  <div class="font-bold text-carbon flex items-center gap-1.5">
+                    <span>🛠️</span><span>快速排查步骤：</span>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">1</span>
+                    <div>
+                      <strong class="text-carbon">更新操作系统根证书库：</strong>旧版系统缺少最新根证书，打齐系统补丁或手动导入更新根证书（如 ISRG Root X1）。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">2</span>
+                    <div>
+                      <strong class="text-carbon">关闭抓包工具与杀软流量扫描：</strong>关闭 Fiddler、Charles、Proxyman 等抓包工具，并检查杀毒软件是否开启了 SSL/TLS 流量嗅探过滤。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">3</span>
+                    <div>
+                      <strong class="text-carbon">客户端临时开启跳过证书校验：</strong>在客户端高级设置中临时开启「跳过证书校验 (skip-cert-verify)」排查，若能连上则尽快修复本地证书。
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q05: 为什么网页能打开，但微信/QQ卡...  -->
+          <div class="faq-item bg-white rounded-2xl border border-oat p-5 md:p-6 shadow-card transition-all" data-category="dns">
+            <button class="w-full flex items-start justify-between gap-4 text-left group" onclick="toggleFaq(this)">
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-mono font-bold flex items-center justify-center flex-shrink-0 mt-0.5">Q05</span>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                    <span class="px-2 py-0.5 rounded-full bg-skyBlue/30 text-blue-800 font-bold text-[10px]">分流规则</span>
+                    <span class="px-2 py-0.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep font-semibold text-[10px]">DNS与分流</span>
+                    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-medium text-[10px]">日常调优</span>
+                  </div>
+                  <h3 class="font-bold text-base md:text-lg text-carbon group-hover:text-warmOrange transition-colors leading-snug">
+                    为什么网页能打开，但微信/QQ卡顿或国内网站变慢？
+                  </h3>
+                </div>
+              </div>
+              <svg class="faq-arrow w-5 h-5 text-carbonMuted flex-shrink-0 transform transition-transform duration-300 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              <div class="pt-4 mt-4 border-t border-oat/70 text-sm text-carbonLight space-y-3 leading-relaxed">
+                <!-- 简明结论 -->
+                <div class="p-3 bg-cream/70 rounded-xl border border-oat/70 text-xs text-carbon">
+                  <span class="font-bold text-warmOrangeDeep">💡 简明结论：</span>
+                  误开了「全局代理」让国内流量绕道海外，或 DNS 发生污染导致国内域名被解析为海外 IP。
+                </div>
+                <!-- 分步排查 -->
+                <div class="bg-oat/30 rounded-xl p-4 space-y-2.5 text-xs">
+                  <div class="font-bold text-carbon flex items-center gap-1.5">
+                    <span>🛠️</span><span>快速排查步骤：</span>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">1</span>
+                    <div>
+                      <strong class="text-carbon">切换路由模式为规则分流：</strong>将路由模式从「全局 (Global)」切换为「规则分流 (Rule / PAC)」，确保国内应用与网站直连（DIRECT）放行。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">2</span>
+                    <div>
+                      <strong class="text-carbon">开启 Fake-IP 并配置纯净国内 DNS：</strong>在客户端开启 Fake-IP 模式，将国内 Direct DNS 解析服务器指定为 223.5.5.5 或 119.29.29.29。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">3</span>
+                    <div>
+                      <strong class="text-carbon">刷新本地 DNS 缓存：</strong>打开终端执行 <code>ipconfig /flushdns</code>（macOS 为 <code>dscacheutil -flushcache</code>）清理污染解析残留。
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q06: 访问某些国内银行、政务、特定高校...  -->
+          <div class="faq-item bg-white rounded-2xl border border-oat p-5 md:p-6 shadow-card transition-all" data-category="dns">
+            <button class="w-full flex items-start justify-between gap-4 text-left group" onclick="toggleFaq(this)">
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-mono font-bold flex items-center justify-center flex-shrink-0 mt-0.5">Q06</span>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                    <span class="px-2 py-0.5 rounded-full bg-skyBlue/30 text-blue-800 font-bold text-[10px]">分流规则</span>
+                    <span class="px-2 py-0.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep font-semibold text-[10px]">DNS与分流</span>
+                    <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-medium text-[10px]">特需网站</span>
+                  </div>
+                  <h3 class="font-bold text-base md:text-lg text-carbon group-hover:text-warmOrange transition-colors leading-snug">
+                    访问某些国内银行、政务、特定高校网站提示「禁止代理访问」？
+                  </h3>
+                </div>
+              </div>
+              <svg class="faq-arrow w-5 h-5 text-carbonMuted flex-shrink-0 transform transition-transform duration-300 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              <div class="pt-4 mt-4 border-t border-oat/70 text-sm text-carbonLight space-y-3 leading-relaxed">
+                <!-- 简明结论 -->
+                <div class="p-3 bg-cream/70 rounded-xl border border-oat/70 text-xs text-carbon">
+                  <span class="font-bold text-warmOrangeDeep">💡 简明结论：</span>
+                  这部分网站对 IP 地域判定极为严格，且客户端规则库未将其收录，导致流量被错误代理或触发防重放安全策略。
+                </div>
+                <!-- 分步排查 -->
+                <div class="bg-oat/30 rounded-xl p-4 space-y-2.5 text-xs">
+                  <div class="font-bold text-carbon flex items-center gap-1.5">
+                    <span>🛠️</span><span>快速排查步骤：</span>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">1</span>
+                    <div>
+                      <strong class="text-carbon">将目标域名加入直连规则 (DIRECT)：</strong>在客户端自定义规则中添加 <code>DOMAIN-SUFFIX,xxx.edu.cn,DIRECT</code>，确保该机构域名完全直连。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">2</span>
+                    <div>
+                      <strong class="text-carbon">暂停 TUN 模式或使用纯系统代理：</strong>部分网银客户端会检测是否存在虚拟网卡驱动（Wintun），办理业务前可临时关闭 TUN 虚拟网卡。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">3</span>
+                    <div>
+                      <strong class="text-carbon">关闭防泄漏中的严格安全劫持：</strong>关闭针对国内域名的强制 DOH 劫持，防止国内专用服务因无法获取真实运营商内网 IP 而报错。
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q07: 出现 DNS 泄漏（DNS Le...  -->
+          <div class="faq-item bg-white rounded-2xl border border-oat p-5 md:p-6 shadow-card transition-all" data-category="dns">
+            <button class="w-full flex items-start justify-between gap-4 text-left group" onclick="toggleFaq(this)">
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-mono font-bold flex items-center justify-center flex-shrink-0 mt-0.5">Q07</span>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                    <span class="px-2 py-0.5 rounded-full bg-red-100 text-red-700 font-bold text-[10px]">隐私安全</span>
+                    <span class="px-2 py-0.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep font-semibold text-[10px]">DNS与分流</span>
+                    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-medium text-[10px]">进阶防护</span>
+                  </div>
+                  <h3 class="font-bold text-base md:text-lg text-carbon group-hover:text-warmOrange transition-colors leading-snug">
+                    出现 DNS 泄漏（DNS Leak）如何彻底防范？
+                  </h3>
+                </div>
+              </div>
+              <svg class="faq-arrow w-5 h-5 text-carbonMuted flex-shrink-0 transform transition-transform duration-300 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              <div class="pt-4 mt-4 border-t border-oat/70 text-sm text-carbonLight space-y-3 leading-relaxed">
+                <!-- 简明结论 -->
+                <div class="p-3 bg-cream/70 rounded-xl border border-oat/70 text-xs text-carbon">
+                  <span class="font-bold text-warmOrangeDeep">💡 简明结论：</span>
+                  本地多网卡或备用 DNS 将海外域名解析请求广播给了国内运营商，造成访问行为明文泄漏。
+                </div>
+                <!-- 分步排查 -->
+                <div class="bg-oat/30 rounded-xl p-4 space-y-2.5 text-xs">
+                  <div class="font-bold text-carbon flex items-center gap-1.5">
+                    <span>🛠️</span><span>快速排查步骤：</span>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">1</span>
+                    <div>
+                      <strong class="text-carbon">使用专门测试网站进行验证：</strong>访问 dnsleaktest.com 进行 Extended Test 扩展测试，若测试列表中出现国内 ISP 的 DNS 即存在泄漏。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">2</span>
+                    <div>
+                      <strong class="text-carbon">开启远端加密 DNS 解析：</strong>将分流规则中的海外域名 DNS 查询绑定至代理通道（Nameserver-Policy），使用纯净远端加密解析并关闭并发回退。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">3</span>
+                    <div>
+                      <strong class="text-carbon">禁用智能多宿主名称解析：</strong>在 Windows 组策略中启用「关闭智能多宿主名称解析」，防止系统绕过代理向本地多网卡广播 DNS。
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q08: 什么是 Fake-IP 与 Re...  -->
+          <div class="faq-item bg-white rounded-2xl border border-oat p-5 md:p-6 shadow-card transition-all" data-category="dns">
+            <button class="w-full flex items-start justify-between gap-4 text-left group" onclick="toggleFaq(this)">
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-mono font-bold flex items-center justify-center flex-shrink-0 mt-0.5">Q08</span>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                    <span class="px-2 py-0.5 rounded-full bg-buttercupLight text-amber-800 font-bold text-[10px]">模式选型</span>
+                    <span class="px-2 py-0.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep font-semibold text-[10px]">DNS与分流</span>
+                    <span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-medium text-[10px]">小白进阶</span>
+                  </div>
+                  <h3 class="font-bold text-base md:text-lg text-carbon group-hover:text-warmOrange transition-colors leading-snug">
+                    什么是 Fake-IP 与 Redir-Host？游戏/BT下载该怎么选？
+                  </h3>
+                </div>
+              </div>
+              <svg class="faq-arrow w-5 h-5 text-carbonMuted flex-shrink-0 transform transition-transform duration-300 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              <div class="pt-4 mt-4 border-t border-oat/70 text-sm text-carbonLight space-y-3 leading-relaxed">
+                <!-- 简明结论 -->
+                <div class="p-3 bg-cream/70 rounded-xl border border-oat/70 text-xs text-carbon">
+                  <span class="font-bold text-warmOrangeDeep">💡 简明结论：</span>
+                  Fake-IP 速度快、抗污染好，适合 95% 的网页与流媒体；Redir-Host 兼容真实 IP，适合部分对虚拟 IP 敏感的外服游戏与局域网设备。
+                </div>
+                <!-- 分步排查 -->
+                <div class="bg-oat/30 rounded-xl p-4 space-y-2.5 text-xs">
+                  <div class="font-bold text-carbon flex items-center gap-1.5">
+                    <span>🛠️</span><span>快速排查步骤：</span>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">1</span>
+                    <div>
+                      <strong class="text-carbon">日常浏览与视频首选 Fake-IP：</strong>Fake-IP 模式下客户端直接向应用返回 198.18.x.x 虚拟 IP，省去本地 DNS 握手等待，网页秒开体验极佳。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">2</span>
+                    <div>
+                      <strong class="text-carbon">外服游戏联机排查：</strong>部分硬编码 IP 或反作弊游戏检测到 198.18 段虚拟 IP 会无法连入，可切为 Redir-Host 或添加游戏进程直连。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">3</span>
+                    <div>
+                      <strong class="text-carbon">BT / PT 下载严禁走代理通道：</strong>在客户端中务必将 BitTorrent、qbittorrent 下载流量配置为 DIRECT 直连，避免 Fake-IP 虚拟映射污染内网或被机场封禁。
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q09: 晚高峰（20:00 - 23:0...  -->
+          <div class="faq-item bg-white rounded-2xl border border-oat p-5 md:p-6 shadow-card transition-all" data-category="speed">
+            <button class="w-full flex items-start justify-between gap-4 text-left group" onclick="toggleFaq(this)">
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-mono font-bold flex items-center justify-center flex-shrink-0 mt-0.5">Q09</span>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                    <span class="px-2 py-0.5 rounded-full bg-buttercupLight text-amber-800 font-bold text-[10px]">晚高峰</span>
+                    <span class="px-2 py-0.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep font-semibold text-[10px]">节点测速</span>
+                    <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-medium text-[10px]">线路选择</span>
+                  </div>
+                  <h3 class="font-bold text-base md:text-lg text-carbon group-hover:text-warmOrange transition-colors leading-snug">
+                    晚高峰（20:00 - 23:00）频繁断流、看视频降画质是什么原因？
+                  </h3>
+                </div>
+              </div>
+              <svg class="faq-arrow w-5 h-5 text-carbonMuted flex-shrink-0 transform transition-transform duration-300 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              <div class="pt-4 mt-4 border-t border-oat/70 text-sm text-carbonLight space-y-3 leading-relaxed">
+                <!-- 简明结论 -->
+                <div class="p-3 bg-cream/70 rounded-xl border border-oat/70 text-xs text-carbon">
+                  <span class="font-bold text-warmOrangeDeep">💡 简明结论：</span>
+                  夜间跨洋骨干网总带宽超载触发了运营商 QoS 丢包限速。普通公网直连首当其冲，换专线内网或抗拥塞协议可保平安。
+                </div>
+                <!-- 分步排查 -->
+                <div class="bg-oat/30 rounded-xl p-4 space-y-2.5 text-xs">
+                  <div class="font-bold text-carbon flex items-center gap-1.5">
+                    <span>🛠️</span><span>快速排查步骤：</span>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">1</span>
+                    <div>
+                      <strong class="text-carbon">理解公网骨干网丢包机制：</strong>普通 163 或 4134 骨干网在高峰期丢包率可达 20%~40%，传统 TCP 拥塞控制遭遇丢包会断崖式降速。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">2</span>
+                    <div>
+                      <strong class="text-carbon">切换专线/优质中继节点：</strong>建议在晚高峰优先切换为具备 BGP 优质入口或 IPLC/IEPL 内网专线中继的节点，完全绕开公网拥堵点。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">3</span>
+                    <div>
+                      <strong class="text-carbon">换用抗丢包新型传输协议：</strong>在协议设置中调整为抗丢包能力更强的新型协议（如基于 UDP 的 Hysteria2，或在节点服务端开启 TCP BBR 拥塞控制）。
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q10: 客户端内 Ping 延迟很低（5...  -->
+          <div class="faq-item bg-white rounded-2xl border border-oat p-5 md:p-6 shadow-card transition-all" data-category="speed">
+            <button class="w-full flex items-start justify-between gap-4 text-left group" onclick="toggleFaq(this)">
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-mono font-bold flex items-center justify-center flex-shrink-0 mt-0.5">Q10</span>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                    <span class="px-2 py-0.5 rounded-full bg-red-100 text-red-700 font-bold text-[10px]">测速解密</span>
+                    <span class="px-2 py-0.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep font-semibold text-[10px]">节点测速</span>
+                    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-medium text-[10px]">小白必看</span>
+                  </div>
+                  <h3 class="font-bold text-base md:text-lg text-carbon group-hover:text-warmOrange transition-colors leading-snug">
+                    客户端内 Ping 延迟很低（50ms），但实际打开网页非常卡？
+                  </h3>
+                </div>
+              </div>
+              <svg class="faq-arrow w-5 h-5 text-carbonMuted flex-shrink-0 transform transition-transform duration-300 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              <div class="pt-4 mt-4 border-t border-oat/70 text-sm text-carbonLight space-y-3 leading-relaxed">
+                <!-- 简明结论 -->
+                <div class="p-3 bg-cream/70 rounded-xl border border-oat/70 text-xs text-carbon">
+                  <span class="font-bold text-warmOrangeDeep">💡 简明结论：</span>
+                  客户端默认测的是「本地到国内中继入口」的 TCP 握手延迟，不代表海外落地机房到目标网站的真实加载速度。
+                </div>
+                <!-- 分步排查 -->
+                <div class="bg-oat/30 rounded-xl p-4 space-y-2.5 text-xs">
+                  <div class="font-bold text-carbon flex items-center gap-1.5">
+                    <span>🛠️</span><span>快速排查步骤：</span>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">1</span>
+                    <div>
+                      <strong class="text-carbon">区分入口延迟与真实落地延迟：</strong>专线节点的 Ping 往往只是测本地宽带到国内入口机房的时间，若境外落地机房拥堵，网页依然会卡顿。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">2</span>
+                    <div>
+                      <strong class="text-carbon">将测试 URL 设为真实海外网站：</strong>在客户端设置中将延时测试的 URL 从默认的 gstatic 改为真实海外目标（如 <code>https://www.google.com/generate_204</code>）。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">3</span>
+                    <div>
+                      <strong class="text-carbon">观察节点带宽负载与吞吐：</strong>在测速页面使用测速冰箱跑一次真实下载速率，有些节点延迟极低但峰值带宽已被合租用户跑满挤爆。
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q11: 部分流媒体（Netflix/Di...  -->
+          <div class="faq-item bg-white rounded-2xl border border-oat p-5 md:p-6 shadow-card transition-all" data-category="speed">
+            <button class="w-full flex items-start justify-between gap-4 text-left group" onclick="toggleFaq(this)">
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-mono font-bold flex items-center justify-center flex-shrink-0 mt-0.5">Q11</span>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                    <span class="px-2 py-0.5 rounded-full bg-blushPink/40 text-red-800 font-bold text-[10px]">流媒体</span>
+                    <span class="px-2 py-0.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep font-semibold text-[10px]">节点测速</span>
+                    <span class="px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 font-medium text-[10px]">原生解锁</span>
+                  </div>
+                  <h3 class="font-bold text-base md:text-lg text-carbon group-hover:text-warmOrange transition-colors leading-snug">
+                    部分流媒体（Netflix/Disney+/ChatGPT）提示「检测到代理 / 当前地区不可用」？
+                  </h3>
+                </div>
+              </div>
+              <svg class="faq-arrow w-5 h-5 text-carbonMuted flex-shrink-0 transform transition-transform duration-300 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              <div class="pt-4 mt-4 border-t border-oat/70 text-sm text-carbonLight space-y-3 leading-relaxed">
+                <!-- 简明结论 -->
+                <div class="p-3 bg-cream/70 rounded-xl border border-oat/70 text-xs text-carbon">
+                  <span class="font-bold text-warmOrangeDeep">💡 简明结论：</span>
+                  目标平台具备严格的商业 IP 风险库，若节点 IP 属于托管机房数据中心（Hosting/DCH）便会被拦截，需要纯净原生家宽 IP 落地。
+                </div>
+                <!-- 分步排查 -->
+                <div class="bg-oat/30 rounded-xl p-4 space-y-2.5 text-xs">
+                  <div class="font-bold text-carbon flex items-center gap-1.5">
+                    <span>🛠️</span><span>快速排查步骤：</span>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">1</span>
+                    <div>
+                      <strong class="text-carbon">确认节点是否标有专用解锁标识：</strong>在节点列表中切换为标注有「原生 IP」或专门标有对应流媒体解锁标识（如 🍿NF / 🏰DP / 🤖OpenAI）的落地节点。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">2</span>
+                    <div>
+                      <strong class="text-carbon">检查是否使用了家庭住宅落地中继：</strong>流媒体风控服务商会将机房 IP 标记为高风险，优质服务商通常会挂载 Residential 住宅原生 IP 解锁。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">3</span>
+                    <div>
+                      <strong class="text-carbon">彻底清理浏览器缓存与 Cookie：</strong>清除浏览器中该网站的历史 Cookie 与 LocalStorage，或打开无痕/隐私窗口重新登录，防止因历史指纹残留被判定为代理。
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q12: 为什么用测速跑满几百兆，但看 4...  -->
+          <div class="faq-item bg-white rounded-2xl border border-oat p-5 md:p-6 shadow-card transition-all" data-category="speed">
+            <button class="w-full flex items-start justify-between gap-4 text-left group" onclick="toggleFaq(this)">
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-mono font-bold flex items-center justify-center flex-shrink-0 mt-0.5">Q12</span>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                    <span class="px-2 py-0.5 rounded-full bg-buttercupLight text-amber-800 font-bold text-[10px]">测速误区</span>
+                    <span class="px-2 py-0.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep font-semibold text-[10px]">节点测速</span>
+                    <span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-medium text-[10px]">视频卡顿</span>
+                  </div>
+                  <h3 class="font-bold text-base md:text-lg text-carbon group-hover:text-warmOrange transition-colors leading-snug">
+                    为什么用测速跑满几百兆，但看 4K 视频依然不断转圈缓冲？
+                  </h3>
+                </div>
+              </div>
+              <svg class="faq-arrow w-5 h-5 text-carbonMuted flex-shrink-0 transform transition-transform duration-300 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              <div class="pt-4 mt-4 border-t border-oat/70 text-sm text-carbonLight space-y-3 leading-relaxed">
+                <!-- 简明结论 -->
+                <div class="p-3 bg-cream/70 rounded-xl border border-oat/70 text-xs text-carbon">
+                  <span class="font-bold text-warmOrangeDeep">💡 简明结论：</span>
+                  常规多线程测速能堆满瞬时突发带宽，但视频点播依赖单线程长连接的持续稳定性与境外 CDN 路由质量。
+                </div>
+                <!-- 分步排查 -->
+                <div class="bg-oat/30 rounded-xl p-4 space-y-2.5 text-xs">
+                  <div class="font-bold text-carbon flex items-center gap-1.5">
+                    <span>🛠️</span><span>快速排查步骤：</span>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">1</span>
+                    <div>
+                      <strong class="text-carbon">警惕多线程测速假象：</strong>Speedtest 是通过 8~16 个并发请求测出的峰值，而油管/网飞通常使用单线程分片传输，受限于单流 TCP 拥塞窗口。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">2</span>
+                    <div>
+                      <strong class="text-carbon">打开视频详细统计信息：</strong>在 YouTube 视频上右键打开「Stats for nerds (详细统计信息)」，观察 Connection Speed 是否稳定在 50000 Kbps 以上及 Buffer Health 缓冲长度。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">3</span>
+                    <div>
+                      <strong class="text-carbon">检查运营商 UDP QoS 限速：</strong>若使用的是基于 UDP 的协议，部分省份宽带会对长时间持续高带宽的 UDP 流量施加阻断或限速，可尝试切回 TCP 协议排查。
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q13: 手机端（iOS / Androi...  -->
+          <div class="faq-item bg-white rounded-2xl border border-oat p-5 md:p-6 shadow-card transition-all" data-category="client">
+            <button class="w-full flex items-start justify-between gap-4 text-left group" onclick="toggleFaq(this)">
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-mono font-bold flex items-center justify-center flex-shrink-0 mt-0.5">Q13</span>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                    <span class="px-2 py-0.5 rounded-full bg-mintFresh/30 text-green-800 font-bold text-[10px]">移动端</span>
+                    <span class="px-2 py-0.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep font-semibold text-[10px]">客户端设置</span>
+                    <span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-medium text-[10px]">系统保活</span>
+                  </div>
+                  <h3 class="font-bold text-base md:text-lg text-carbon group-hover:text-warmOrange transition-colors leading-snug">
+                    手机端（iOS / Android）息屏后经常自动断连、不推送消息？
+                  </h3>
+                </div>
+              </div>
+              <svg class="faq-arrow w-5 h-5 text-carbonMuted flex-shrink-0 transform transition-transform duration-300 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              <div class="pt-4 mt-4 border-t border-oat/70 text-sm text-carbonLight space-y-3 leading-relaxed">
+                <!-- 简明结论 -->
+                <div class="p-3 bg-cream/70 rounded-xl border border-oat/70 text-xs text-carbon">
+                  <span class="font-bold text-warmOrangeDeep">💡 简明结论：</span>
+                  手机操作系统自带的深度省电策略（Doze 机制）在息屏后杀死了客户端后台进程，解禁后台限制即可常驻。
+                </div>
+                <!-- 分步排查 -->
+                <div class="bg-oat/30 rounded-xl p-4 space-y-2.5 text-xs">
+                  <div class="font-bold text-carbon flex items-center gap-1.5">
+                    <span>🛠️</span><span>快速排查步骤：</span>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">1</span>
+                    <div>
+                      <strong class="text-carbon">iOS 端关闭低电量并检查按需连接：</strong>关闭系统「低电量模式」；在 Shadowrocket / Loon 设置中确保「按需连接 (On Demand)」配置正确，防止系统回收 TUN 网卡。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">2</span>
+                    <div>
+                      <strong class="text-carbon">Android 端解除电池优化并锁定任务：</strong>在系统设置中将客户端的省电策略设为「无限制 / 不优化」；并在多任务界面将应用卡片下拉「加锁」。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">3</span>
+                    <div>
+                      <strong class="text-carbon">开启客户端前台守护通知：</strong>在客户端应用设置中开启「保持后台连接」及「前台服务常驻通知栏（唤醒守护）」开关，提升系统进程优先级。
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q14: 开启 TUN 虚拟网卡模式后，局...  -->
+          <div class="faq-item bg-white rounded-2xl border border-oat p-5 md:p-6 shadow-card transition-all" data-category="client">
+            <button class="w-full flex items-start justify-between gap-4 text-left group" onclick="toggleFaq(this)">
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-mono font-bold flex items-center justify-center flex-shrink-0 mt-0.5">Q14</span>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                    <span class="px-2 py-0.5 rounded-full bg-skyBlue/30 text-blue-800 font-bold text-[10px]">局域网共享</span>
+                    <span class="px-2 py-0.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep font-semibold text-[10px]">客户端设置</span>
+                    <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-medium text-[10px]">TUN排障</span>
+                  </div>
+                  <h3 class="font-bold text-base md:text-lg text-carbon group-hover:text-warmOrange transition-colors leading-snug">
+                    开启 TUN 虚拟网卡模式后，局域网打印机、NAS 或本地共享失效？
+                  </h3>
+                </div>
+              </div>
+              <svg class="faq-arrow w-5 h-5 text-carbonMuted flex-shrink-0 transform transition-transform duration-300 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              <div class="pt-4 mt-4 border-t border-oat/70 text-sm text-carbonLight space-y-3 leading-relaxed">
+                <!-- 简明结论 -->
+                <div class="p-3 bg-cream/70 rounded-xl border border-oat/70 text-xs text-carbon">
+                  <span class="font-bold text-warmOrangeDeep">💡 简明结论：</span>
+                  TUN 虚拟网卡接管了整机路由表，将私有网段（192.168.x.x / 10.x.x.x）误当作目标流量接管，导致局域网广播失效。
+                </div>
+                <!-- 分步排查 -->
+                <div class="bg-oat/30 rounded-xl p-4 space-y-2.5 text-xs">
+                  <div class="font-bold text-carbon flex items-center gap-1.5">
+                    <span>🛠️</span><span>快速排查步骤：</span>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">1</span>
+                    <div>
+                      <strong class="text-carbon">勾选绕过私有局域网：</strong>在客户端 TUN 设置中，确保开启「Bypass Private Networks（绕过私有网络地址）」选项。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">2</span>
+                    <div>
+                      <strong class="text-carbon">手动添加局域网直连网段：</strong>若仍无法连接 NAS，在自定义分流规则中加入：<code>IP-CIDR,192.168.0.0/16,DIRECT,no-resolve</code> 及 <code>IP-CIDR,10.0.0.0/8,DIRECT,no-resolve</code>。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">3</span>
+                    <div>
+                      <strong class="text-carbon">排除第三方虚拟网卡冲突：</strong>若安装了虚拟机（VMware/VirtualBox）或 Docker，检查其网段是否与 TUN 默认网段（如 198.18.0.0/16）重叠，如有重叠需修改 TUN 接口网段。
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q15: 退出客户端后电脑完全上不了网（关...  -->
+          <div class="faq-item bg-white rounded-2xl border border-oat p-5 md:p-6 shadow-card transition-all" data-category="client">
+            <button class="w-full flex items-start justify-between gap-4 text-left group" onclick="toggleFaq(this)">
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-mono font-bold flex items-center justify-center flex-shrink-0 mt-0.5">Q15</span>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                    <span class="px-2 py-0.5 rounded-full bg-red-100 text-red-700 font-bold text-[10px]">高频痛点</span>
+                    <span class="px-2 py-0.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep font-semibold text-[10px]">客户端设置</span>
+                    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-medium text-[10px]">小白必看</span>
+                  </div>
+                  <h3 class="font-bold text-base md:text-lg text-carbon group-hover:text-warmOrange transition-colors leading-snug">
+                    退出客户端后电脑完全上不了网（关闭软件后网页无法打开）？
+                  </h3>
+                </div>
+              </div>
+              <svg class="faq-arrow w-5 h-5 text-carbonMuted flex-shrink-0 transform transition-transform duration-300 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              <div class="pt-4 mt-4 border-t border-oat/70 text-sm text-carbonLight space-y-3 leading-relaxed">
+                <!-- 简明结论 -->
+                <div class="p-3 bg-cream/70 rounded-xl border border-oat/70 text-xs text-carbon">
+                  <span class="font-bold text-warmOrangeDeep">💡 简明结论：</span>
+                  非正常退出或软件崩溃后，Windows 系统代理开关未被还原，系统依然在向已关闭的本地代理端口转发所有流量。
+                </div>
+                <!-- 分步排查 -->
+                <div class="bg-oat/30 rounded-xl p-4 space-y-2.5 text-xs">
+                  <div class="font-bold text-carbon flex items-center gap-1.5">
+                    <span>🛠️</span><span>快速排查步骤：</span>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">1</span>
+                    <div>
+                      <strong class="text-carbon">手动关闭 Windows 系统代理开关：</strong>打开 Windows 设置 →「网络和 Internet」→「代理」，关闭「使用代理服务器」开关并保存。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">2</span>
+                    <div>
+                      <strong class="text-carbon">养成通过软件托盘正常退出的习惯：</strong>避免在任务管理器中强制杀死进程，在软件菜单中点击「Quit / 退出」时，客户端会自动清理系统代理注册表残留。
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-warmOrange text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0">3</span>
+                    <div>
+                      <strong class="text-carbon">应急一键恢复小技巧：</strong>重新打开客户端软件，先开启系统代理，再正常点击「退出」或在系统 Internet 选项「局域网设置」中取消勾选代理。
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Sidebar / Convenience Receipt & Cheat Sheet (Right 4 Cols) -->
+        <div class="lg:col-span-4 space-y-6">
+          
+          <!-- Convenience Receipt Card (小票风格) -->
+          <div class="bg-white rounded-2xl border border-oat shadow-receipt p-6 relative overflow-hidden observe-fade">
+            <div class="text-center pb-4 border-b-2 border-dashed border-oat">
+              <div class="text-xs font-mono font-bold uppercase tracking-widest text-carbonMuted">★ SPEED MART TICKET ★</div>
+              <div class="text-lg font-extrabold text-carbon mt-1">排障小票 · 黄金三步法</div>
+              <div class="text-[11px] text-carbonMuted font-mono">DATE: 2026-10-20 #00892</div>
+            </div>
+
+            <div class="py-4 space-y-3 text-xs">
+              <div class="flex items-start gap-2.5">
+                <span class="w-5 h-5 rounded-full bg-oat flex items-center justify-center font-bold text-carbon">1</span>
+                <div>
+                  <div class="font-bold text-carbon">看时间 (Clock Sync)</div>
+                  <div class="text-carbonMuted text-[11px]">同步系统时钟，误差必须小于60秒</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <span class="w-5 h-5 rounded-full bg-oat flex items-center justify-center font-bold text-carbon">2</span>
+                <div>
+                  <div class="font-bold text-carbon">看端口 (Port Check)</div>
+                  <div class="text-carbonMuted text-[11px]">检查 7890/10808 是否被占用或未放行</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <span class="w-5 h-5 rounded-full bg-oat flex items-center justify-center font-bold text-carbon">3</span>
+                <div>
+                  <div class="font-bold text-carbon">换协议 (Protocol Switch)</div>
+                  <div class="text-carbonMuted text-[11px]">从 TCP/WS 切换至 Hysteria2 或 VLESS-Reality</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t-2 border-dashed border-oat flex items-center justify-between text-xs font-mono text-carbonMuted">
+              <span>SERVICE STATUS</span>
+              <span class="text-emerald-600 font-bold">100% PASS</span>
+            </div>
+
+            <div class="mt-4 pt-2 text-center text-[10px] text-carbonMuted font-mono">
+              如有疑问，请保留此小票咨询便利店店长
+            </div>
+          </div>
+
+          <!-- Error Code Cheat Table -->
+          <div class="bg-white rounded-2xl border border-oat shadow-card p-6 observe-fade">
+            <h3 class="text-sm font-bold text-carbon mb-3 flex items-center gap-1.5">
+              <span>📟</span>
+              <span>高频报错代码速查</span>
+            </h3>
+            <div class="space-y-2.5 text-xs font-mono">
+              <div class="p-2 bg-cream/70 rounded-lg border border-oat/60">
+                <div class="text-red-600 font-bold">WSAECONNREFUSED (10061)</div>
+                <div class="text-[11px] text-carbonMuted mt-0.5 font-sans">本地代理内核未启动或监听端口被杀软拦截。</div>
+              </div>
+              <div class="p-2 bg-cream/70 rounded-lg border border-oat/60">
+                <div class="text-amber-600 font-bold">CERTIFICATE_VERIFY_FAILED</div>
+                <div class="text-[11px] text-carbonMuted mt-0.5 font-sans">本地根证书过期，或开启了 MitM 拦截未信任证书。</div>
+              </div>
+              <div class="p-2 bg-cream/70 rounded-lg border border-oat/60">
+                <div class="text-blue-600 font-bold">i/o timeout (Context Deadline)</div>
+                <div class="text-[11px] text-carbonMuted mt-0.5 font-sans">目标节点 IP 阻断或本地到节点线路重度拥塞丢包。</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Question Submission Card -->
+          <div class="bg-gradient-to-br from-buttercupLight/50 to-cream rounded-2xl border border-buttercup/60 p-6 shadow-card observe-fade">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-lg">📮</span>
+              <h4 class="text-sm font-bold text-carbon">遇到没写到的怪坑？</h4>
+            </div>
+            <p class="text-xs text-carbonMuted leading-relaxed mb-4">
+              向便利店留言信箱投稿你的疑难杂症，店长每周会挑选题例更新到避坑货架中！
+            </p>
+            <a href="https://t.me/huanqiuti8899" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 w-full text-center py-2.5 px-4 bg-[#229ED9] hover:bg-[#1e8ec3] text-white text-xs font-bold rounded-xl shadow-sm transition-colors">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+              <span>联系店长 Telegram</span>
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="bg-white border-t border-oat/80 py-12 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div class="space-y-3 md:col-span-1">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-md bg-warmOrange flex items-center justify-center text-white text-xs font-bold">SM</div>
+            <span class="font-bold text-carbon">光速便利店</span>
+          </div>
+          <p class="text-xs text-carbonMuted leading-relaxed">
+            24小时不打烊的网络漫游补给站。让复杂的网络优化像在货架挑冷饮一样直观简单。
+          </p>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold text-carbon uppercase tracking-wider mb-3">货架指引</h4>
+          <ul class="space-y-2 text-xs text-carbonMuted">
+            <li><a href="index.html" class="hover:text-warmOrange transition-colors">首页</a></li>
+            <li><a href="reviews.html" class="hover:text-warmOrange transition-colors">店长严选</a></li>
+            <li><a href="guide.html" class="hover:text-warmOrange transition-colors">新手便当</a></li>
+            <li><a href="devices.html" class="hover:text-warmOrange transition-colors">设备专柜</a></li>
+            <li><a href="speedtest.html" class="hover:text-warmOrange transition-colors">测速冰箱</a></li>
+            <li><a href="blog.html" class="hover:text-warmOrange transition-colors">便利店日志</a></li>
+            <li><a href="faq.html" class="hover:text-warmOrange text-warmOrange font-semibold transition-colors">常见避坑</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold text-carbon uppercase tracking-wider mb-3">热门避坑检索</h4>
+          <div class="flex flex-wrap gap-1.5 text-[11px] text-carbonMuted">
+            <span class="bg-oat/60 px-2 py-0.5 rounded">端口占用</span>
+            <span class="bg-oat/60 px-2 py-0.5 rounded">时间不同步</span>
+            <span class="bg-oat/60 px-2 py-0.5 rounded">Fake-IP</span>
+            <span class="bg-oat/60 px-2 py-0.5 rounded">TUN虚拟网卡</span>
+            <span class="bg-oat/60 px-2 py-0.5 rounded">微信打不开</span>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold text-carbon uppercase tracking-wider mb-3">便利店声明</h4>
+          <p class="text-xs text-carbonMuted leading-relaxed">
+            本站所有教程仅供网络技术学习与科研交流用途，请严格遵守所在地区法律法规，文明理性上网。
+          </p>
+        </div>
+      </div>
+      <div class="border-t border-oat pt-6 text-center text-xs text-carbonMuted">
+        © 2026 光速便利店 Speed Mart. All rights reserved. Keep your internet fresh.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== JAVASCRIPT ===================== -->
+  <script>
+    // Mobile Menu Toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('menu-icon-open');
+    const iconClose = document.getElementById('menu-icon-close');
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      iconOpen.classList.toggle('hidden', isOpen);
+      iconClose.classList.toggle('hidden', !isOpen);
+      menuToggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Accordion Toggle function
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      item.classList.toggle('active');
+    }
+
+    // Category Filter
+    const filterBtns = document.querySelectorAll('.faq-filter-btn');
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => {
+          b.className = 'faq-filter-btn px-4 py-2 rounded-full font-medium bg-white border border-oat text-carbonLight hover:border-warmOrange hover:text-warmOrange transition-all whitespace-nowrap';
+        });
+        btn.className = 'faq-filter-btn px-4 py-2 rounded-full font-bold bg-warmOrange text-white shadow-sm transition-all whitespace-nowrap';
+
+        const cat = btn.getAttribute('data-cat');
+        faqItems.forEach(item => {
+          if (cat === 'all' || item.getAttribute('data-category') === cat) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Search Filter
+    const searchInput = document.getElementById('faqSearchInput');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const val = e.target.value.toLowerCase().trim();
+        faqItems.forEach(item => {
+          const text = item.innerText.toLowerCase();
+          if (!val || text.includes(val)) {
+            item.style.display = 'block';
+            if (val) item.classList.add('active'); // auto open when searching
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    }
+
+    // Fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.observe-fade').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

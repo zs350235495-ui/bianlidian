@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>设备专柜 — 光速便利店 Speed Mart</title>
+  <meta name="description" content="Windows、Mac、iOS、Android、软路由全平台网络加速客户端配置详解，一站式设备适配指南。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config={theme:{extend:{colors:{cream:'#FFF8F0',oat:'#F5EDE3',warmOrange:'#E8935A',warmOrangeLight:'#F4B88A',warmOrangeDeep:'#D47A3F',buttercup:'#F5D78E',buttercupLight:'#FBE9B7',carbon:'#2E2A27',carbonLight:'#4A4541',carbonMuted:'#8A8480',mintFresh:'#A8D5BA',skyBlue:'#9ECFEA',blushPink:'#F2B8B5'},fontFamily:{sans:['"Noto Sans SC"','"Outfit"','system-ui','sans-serif'],display:['"Outfit"','"Noto Sans SC"','sans-serif']},borderRadius:{'shelf':'1rem','pill':'9999px'},boxShadow:{'card':'0 2px 16px 0 rgba(46,42,39,.07)','card-hover':'0 8px 32px 0 rgba(46,42,39,.13)','shelf':'0 4px 24px 0 rgba(46,42,39,.09)'},animation:{'pulse-soft':'pulseSoft 3s ease-in-out infinite'},keyframes:{pulseSoft:{'0%,100%':{transform:'scale(1)'},'50%':{transform:'scale(1.05)'}}}}}}
+  </script>
+  <style>
+    ::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:#F5EDE3}::-webkit-scrollbar-thumb{background:#E8935A;border-radius:9999px}::-webkit-scrollbar-thumb:hover{background:#D47A3F}html{scroll-behavior:smooth}
+    .navbar-blur{backdrop-filter:blur(16px) saturate(1.6);-webkit-backdrop-filter:blur(16px) saturate(1.6)}.store-icon-shadow{filter:drop-shadow(0 3px 8px rgba(232,147,90,.35))}.dots-pattern{background-image:radial-gradient(circle,#E8935A 1px,transparent 1px);background-size:24px 24px;opacity:.06}
+    .mobile-menu-enter{max-height:0;opacity:0;overflow:hidden;transition:max-height .4s ease,opacity .3s ease}.mobile-menu-enter.open{max-height:500px;opacity:1}
+    .nav-link{position:relative}.nav-link.active{color:#E8935A;font-weight:600}.nav-link.active::after{content:'';position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:18px;height:3px;background:#E8935A;border-radius:9999px}.mobile-nav-link.active{color:#E8935A;background:rgba(232,147,90,.08);font-weight:600}
+    .observe-fade{opacity:0;transform:translateY(24px);transition:opacity .6s ease-out,transform .6s ease-out}.observe-fade.visible{opacity:1;transform:translateY(0)}
+    .sidebar-link{transition:all .2s ease;border-left:3px solid transparent}.sidebar-link:hover{background:rgba(232,147,90,.06);border-left-color:#F4B88A;color:#D47A3F}.sidebar-link.active{background:rgba(232,147,90,.10);border-left-color:#E8935A;color:#E8935A;font-weight:600}
+    .article-card{transition:all .3s ease}.article-card:hover{box-shadow:0 8px 32px rgba(46,42,39,.11);transform:translateY(-3px)}.article-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:transparent;border-radius:1rem 0 0 1rem;transition:background .3s ease}.article-card:hover::before{background:#E8935A}
+    .tag-pill{display:inline-block;padding:2px 10px;font-size:.7rem;font-weight:600;border-radius:9999px}
+  </style>
+</head>
+<body class="bg-cream text-carbon font-sans antialiased">
+  <!-- NAVBAR -->
+  <header class="fixed top-0 left-0 right-0 z-50 navbar-blur bg-cream/80 border-b border-oat/60" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 lg:h-[72px]">
+        <a href="index.html" class="flex items-center group py-1" aria-label="光速便利店首页">
+          <svg class="h-10 sm:h-11 w-auto drop-shadow-sm select-none group-hover:scale-[1.02] transition-transform duration-300" viewBox="0 0 320 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="c1-bg-grad-d" x1="8" y1="8" x2="68" y2="72" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FF8A3D"/>
+                <stop offset="100%" stop-color="#EA580C"/>
+              </linearGradient>
+              <linearGradient id="c1-bolt-grad-d" x1="28" y1="20" x2="52" y2="60" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FEF08A"/>
+                <stop offset="100%" stop-color="#FBBF24"/>
+              </linearGradient>
+              <filter id="c1-soft-shadow-d" x="0" y="4" width="80" height="80" filterUnits="userSpaceOnUse">
+                <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#EA580C" flood-opacity="0.25"/>
+              </filter>
+            </defs>
+            <g filter="url(#c1-soft-shadow-d)">
+              <rect x="8" y="8" width="64" height="64" rx="20" fill="url(#c1-bg-grad-d)"/>
+              <rect x="9.5" y="9.5" width="61" height="61" rx="18.5" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1.5"/>
+            </g>
+            <path d="M16 28 C16 23.58 19.58 20 24 20 H56 C60.42 20 64 23.58 64 28 L62 33 C61.2 35 59 36.5 56.5 36.5 C54 36.5 52 35 51.5 33 C50.5 35 48.5 36.5 46 36.5 C43.5 36.5 41.5 35 40.5 33 C39.5 35 37.5 36.5 35 36.5 C32.5 36.5 30.5 35 29.5 33 C28.5 35 26.5 36.5 24 36.5 C21.5 36.5 19.5 35 18.5 33 L16 28 Z" fill="#FFFBEB" fill-opacity="0.95"/>
+            <path d="M26 20 L27 34 M38 20 L37 34 M49 20 L48 34" stroke="#F97316" stroke-width="2.5" stroke-linecap="round" stroke-opacity="0.85"/>
+            <path d="M44 26 L26 44 H38 L32 58 L54 38 H40 L44 26 Z" fill="url(#c1-bolt-grad-d)" stroke="#7C2D12" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+            <text x="88" y="44" fill="#0F172A" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="25" font-weight="900" letter-spacing="1.5">
+              光速便利店
+            </text>
+            <g transform="translate(89, 53)">
+              <circle cx="4" cy="9" r="3" fill="#10B981"/>
+              <circle cx="4" cy="9" r="5" stroke="#10B981" stroke-width="1" stroke-opacity="0.4"/>
+              <text x="13" y="12" fill="#64748B" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10.5" font-weight="700" letter-spacing="2.2">
+                SPEED MART
+              </text>
+              <rect x="94" y="6" width="1" height="8" fill="#CBD5E1"/>
+              <text x="102" y="12" fill="#94A3B8" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="9" font-weight="500">
+                24H 网络漫游
+              </text>
+            </g>
+          </svg>
+        </a>
+        <nav class="hidden lg:flex items-center gap-1" aria-label="主导航">
+          <a href="index.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="home">首页</a>
+          <a href="reviews.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="reviews">店长严选</a>
+          <a href="guide.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="guide">新手便当</a>
+          <a href="devices.html" class="nav-link active px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="devices">设备专柜</a>
+          <a href="speedtest.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="speedtest">测速冰箱</a>
+          <a href="blog.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="blog">便利店日志</a>
+          <a href="faq.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="faq">常见避坑</a>
+        </nav>
+        <div class="flex items-center gap-2">
+          <div class="hidden md:flex items-center bg-oat/70 rounded-full px-3.5 py-2 gap-2 focus-within:ring-2 focus-within:ring-warmOrange/40"><svg class="w-4 h-4 text-carbonMuted flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="搜索教程或工具..." class="bg-transparent outline-none text-sm text-carbon placeholder-carbonMuted w-36 lg:w-44"/></div>
+          <button class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-oat/60 transition-colors" id="menu-toggle" aria-label="打开菜单"><svg class="w-5 h-5 text-carbon" id="menu-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg><svg class="w-5 h-5 text-carbon hidden" id="menu-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="lg:hidden mobile-menu-enter bg-cream/95 navbar-blur border-t border-oat/40" id="mobile-menu">
+      <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
+        <a href="index.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="home">首页</a>
+        <a href="reviews.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="reviews">店长严选</a>
+        <a href="guide.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="guide">新手便当</a>
+        <a href="devices.html" class="mobile-nav-link active block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="devices">设备专柜</a>
+        <a href="speedtest.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="speedtest">测速冰箱</a>
+        <a href="blog.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="blog">便利店日志</a>
+        <a href="faq.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="faq">常见避坑</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-20 lg:pt-[76px]">
+    <!-- PAGE HEADER -->
+    <section class="relative bg-oat/40 border-b border-oat/50 py-10 md:py-14 overflow-hidden">
+      <div class="absolute inset-0 dots-pattern pointer-events-none"></div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav class="mb-4" aria-label="面包屑导航">
+          <ol class="flex items-center gap-1.5 text-xs text-carbonMuted">
+            <li><a href="index.html" class="hover:text-warmOrange transition-colors">首页</a></li>
+            <li><svg class="w-3 h-3 text-carbonMuted/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></li>
+            <li class="text-warmOrange font-semibold">设备专柜</li>
+          </ol>
+        </nav>
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 rounded-xl bg-green-50 flex items-center justify-center text-3xl flex-shrink-0 shadow-sm">📱</div>
+          <div>
+            <h1 class="text-2xl md:text-3xl font-bold tracking-tight">设备专柜</h1>
+            <p class="mt-1 text-sm md:text-base text-carbonMuted">Windows / Mac / iOS / Android / 软路由 · 全平台配置详解</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: 全平台客户端选型天梯榜与横评专柜 (Client Matrix & Compass) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+      <div class="bg-white rounded-2xl border border-oat shadow-card p-6 md:p-8 observe-fade">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-oat/80 pb-6 mb-6">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-semibold mb-2">
+              <span>🏆</span><span>2026 年度设备货架选型指南</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-carbon">全平台客户端选型天梯榜 · 明星工具横评</h2>
+            <p class="text-xs sm:text-sm text-carbonMuted mt-1">按易用度、内核性能、新协议支持与后台稳定性综合评定，小白到老鸟都能挑到趁手兵器。</p>
+          </div>
+
+          <!-- Platform Selector Tabs -->
+          <div class="flex items-center gap-1.5 bg-oat/40 p-1.5 rounded-xl text-xs overflow-x-auto scrollbar-none" id="tierPlatformTabs">
+            <button data-platform="win" class="tier-tab-btn px-3.5 py-1.5 rounded-lg font-bold bg-warmOrange text-white shadow-sm transition-all whitespace-nowrap">🖥️ Windows</button>
+            <button data-platform="mac" class="tier-tab-btn px-3.5 py-1.5 rounded-lg font-medium text-carbonLight hover:text-warmOrange transition-all whitespace-nowrap">🍎 macOS</button>
+            <button data-platform="ios" class="tier-tab-btn px-3.5 py-1.5 rounded-lg font-medium text-carbonLight hover:text-warmOrange transition-all whitespace-nowrap">📱 iOS</button>
+            <button data-platform="android" class="tier-tab-btn px-3.5 py-1.5 rounded-lg font-medium text-carbonLight hover:text-warmOrange transition-all whitespace-nowrap">🤖 Android</button>
+            <button data-platform="router" class="tier-tab-btn px-3.5 py-1.5 rounded-lg font-medium text-carbonLight hover:text-warmOrange transition-all whitespace-nowrap">🌐 软路由</button>
+          </div>
+        </div>
+
+        <!-- Tier Grid Displays -->
+        <div id="tierContentArea">
+          <!-- Windows Tier (Default) -->
+          <div class="tier-panel grid grid-cols-1 md:grid-cols-3 gap-5" data-panel="win">
+            <!-- Win Item 1 -->
+            <div class="bg-cream/60 border-2 border-warmOrange/50 rounded-2xl p-5 relative overflow-hidden flex flex-col justify-between">
+              <div class="absolute top-0 right-0 bg-warmOrange text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">首选推荐 ★ 9.9</div>
+              <div>
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="text-2xl">⚡️</span>
+                  <div>
+                    <h3 class="font-bold text-base text-carbon">Clash Verge Rev</h3>
+                    <span class="text-[11px] text-carbonMuted font-mono">Kernel: Mihomo (Meta)</span>
+                  </div>
+                </div>
+                <p class="text-xs text-carbonLight leading-relaxed mb-4">
+                  现代跨平台 UI 的集大成者。内置一键 TUN 虚拟网卡驱动，完美支持 Hysteria2、VLESS-Reality 等现代加密协议，支持订阅自动更新与自定义规则集。
+                </p>
+                <div class="space-y-1.5 text-xs bg-white/80 rounded-xl p-3 border border-oat mb-4">
+                  <div class="flex justify-between"><span class="text-carbonMuted">易用程度：</span><span class="text-warmOrange font-bold">★★★★★ (新手友好)</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">TUN 虚拟网卡：</span><span class="text-emerald-600 font-semibold">原生自带 · 一键启用</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">内存占用：</span><span class="text-carbon font-mono">约 60~120 MB</span></div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-3 border-t border-oat">
+                <span class="text-[11px] text-carbonMuted font-medium">开源免费 · 持续维护</span>
+                <a href="https://github.com/clash-verge-rev/clash-verge-rev/releases" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-warmOrange hover:bg-warmOrangeDeep text-white font-bold text-xs rounded-lg transition-colors flex items-center gap-1">
+                  前往 GitHub 下载 ↗
+                </a>
+              </div>
+            </div>
+
+            <!-- Win Item 2 -->
+            <div class="bg-white border border-oat hover:border-sky-300 rounded-2xl p-5 shadow-sm transition-all flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-2">
+                    <span class="text-2xl">🧰</span>
+                    <div>
+                      <h3 class="font-bold text-base text-carbon">v2rayN</h3>
+                      <span class="text-[11px] text-carbonMuted font-mono">Kernel: Xray / Sing-box</span>
+                    </div>
+                  </div>
+                  <span class="px-2 py-0.5 rounded-full bg-sky-100 text-blue-800 text-[10px] font-bold">老牌全能 9.3</span>
+                </div>
+                <p class="text-xs text-carbonLight leading-relaxed mb-4">
+                  Windows 平台常青树。功能极其丰富，支持多内核无缝热切换，对自建节点与小众协议兼容性极佳，单文件绿色免安装。
+                </p>
+                <div class="space-y-1.5 text-xs bg-oat/30 rounded-xl p-3 border border-oat/60 mb-4">
+                  <div class="flex justify-between"><span class="text-carbonMuted">易用程度：</span><span class="text-sky-600 font-bold">★★★☆☆ (参数密集)</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">TUN 虚拟网卡：</span><span class="text-emerald-600 font-semibold">支持 Sing-box TUN</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">内存占用：</span><span class="text-carbon font-mono">约 35~70 MB (极低)</span></div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-3 border-t border-oat">
+                <span class="text-[11px] text-carbonMuted font-medium">极客自建节点首选</span>
+                <a href="https://github.com/2dust/v2rayN/releases" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-oat/70 hover:bg-sky-50 text-carbon hover:text-sky-600 font-bold text-xs rounded-lg transition-colors flex items-center gap-1">
+                  前往 GitHub 下载 ↗
+                </a>
+              </div>
+            </div>
+
+            <!-- Win Item 3 -->
+            <div class="bg-white border border-oat hover:border-emerald-300 rounded-2xl p-5 shadow-sm transition-all flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-2">
+                    <span class="text-2xl">🌱</span>
+                    <div>
+                      <h3 class="font-bold text-base text-carbon">Flclash</h3>
+                      <span class="text-[11px] text-carbonMuted font-mono">Kernel: Mihomo (Clash.Meta)</span>
+                    </div>
+                  </div>
+                  <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">极简新秀 9.0</span>
+                </div>
+                <p class="text-xs text-carbonLight leading-relaxed mb-4">
+                  基于 Flutter 开发的跨平台新秀。界面极其清爽无干扰，多端 UI 逻辑高度一致，特别适合厌倦复杂繁琐界面的极简主义用户。
+                </p>
+                <div class="space-y-1.5 text-xs bg-oat/30 rounded-xl p-3 border border-oat/60 mb-4">
+                  <div class="flex justify-between"><span class="text-carbonMuted">易用程度：</span><span class="text-emerald-600 font-bold">★★★★☆ (零门槛上手)</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">TUN 虚拟网卡：</span><span class="text-emerald-600 font-semibold">已集成 TUN 模式</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">动画交互：</span><span class="text-carbon font-medium">流畅 60FPS 动效</span></div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-3 border-t border-oat">
+                <span class="text-[11px] text-carbonMuted font-medium">轻巧优雅日常推荐</span>
+                <a href="https://github.com/chen08209/FlClash/releases" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-oat/70 hover:bg-emerald-50 text-carbon hover:text-emerald-600 font-bold text-xs rounded-lg transition-colors flex items-center gap-1">
+                  前往 GitHub 下载 ↗
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mac Tier (Hidden by default) -->
+          <div class="tier-panel hidden grid grid-cols-1 md:grid-cols-3 gap-5" data-panel="mac">
+            <!-- Mac Item 1 -->
+            <div class="bg-cream/60 border-2 border-warmOrange/50 rounded-2xl p-5 relative overflow-hidden flex flex-col justify-between">
+              <div class="absolute top-0 right-0 bg-warmOrange text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">首选推荐 ★ 9.9</div>
+              <div>
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="text-2xl">🍏</span>
+                  <div>
+                    <h3 class="font-bold text-base text-carbon">Clash Verge Rev for Mac</h3>
+                    <span class="text-[11px] text-carbonMuted font-mono">Apple Silicon Native (ARM/Intel)</span>
+                  </div>
+                </div>
+                <p class="text-xs text-carbonLight leading-relaxed mb-4">
+                  Mac 用户首选神器。针对 M 系列芯片原生编译优化，无缝支持系统代理菜单栏常驻、增强模式与智能 Apple 域名直连规则分流。
+                </p>
+                <div class="space-y-1.5 text-xs bg-white/80 rounded-xl p-3 border border-oat mb-4">
+                  <div class="flex justify-between"><span class="text-carbonMuted">芯片适配：</span><span class="text-emerald-600 font-bold">M1/M2/M3/M4 原生无发热</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">系统集成：</span><span class="text-sky-600 font-semibold">顶部菜单栏极简小图标</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">TUN 授权：</span><span class="text-carbon">免终端命令一键授权</span></div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-3 border-t border-oat">
+                <span class="text-[11px] text-carbonMuted font-medium">dmg 安装包即装即用</span>
+                <a href="https://github.com/clash-verge-rev/clash-verge-rev/releases" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-warmOrange hover:bg-warmOrangeDeep text-white font-bold text-xs rounded-lg transition-colors flex items-center gap-1">
+                  获取 Mac 安装包 ↗
+                </a>
+              </div>
+            </div>
+
+            <!-- Mac Item 2 -->
+            <div class="bg-white border border-oat hover:border-purple-300 rounded-2xl p-5 shadow-sm transition-all flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-2">
+                    <span class="text-2xl">⚡️</span>
+                    <div>
+                      <h3 class="font-bold text-base text-carbon">Surge Mac</h3>
+                      <span class="text-[11px] text-carbonMuted font-mono">Advanced Network Tool</span>
+                    </div>
+                  </div>
+                  <span class="px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 text-[10px] font-bold">专业天花板 9.9</span>
+                </div>
+                <p class="text-xs text-carbonLight leading-relaxed mb-4">
+                  macOS 网络调试工具的绝对霸主。具备强大的网关接管模式、MitM 抓包解密、本地 DNS 深度监控与模块化 Scripting 自动化。
+                </p>
+                <div class="space-y-1.5 text-xs bg-oat/30 rounded-xl p-3 border border-oat/60 mb-4">
+                  <div class="flex justify-between"><span class="text-carbonMuted">定位：</span><span class="text-purple-700 font-bold">专业开发者与网络极客</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">网络接管：</span><span class="text-emerald-600 font-semibold">增强模式 (Enhanced Mode)</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">授权模式：</span><span class="text-carbon">付费商业软件 ($49.99起)</span></div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-3 border-t border-oat">
+                <span class="text-[11px] text-carbonMuted font-medium">极致专业体验</span>
+                <a href="https://nssurge.com/" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-oat/70 hover:bg-purple-50 text-carbon hover:text-purple-700 font-bold text-xs rounded-lg transition-colors flex items-center gap-1">
+                  前往 Surge 官网 ↗
+                </a>
+              </div>
+            </div>
+
+            <!-- Mac Item 3 -->
+            <div class="bg-white border border-oat hover:border-sky-300 rounded-2xl p-5 shadow-sm transition-all flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-2">
+                    <span class="text-2xl">🎈</span>
+                    <div>
+                      <h3 class="font-bold text-base text-carbon">Loon for Mac</h3>
+                      <span class="text-[11px] text-carbonMuted font-mono">Universal Purchase (iOS/macOS)</span>
+                    </div>
+                  </div>
+                  <span class="px-2 py-0.5 rounded-full bg-sky-100 text-blue-800 text-[10px] font-bold">优雅跨端 9.2</span>
+                </div>
+                <p class="text-xs text-carbonLight leading-relaxed mb-4">
+                  买断 iOS 版直接免费在 Apple Silicon Mac 上运行。插件生态极其丰富，去广告与流媒体规则配置省心，界面清爽精巧。
+                </p>
+                <div class="space-y-1.5 text-xs bg-oat/30 rounded-xl p-3 border border-oat/60 mb-4">
+                  <div class="flex justify-between"><span class="text-carbonMuted">购买方式：</span><span class="text-sky-600 font-bold">App Store 一次购买全端通用</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">插件支持：</span><span class="text-emerald-600 font-semibold">支持丰富 Plugin 生态</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">配置同步：</span><span class="text-carbon">iCloud 规则自动双向同步</span></div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-3 border-t border-oat">
+                <span class="text-[11px] text-carbonMuted font-medium">Apple 生态无缝流转</span>
+                <a href="https://apps.apple.com/app/loon/id1373567447" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-oat/70 hover:bg-sky-50 text-carbon hover:text-sky-600 font-bold text-xs rounded-lg transition-colors flex items-center gap-1">
+                  Mac App Store ↗
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- iOS Tier (Hidden by default) -->
+          <div class="tier-panel hidden grid grid-cols-1 md:grid-cols-3 gap-5" data-panel="ios">
+            <!-- iOS Item 1 -->
+            <div class="bg-cream/60 border-2 border-warmOrange/50 rounded-2xl p-5 relative overflow-hidden flex flex-col justify-between">
+              <div class="absolute top-0 right-0 bg-warmOrange text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">国民工具 ★ 9.9</div>
+              <div>
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="text-2xl">🚀</span>
+                  <div>
+                    <h3 class="font-bold text-base text-carbon">Shadowrocket (小火箭)</h3>
+                    <span class="text-[11px] text-carbonMuted font-mono">App Store US ($2.99)</span>
+                  </div>
+                </div>
+                <p class="text-xs text-carbonLight leading-relaxed mb-4">
+                  iOS 用户装机率第一的国民级工具。扫码一键导入所有格式订阅，几乎支持全协议解析，按需连接智能保活，息屏绝不掉线。
+                </p>
+                <div class="space-y-1.5 text-xs bg-white/80 rounded-xl p-3 border border-oat mb-4">
+                  <div class="flex justify-between"><span class="text-carbonMuted">上手门槛：</span><span class="text-warmOrange font-bold">★☆☆☆☆ (新手极力推荐)</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">协议覆盖：</span><span class="text-emerald-600 font-semibold">SS/V2/Trojan/Hysteria2/Wireguard</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">省电策略：</span><span class="text-carbon font-medium">耗电量极低 · 智能息屏休眠</span></div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-3 border-t border-oat">
+                <span class="text-[11px] text-carbonMuted font-medium">需外区 Apple ID 购买</span>
+                <a href="https://apps.apple.com/us/app/shadowrocket/id932747118" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-warmOrange hover:bg-warmOrangeDeep text-white font-bold text-xs rounded-lg transition-colors flex items-center gap-1">
+                  美区 App Store ↗
+                </a>
+              </div>
+            </div>
+
+            <!-- iOS Item 2 -->
+            <div class="bg-white border border-oat hover:border-sky-300 rounded-2xl p-5 shadow-sm transition-all flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-2">
+                    <span class="text-2xl">🎈</span>
+                    <div>
+                      <h3 class="font-bold text-base text-carbon">Loon (iOS)</h3>
+                      <span class="text-[11px] text-carbonMuted font-mono">App Store US ($5.99)</span>
+                    </div>
+                  </div>
+                  <span class="px-2 py-0.5 rounded-full bg-sky-100 text-blue-800 text-[10px] font-bold">颜值生态 9.5</span>
+                </div>
+                <p class="text-xs text-carbonLight leading-relaxed mb-4">
+                  设计极其考究的 iOS 代理神器。支持模块插件一键配置去广告、流媒体解锁测试与定时脚本，对新手与进阶玩家都极其友好。
+                </p>
+                <div class="space-y-1.5 text-xs bg-oat/30 rounded-xl p-3 border border-oat/60 mb-4">
+                  <div class="flex justify-between"><span class="text-carbonMuted">界面美学：</span><span class="text-sky-600 font-bold">iOS 原生现代设计典范</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">特色能力：</span><span class="text-emerald-600 font-semibold">插件生态 / 脚本支持</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">节点优选：</span><span class="text-carbon font-medium">自动测速健康策略组</span></div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-3 border-t border-oat">
+                <span class="text-[11px] text-carbonMuted font-medium">插件扩展之王</span>
+                <a href="https://apps.apple.com/app/loon/id1373567447" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-oat/70 hover:bg-sky-50 text-carbon hover:text-sky-600 font-bold text-xs rounded-lg transition-colors flex items-center gap-1">
+                  美区 App Store ↗
+                </a>
+              </div>
+            </div>
+
+            <!-- iOS Item 3 -->
+            <div class="bg-white border border-oat hover:border-purple-300 rounded-2xl p-5 shadow-sm transition-all flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-2">
+                    <span class="text-2xl">📦</span>
+                    <div>
+                      <h3 class="font-bold text-base text-carbon">Stash (Clash for iOS)</h3>
+                      <span class="text-[11px] text-carbonMuted font-mono">App Store US ($3.99)</span>
+                    </div>
+                  </div>
+                  <span class="px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 text-[10px] font-bold">Clash标准 9.4</span>
+                </div>
+                <p class="text-xs text-carbonLight leading-relaxed mb-4">
+                  基于 Clash 规则体系专门为 iOS / Apple TV 定制开发的客户端。配置规则完全兼容桌面端 Clash YAML，开箱即用。
+                </p>
+                <div class="space-y-1.5 text-xs bg-oat/30 rounded-xl p-3 border border-oat/60 mb-4">
+                  <div class="flex justify-between"><span class="text-carbonMuted">规则兼容：</span><span class="text-purple-700 font-bold">100% 兼容 Clash YAML 配置</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">Apple TV：</span><span class="text-emerald-600 font-semibold">支持 tvOS 原生应用</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">分流引擎：</span><span class="text-carbon font-medium">支持按设备/按域名智能路由</span></div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-3 border-t border-oat">
+                <span class="text-[11px] text-carbonMuted font-medium">支持 Apple TV 电视大屏</span>
+                <a href="https://apps.apple.com/app/stash/id1596063718" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-oat/70 hover:bg-purple-50 text-carbon hover:text-purple-700 font-bold text-xs rounded-lg transition-colors flex items-center gap-1">
+                  美区 App Store ↗
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Android Tier (Hidden by default) -->
+          <div class="tier-panel hidden grid grid-cols-1 md:grid-cols-3 gap-5" data-panel="android">
+            <!-- Android Item 1 -->
+            <div class="bg-cream/60 border-2 border-warmOrange/50 rounded-2xl p-5 relative overflow-hidden flex flex-col justify-between">
+              <div class="absolute top-0 right-0 bg-warmOrange text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">首选推荐 ★ 9.9</div>
+              <div>
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="text-2xl">🤖</span>
+                  <div>
+                    <h3 class="font-bold text-base text-carbon">Clash Meta for Android</h3>
+                    <span class="text-[11px] text-carbonMuted font-mono">CMFA (Mihomo Core)</span>
+                  </div>
+                </div>
+                <p class="text-xs text-carbonLight leading-relaxed mb-4">
+                  安卓端稳定性之王。深度适配国内各品牌安卓系统后台机制，支持应用分流白名单、智能 DNS 解析与一键导入机场订阅。
+                </p>
+                <div class="space-y-1.5 text-xs bg-white/80 rounded-xl p-3 border border-oat mb-4">
+                  <div class="flex justify-between"><span class="text-carbonMuted">应用分流：</span><span class="text-warmOrange font-bold">精细勾选应用走直连/代理</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">后台保活：</span><span class="text-emerald-600 font-semibold">常驻通知栏守护进程</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">协议更新：</span><span class="text-carbon font-medium">紧跟 Meta 最新发布内核</span></div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-3 border-t border-oat">
+                <span class="text-[11px] text-carbonMuted font-medium">开源免费 apk 直链</span>
+                <a href="https://github.com/MetaCubeX/ClashMetaForAndroid/releases" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-warmOrange hover:bg-warmOrangeDeep text-white font-bold text-xs rounded-lg transition-colors flex items-center gap-1">
+                  下载 GitHub APK ↗
+                </a>
+              </div>
+            </div>
+
+            <!-- Android Item 2 -->
+            <div class="bg-white border border-oat hover:border-emerald-300 rounded-2xl p-5 shadow-sm transition-all flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-2">
+                    <span class="text-2xl">📦</span>
+                    <div>
+                      <h3 class="font-bold text-base text-carbon">Sing-box for Android</h3>
+                      <span class="text-[11px] text-carbonMuted font-mono">The Universal Proxy Platform</span>
+                    </div>
+                  </div>
+                  <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">极速轻量 9.5</span>
+                </div>
+                <p class="text-xs text-carbonLight leading-relaxed mb-4">
+                  新一代通用底层代理客户端。内存占用极低，电量损耗控制极为惊艳，原生支持最新的 Hysteria2 与 TUIC 协议。
+                </p>
+                <div class="space-y-1.5 text-xs bg-oat/30 rounded-xl p-3 border border-oat/60 mb-4">
+                  <div class="flex justify-between"><span class="text-carbonMuted">耗电控制：</span><span class="text-emerald-600 font-bold">全平台功耗最低之一</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">新协议：</span><span class="text-emerald-600 font-semibold">第一梯队支持最新协议标准</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">发布渠道：</span><span class="text-carbon font-medium">Google Play & GitHub 双发</span></div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-3 border-t border-oat">
+                <span class="text-[11px] text-carbonMuted font-medium">极致轻盈省电</span>
+                <a href="https://github.com/SagerNet/sing-box/releases" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-oat/70 hover:bg-emerald-50 text-carbon hover:text-emerald-600 font-bold text-xs rounded-lg transition-colors flex items-center gap-1">
+                  下载官方 Release ↗
+                </a>
+              </div>
+            </div>
+
+            <!-- Android Item 3 -->
+            <div class="bg-white border border-oat hover:border-sky-300 rounded-2xl p-5 shadow-sm transition-all flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-2">
+                    <span class="text-2xl">🐱</span>
+                    <div>
+                      <h3 class="font-bold text-base text-carbon">NekoBox for Android</h3>
+                      <span class="text-[11px] text-carbonMuted font-mono">Sing-box based GUI</span>
+                    </div>
+                  </div>
+                  <span class="px-2 py-0.5 rounded-full bg-sky-100 text-blue-800 text-[10px] font-bold">协议聚合 9.2</span>
+                </div>
+                <p class="text-xs text-carbonLight leading-relaxed mb-4">
+                  基于 Sing-box 内核打造的开源图形界面工具。内置全协议解析器，支持订阅分组管理与极其自由的路由规则定制。
+                </p>
+                <div class="space-y-1.5 text-xs bg-oat/30 rounded-xl p-3 border border-oat/60 mb-4">
+                  <div class="flex justify-between"><span class="text-carbonMuted">自建节点：</span><span class="text-sky-600 font-bold">支持全协议手动参数微调</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">测速机制：</span><span class="text-emerald-600 font-semibold">并发 URL-Test 毫秒级反馈</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">纯净无广：</span><span class="text-carbon font-medium">完全开源 · 零跟踪代码</span></div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-3 border-t border-oat">
+                <span class="text-[11px] text-carbonMuted font-medium">极客玩家强力推荐</span>
+                <a href="https://github.com/MatsuriDayo/NekoBoxForAndroid/releases" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-oat/70 hover:bg-sky-50 text-carbon hover:text-sky-600 font-bold text-xs rounded-lg transition-colors flex items-center gap-1">
+                  前往 GitHub 下载 ↗
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Router Tier (Hidden by default) -->
+          <div class="tier-panel hidden grid grid-cols-1 md:grid-cols-3 gap-5" data-panel="router">
+            <!-- Router Item 1 -->
+            <div class="bg-cream/60 border-2 border-warmOrange/50 rounded-2xl p-5 relative overflow-hidden flex flex-col justify-between">
+              <div class="absolute top-0 right-0 bg-warmOrange text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">全屋神器 ★ 9.9</div>
+              <div>
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="text-2xl">🌐</span>
+                  <div>
+                    <h3 class="font-bold text-base text-carbon">OpenClash</h3>
+                    <span class="text-[11px] text-carbonMuted font-mono">OpenWrt Package (Mihomo)</span>
+                  </div>
+                </div>
+                <p class="text-xs text-carbonLight leading-relaxed mb-4">
+                  软路由透明代理统治级插件。全家电视盒子（Apple TV）、游戏机（Switch/PS5）与智能家居零配置无感科学漫游。
+                </p>
+                <div class="space-y-1.5 text-xs bg-white/80 rounded-xl p-3 border border-oat mb-4">
+                  <div class="flex justify-between"><span class="text-carbonMuted">透明代理：</span><span class="text-emerald-600 font-bold">Fake-IP + TUN 极致性能</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">设备控制：</span><span class="text-warmOrange font-semibold">支持按局域网 MAC 独立分流</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">部署形态：</span><span class="text-carbon font-medium">主路由 / 旁路网关双模式</span></div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-3 border-t border-oat">
+                <span class="text-[11px] text-carbonMuted font-medium">软路由玩家装机标配</span>
+                <a href="https://github.com/vernesong/OpenClash/releases" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-warmOrange hover:bg-warmOrangeDeep text-white font-bold text-xs rounded-lg transition-colors flex items-center gap-1">
+                  前往 GitHub 仓库 ↗
+                </a>
+              </div>
+            </div>
+
+            <!-- Router Item 2 -->
+            <div class="bg-white border border-oat hover:border-blue-300 rounded-2xl p-5 shadow-sm transition-all flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-2">
+                    <span class="text-2xl">🧱</span>
+                    <div>
+                      <h3 class="font-bold text-base text-carbon">PassWall 2</h3>
+                      <span class="text-[11px] text-carbonMuted font-mono">OpenWrt Lean Package</span>
+                    </div>
+                  </div>
+                  <span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 text-[10px] font-bold">轻巧稳定 9.4</span>
+                </div>
+                <p class="text-xs text-carbonLight leading-relaxed mb-4">
+                  老牌路由插件。采用轻量化分流设计，占用系统 CPU 与内存资源极低，老旧硬路由或小内存工控机也能健步如飞。
+                </p>
+                <div class="space-y-1.5 text-xs bg-oat/30 rounded-xl p-3 border border-oat/60 mb-4">
+                  <div class="flex justify-between"><span class="text-carbonMuted">资源消耗：</span><span class="text-emerald-600 font-bold">仅需 30MB 极低内存</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">分流设计：</span><span class="text-blue-600 font-semibold">主备节点故障无缝秒切换</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">老设备兼容：</span><span class="text-carbon font-medium">支持 MT7621 等经典架构</span></div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-3 border-t border-oat">
+                <span class="text-[11px] text-carbonMuted font-medium">低配置硬件优选</span>
+                <a href="https://github.com/xiaorouji/openwrt-passwall" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-oat/70 hover:bg-blue-50 text-carbon hover:text-blue-700 font-bold text-xs rounded-lg transition-colors flex items-center gap-1">
+                  前往开源项目 ↗
+                </a>
+              </div>
+            </div>
+
+            <!-- Router Item 3 -->
+            <div class="bg-white border border-oat hover:border-purple-300 rounded-2xl p-5 shadow-sm transition-all flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-2">
+                    <span class="text-2xl">🐚</span>
+                    <div>
+                      <h3 class="font-bold text-base text-carbon">ShellCrash</h3>
+                      <span class="text-[11px] text-carbonMuted font-mono">Linux Shell Script</span>
+                    </div>
+                  </div>
+                  <span class="px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 text-[10px] font-bold">纯Shell神器 9.3</span>
+                </div>
+                <p class="text-xs text-carbonLight leading-relaxed mb-4">
+                  基于纯 Shell 脚本打造的轻量透明代理。一行命令安装在任何 Linux 系统上（小米路由器原厂固件、NAS、玩客云、树莓派）。
+                </p>
+                <div class="space-y-1.5 text-xs bg-oat/30 rounded-xl p-3 border border-oat/60 mb-4">
+                  <div class="flex justify-between"><span class="text-carbonMuted">安装方式：</span><span class="text-purple-700 font-bold">一行终端命令自动化部署</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">硬件适应：</span><span class="text-emerald-600 font-semibold">NAS / Docker / 原厂固件</span></div>
+                  <div class="flex justify-between"><span class="text-carbonMuted">管理后台：</span><span class="text-carbon font-medium">支持 Web 仪表盘直连控制</span></div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-3 border-t border-oat">
+                <span class="text-[11px] text-carbonMuted font-medium">免刷固件直接运行</span>
+                <a href="https://github.com/juewuy/ShellCrash" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-oat/70 hover:bg-purple-50 text-carbon hover:text-purple-700 font-bold text-xs rounded-lg transition-colors flex items-center gap-1">
+                  前往 GitHub 脚本 ↗
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- CONTENT -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
+      <div class="flex flex-col lg:flex-row gap-8 lg:gap-10">
+        <!-- SIDEBAR -->
+        <aside class="w-full lg:w-64 xl:w-72 flex-shrink-0 lg:sticky lg:top-24 lg:self-start">
+          <div class="bg-white rounded-shelf shadow-card p-5">
+            <h2 class="text-sm font-bold text-carbon mb-4 flex items-center gap-2">
+              <svg class="w-4 h-4 text-warmOrange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              设备分类
+            </h2>
+            <nav class="space-y-0.5" id="deviceSidebarNav">
+              <button data-cat="all" class="device-cat-btn active w-full text-left sidebar-link block px-3 py-2.5 text-sm rounded-lg">📦 全部设备 <span class="text-xs text-carbonMuted ml-1" id="catCountAll">(10)</span></button>
+              <button data-cat="windows" class="device-cat-btn w-full text-left sidebar-link block px-3 py-2.5 text-sm rounded-lg text-carbonLight">🖥️ Windows <span class="text-xs text-carbonMuted ml-1">(3)</span></button>
+              <button data-cat="macos" class="device-cat-btn w-full text-left sidebar-link block px-3 py-2.5 text-sm rounded-lg text-carbonLight">🍎 macOS <span class="text-xs text-carbonMuted ml-1">(2)</span></button>
+              <button data-cat="ios" class="device-cat-btn w-full text-left sidebar-link block px-3 py-2.5 text-sm rounded-lg text-carbonLight">📱 iOS <span class="text-xs text-carbonMuted ml-1">(2)</span></button>
+              <button data-cat="android" class="device-cat-btn w-full text-left sidebar-link block px-3 py-2.5 text-sm rounded-lg text-carbonLight">🤖 Android <span class="text-xs text-carbonMuted ml-1">(2)</span></button>
+              <button data-cat="router" class="device-cat-btn w-full text-left sidebar-link block px-3 py-2.5 text-sm rounded-lg text-carbonLight">🌐 软路由 <span class="text-xs text-carbonMuted ml-1">(1)</span></button>
+            </nav>
+          </div>
+        </aside>
+
+        <!-- ARTICLES -->
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center justify-between mb-6">
+            <p class="text-sm text-carbonMuted">当前分类共 <span class="font-semibold text-warmOrange" id="currentArticleCount">10</span> 篇实战教程</p>
+            <select id="articleSortSelect" class="text-xs bg-white border border-oat rounded-lg px-3 py-1.5 text-carbon outline-none focus:ring-2 focus:ring-warmOrange/30 cursor-pointer"><option value="newest">最新发布优先</option><option value="views">最多阅读优先</option></select>
+          </div>
+          <div class="space-y-5" id="articleListContainer">
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="windows" data-date="20261018" data-views="4800">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    <span class="tag-pill bg-warmOrange/15 text-warmOrangeDeep">🔥 热门推荐</span>
+                    <span class="tag-pill bg-skyBlue/30 text-blue-800">Windows</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">Clash Verge Rev 完全指南：Windows 端最佳代理客户端配置与 TUN 模式</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    从基础安装、一键导入机场订阅，到高级 TUN 虚拟网卡驱动安装与系统代理免配置直连，彻底排查无法上网与端口冲突难题。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-10-18
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      10 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      4.8k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="windows" data-date="20261012" data-views="3500">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    
+                    <span class="tag-pill bg-skyBlue/30 text-blue-800">Windows</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">v2rayN 极速上手：轻量稳定、全协议支持的经典 Windows 工具</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    经典极客工具深度解析。多内核自由切换（Xray / Sing-box）、自建节点测速筛选、订阅分组与全局快捷键高效管理。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-10-12
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      8 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      3.5k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="windows" data-date="20261005" data-views="2100">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    
+                    <span class="tag-pill bg-skyBlue/30 text-blue-800">Windows</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">Flclash 跨平台新秀体验：优雅现代的极简 UI 与多内核无缝切换实战</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    基于 Flutter 构建的极简跨平台客户端。轻量纯净、零多余设置干扰、全平台一致操作逻辑，打造视觉享受的加速体验。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-10-05
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      6 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      2.1k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="macos" data-date="20261010" data-views="3900">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    <span class="tag-pill bg-warmOrange/15 text-warmOrangeDeep">🔥 热门推荐</span>
+                    <span class="tag-pill bg-mintFresh/30 text-green-800">macOS</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">macOS 进阶指南：Clash Verge Rev for Mac 系统代理与分流实战</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    针对 Apple Silicon M 芯片深度优化。配置顶部菜单栏常驻、终端代理快捷环境变量 export、增强模式免改系统网络配置。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-10-10
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      8 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      3.9k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="macos" data-date="20260924" data-views="2700">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    
+                    <span class="tag-pill bg-mintFresh/30 text-green-800">macOS</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">Surge Mac 终极网络调试神器：网关接管、抓包与模块化配置精要</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    macOS 最强网络接管工具。全面开启 Enhanced Mode 增强网关、全链路抓包分析、MitM 规则覆写与自定义自动化脚本。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-09-24
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      14 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      2.7k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="ios" data-date="20261015" data-views="5200">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    <span class="tag-pill bg-warmOrange/15 text-warmOrangeDeep">🔥 热门推荐</span>
+                    <span class="tag-pill bg-buttercupLight text-yellow-900">iOS</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">Shadowrocket (小火箭) 入门到精通：美区 ID 获取、订阅导入与分流</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    iPhone / iPad 必备神级工具。从 0 注册美区 Apple ID 并下载、扫描节点二维码导入订阅，到配置规则分流与按需连接省电设置。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-10-15
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      9 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      5.2k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="ios" data-date="20261002" data-views="3100">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    
+                    <span class="tag-pill bg-buttercupLight text-yellow-900">iOS</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">Loon 玩转指南：轻量优雅、插件扩展与脚本自动化配置详解</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    高颜值 iOS 代理新秀。全方位解析 Plugin 插件体系、一键开启流媒体解锁检测、YouTube 免广告模块与定时签到脚本实操。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-10-02
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      11 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      3.1k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="android" data-date="20261008" data-views="4300">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    <span class="tag-pill bg-warmOrange/15 text-warmOrangeDeep">🔥 热门推荐</span>
+                    <span class="tag-pill bg-emerald-100 text-emerald-800">Android</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">Clash Meta for Android (CMFA) 实战：后台保活与分应用代理配置</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    全面破解国产安卓系统杀后台机制。设置电池无限制白名单、多任务加锁、开启常驻前台服务，并精细设置国内常用 App 强制直连。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-10-08
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      7 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      4.3k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="android" data-date="20260930" data-views="2900">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    
+                    <span class="tag-pill bg-emerald-100 text-emerald-800">Android</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">Sing-box for Android 体验：新一代通用代理内核与极速省电特性</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    次时代开源代理平台。极致的内存与 CPU 调度优化，原生支持 Hysteria2 / TUIC 高并发抗丢包协议，安卓设备重度用户的极佳选择。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-09-30
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      8 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      2.9k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="router" data-date="20260928" data-views="6400">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    <span class="tag-pill bg-warmOrange/15 text-warmOrangeDeep">🔥 热门推荐</span>
+                    <span class="tag-pill bg-blushPink/30 text-red-800">软路由</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">OpenWrt 软路由旁路网关方案：全屋透明代理终极指南</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    在软路由上部署 OpenClash / PassWall，实现全屋电视、Switch、手机设备无感漫游，一次配置终身受益的旁路网关架构全解。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-09-28
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      15 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      6.4k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <nav class="mt-10 flex items-center justify-center gap-1.5"><span class="w-9 h-9 flex items-center justify-center rounded-lg bg-warmOrange text-white text-sm font-semibold shadow-sm">1</span><a href="#" class="w-9 h-9 flex items-center justify-center rounded-lg bg-white text-carbonLight text-sm font-medium hover:bg-warmOrange/10 hover:text-warmOrange border border-oat/50 transition-colors">2</a></nav>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-carbon text-cream/80 py-12 md:py-16"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8"><div><div class="flex items-center gap-2.5 mb-4"><div class="w-8 h-8 rounded-lg bg-warmOrange flex items-center justify-center"><svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="leading-tight"><span class="block text-sm font-bold text-cream">光速便利店</span><span class="block text-[9px] font-display font-semibold text-cream/50 tracking-widest uppercase">Speed Mart</span></div></div><p class="text-xs text-cream/50 leading-relaxed max-w-xs">24 小时不打烊的网络漫游补给站。</p></div><div><h3 class="text-sm font-bold text-cream mb-4">站点地图</h3><ul class="space-y-2.5"><li><a href="index.html" class="text-xs text-cream/60 hover:text-warmOrange transition-colors">首页</a></li><li><a href="reviews.html" class="text-xs text-cream/60 hover:text-warmOrange transition-colors">店长严选</a></li><li><a href="guide.html" class="text-xs text-cream/60 hover:text-warmOrange transition-colors">新手便当</a></li><li><a href="devices.html" class="text-xs text-cream/60 hover:text-warmOrange transition-colors">设备专柜</a></li><li><a href="speedtest.html" class="text-xs text-cream/60 hover:text-warmOrange transition-colors">测速冰箱</a></li><li><a href="blog.html" class="text-xs text-cream/60 hover:text-warmOrange transition-colors">便利店日志</a></li><li><a href="faq.html" class="text-xs text-cream/60 hover:text-warmOrange transition-colors">常见避坑</a></li></ul></div>      <div>
+        <h3 class="text-sm font-bold text-cream mb-4">保持联络</h3>
+        <p class="text-xs text-cream/50 mb-3">订阅 RSS 或直接联络店长获取专属建议。</p>
+        <div class="flex flex-wrap items-center gap-2">
+          <a href="https://t.me/huanqiuti8899" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-[#229ED9]/20 hover:bg-[#229ED9]/30 text-[#229ED9] hover:text-[#5bc4f5] text-xs font-semibold px-4 py-2.5 rounded-lg transition-colors border border-[#229ED9]/30">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+            <span>联系店长</span>
+          </a>
+          <a href="#" class="inline-flex items-center gap-1.5 bg-warmOrange/15 hover:bg-warmOrange/25 text-warmOrangeLight text-xs font-semibold px-3 py-2.5 rounded-lg transition-colors">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+            <span>RSS</span>
+          </a>
+        </div>
+      </div>
+    </div><div class="mt-10 pt-8 border-t border-cream/10"><p class="text-[11px] text-cream/35 leading-relaxed text-center max-w-2xl mx-auto">⚠️ 免责声明：本站所有内容仅供合规网络优化与技术研究交流之用，不提供任何违反当地法律法规的服务或建议。</p><p class="mt-4 text-[11px] text-cream/25 text-center">© 2026 光速便利店 Speed Mart. All rights reserved.</p></div></div></footer>
+
+  <script>
+    // Mobile Drawer Toggle
+    const mt=document.getElementById('menu-toggle'),mm=document.getElementById('mobile-menu'),io=document.getElementById('menu-icon-open'),ic=document.getElementById('menu-icon-close');
+    if (mt) {
+      mt.addEventListener('click',()=>{const o=mm.classList.toggle('open');io.classList.toggle('hidden',o);ic.classList.toggle('hidden',!o)});
+    }
+
+    // 1. 全平台天梯榜 Tab 切换
+    const tierTabs = document.querySelectorAll('.tier-tab-btn');
+    const tierPanels = document.querySelectorAll('.tier-panel');
+
+    tierTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tierTabs.forEach(t => {
+          t.className = 'tier-tab-btn px-3.5 py-1.5 rounded-lg font-medium text-carbonLight hover:text-warmOrange transition-all whitespace-nowrap';
+        });
+        tab.className = 'tier-tab-btn px-3.5 py-1.5 rounded-lg font-bold bg-warmOrange text-white shadow-sm transition-all whitespace-nowrap';
+
+        const platform = tab.getAttribute('data-platform');
+        tierPanels.forEach(panel => {
+          if (panel.getAttribute('data-panel') === platform) {
+            panel.classList.remove('hidden');
+          } else {
+            panel.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // 2. 左侧侧边栏文章真实筛选联动
+    const catButtons = document.querySelectorAll('.device-cat-btn');
+    const articleCards = document.querySelectorAll('.article-card');
+    const countDisplay = document.getElementById('currentArticleCount');
+    const sortSelect = document.getElementById('articleSortSelect');
+    const listContainer = document.getElementById('articleListContainer');
+
+    function filterAndSortArticles() {
+      const activeBtn = document.querySelector('.device-cat-btn.active');
+      const cat = activeBtn ? activeBtn.getAttribute('data-cat') : 'all';
+      let visibleCount = 0;
+
+      articleCards.forEach(card => {
+        if (cat === 'all' || card.getAttribute('data-category') === cat) {
+          card.style.display = 'block';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (countDisplay) {
+        countDisplay.textContent = visibleCount;
+      }
+    }
+
+    catButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        catButtons.forEach(b => {
+          b.classList.remove('active');
+          b.classList.add('text-carbonLight');
+        });
+        btn.classList.add('active');
+        btn.classList.remove('text-carbonLight');
+        filterAndSortArticles();
+      });
+    });
+
+    // 3. 排序下拉框联动
+    if (sortSelect && listContainer) {
+      sortSelect.addEventListener('change', () => {
+        const order = sortSelect.value;
+        const cardsArray = Array.from(articleCards);
+
+        cardsArray.sort((a, b) => {
+          if (order === 'views') {
+            return parseInt(b.getAttribute('data-views') || 0) - parseInt(a.getAttribute('data-views') || 0);
+          } else {
+            return parseInt(b.getAttribute('data-date') || 0) - parseInt(a.getAttribute('data-date') || 0);
+          }
+        });
+
+        cardsArray.forEach(card => listContainer.appendChild(card));
+      });
+    }
+
+    // Scroll fade observer
+    const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}}),{threshold:.1});
+    document.querySelectorAll('.observe-fade').forEach(el=>obs.observe(el));
+    window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('shadow-md',window.scrollY>10)},{passive:true});
+  </script>
+</body>
+</html>

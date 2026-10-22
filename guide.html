@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>新手便当 — 光速便利店 Speed Mart</title>
+  <meta name="description" content="零基础保姆级教程：全平台客户端 5 分钟极速上手，从安装配置到进阶分流，一站式新手入门指南。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream:'#FFF8F0', oat:'#F5EDE3', warmOrange:'#E8935A', warmOrangeLight:'#F4B88A', warmOrangeDeep:'#D47A3F',
+            buttercup:'#F5D78E', buttercupLight:'#FBE9B7', carbon:'#2E2A27', carbonLight:'#4A4541', carbonMuted:'#8A8480',
+            mintFresh:'#A8D5BA', skyBlue:'#9ECFEA', blushPink:'#F2B8B5',
+          },
+          fontFamily: { sans:['"Noto Sans SC"','"Outfit"','system-ui','sans-serif'], display:['"Outfit"','"Noto Sans SC"','sans-serif'] },
+          borderRadius: { 'shelf':'1rem', 'pill':'9999px' },
+          boxShadow: { 'card':'0 2px 16px 0 rgba(46,42,39,.07)', 'card-hover':'0 8px 32px 0 rgba(46,42,39,.13)', 'shelf':'0 4px 24px 0 rgba(46,42,39,.09)' },
+          animation: { 'pulse-soft':'pulseSoft 3s ease-in-out infinite' },
+          keyframes: { pulseSoft:{ '0%,100%':{ transform:'scale(1)' }, '50%':{ transform:'scale(1.05)' } } },
+        },
+      },
+    }
+  </script>
+  <style>
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #F5EDE3; }
+    ::-webkit-scrollbar-thumb { background: #E8935A; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #D47A3F; }
+    html { scroll-behavior: smooth; }
+
+    .navbar-blur { backdrop-filter: blur(16px) saturate(1.6); -webkit-backdrop-filter: blur(16px) saturate(1.6); }
+    .store-icon-shadow { filter: drop-shadow(0 3px 8px rgba(232,147,90,.35)); }
+    .dots-pattern { background-image: radial-gradient(circle, #E8935A 1px, transparent 1px); background-size: 24px 24px; opacity: .06; }
+
+    .mobile-menu-enter { max-height: 0; opacity: 0; overflow: hidden; transition: max-height .4s ease, opacity .3s ease; }
+    .mobile-menu-enter.open { max-height: 500px; opacity: 1; }
+
+    .nav-link { position: relative; }
+    .nav-link.active { color: #E8935A; font-weight: 600; }
+    .nav-link.active::after { content: ''; position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%); width: 18px; height: 3px; background: #E8935A; border-radius: 9999px; }
+    .mobile-nav-link.active { color: #E8935A; background: rgba(232,147,90,.08); font-weight: 600; }
+
+    .observe-fade { opacity: 0; transform: translateY(24px); transition: opacity .6s ease-out, transform .6s ease-out; }
+    .observe-fade.visible { opacity: 1; transform: translateY(0); }
+
+    /* Sidebar link active */
+    .sidebar-link { transition: all .2s ease; border-left: 3px solid transparent; }
+    .sidebar-link:hover { background: rgba(232,147,90,.06); border-left-color: #F4B88A; color: #D47A3F; }
+    .sidebar-link.active { background: rgba(232,147,90,.10); border-left-color: #E8935A; color: #E8935A; font-weight: 600; }
+
+    /* Article card hover line */
+    .article-card { transition: all .3s ease; }
+    .article-card:hover { box-shadow: 0 8px 32px rgba(46,42,39,.11); transform: translateY(-3px); }
+    .article-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: transparent; border-radius: 1rem 0 0 1rem; transition: background .3s ease; }
+    .article-card:hover::before { background: #E8935A; }
+
+    /* Tag pill */
+    .tag-pill { display: inline-block; padding: 2px 10px; font-size: .7rem; font-weight: 600; border-radius: 9999px; }
+  </style>
+</head>
+<body class="bg-cream text-carbon font-sans antialiased">
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="fixed top-0 left-0 right-0 z-50 navbar-blur bg-cream/80 border-b border-oat/60" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 lg:h-[72px]">
+        <a href="index.html" class="flex items-center group py-1" aria-label="光速便利店首页">
+          <svg class="h-10 sm:h-11 w-auto drop-shadow-sm select-none group-hover:scale-[1.02] transition-transform duration-300" viewBox="0 0 320 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="c1-bg-grad-g" x1="8" y1="8" x2="68" y2="72" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FF8A3D"/>
+                <stop offset="100%" stop-color="#EA580C"/>
+              </linearGradient>
+              <linearGradient id="c1-bolt-grad-g" x1="28" y1="20" x2="52" y2="60" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FEF08A"/>
+                <stop offset="100%" stop-color="#FBBF24"/>
+              </linearGradient>
+              <filter id="c1-soft-shadow-g" x="0" y="4" width="80" height="80" filterUnits="userSpaceOnUse">
+                <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#EA580C" flood-opacity="0.25"/>
+              </filter>
+            </defs>
+            <g filter="url(#c1-soft-shadow-g)">
+              <rect x="8" y="8" width="64" height="64" rx="20" fill="url(#c1-bg-grad-g)"/>
+              <rect x="9.5" y="9.5" width="61" height="61" rx="18.5" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1.5"/>
+            </g>
+            <path d="M16 28 C16 23.58 19.58 20 24 20 H56 C60.42 20 64 23.58 64 28 L62 33 C61.2 35 59 36.5 56.5 36.5 C54 36.5 52 35 51.5 33 C50.5 35 48.5 36.5 46 36.5 C43.5 36.5 41.5 35 40.5 33 C39.5 35 37.5 36.5 35 36.5 C32.5 36.5 30.5 35 29.5 33 C28.5 35 26.5 36.5 24 36.5 C21.5 36.5 19.5 35 18.5 33 L16 28 Z" fill="#FFFBEB" fill-opacity="0.95"/>
+            <path d="M26 20 L27 34 M38 20 L37 34 M49 20 L48 34" stroke="#F97316" stroke-width="2.5" stroke-linecap="round" stroke-opacity="0.85"/>
+            <path d="M44 26 L26 44 H38 L32 58 L54 38 H40 L44 26 Z" fill="url(#c1-bolt-grad-g)" stroke="#7C2D12" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+            <text x="88" y="44" fill="#0F172A" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="25" font-weight="900" letter-spacing="1.5">
+              光速便利店
+            </text>
+            <g transform="translate(89, 53)">
+              <circle cx="4" cy="9" r="3" fill="#10B981"/>
+              <circle cx="4" cy="9" r="5" stroke="#10B981" stroke-width="1" stroke-opacity="0.4"/>
+              <text x="13" y="12" fill="#64748B" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10.5" font-weight="700" letter-spacing="2.2">
+                SPEED MART
+              </text>
+              <rect x="94" y="6" width="1" height="8" fill="#CBD5E1"/>
+              <text x="102" y="12" fill="#94A3B8" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="9" font-weight="500">
+                24H 网络漫游
+              </text>
+            </g>
+          </svg>
+        </a>
+        <nav class="hidden lg:flex items-center gap-1" aria-label="主导航">
+          <a href="index.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="home">首页</a>
+          <a href="reviews.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="reviews">店长严选</a>
+          <a href="guide.html" class="nav-link active px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="guide">新手便当</a>
+          <a href="devices.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="devices">设备专柜</a>
+          <a href="speedtest.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="speedtest">测速冰箱</a>
+          <a href="blog.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="blog">便利店日志</a>
+          <a href="faq.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="faq">常见避坑</a>
+        </nav>
+        <div class="flex items-center gap-2">
+          <div class="hidden md:flex items-center bg-oat/70 rounded-full px-3.5 py-2 gap-2 focus-within:ring-2 focus-within:ring-warmOrange/40 transition-shadow">
+            <svg class="w-4 h-4 text-carbonMuted flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="搜索教程或工具..." class="bg-transparent outline-none text-sm text-carbon placeholder-carbonMuted w-36 lg:w-44" />
+          </div>
+          <button class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-oat/60 transition-colors" id="menu-toggle" aria-label="打开菜单" aria-expanded="false">
+            <svg class="w-5 h-5 text-carbon" id="menu-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            <svg class="w-5 h-5 text-carbon hidden" id="menu-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="lg:hidden mobile-menu-enter bg-cream/95 navbar-blur border-t border-oat/40" id="mobile-menu">
+      <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
+        <div class="flex items-center bg-oat/70 rounded-full px-3.5 py-2.5 gap-2 mb-3 md:hidden">
+          <svg class="w-4 h-4 text-carbonMuted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" placeholder="搜索教程或工具..." class="bg-transparent outline-none text-sm text-carbon placeholder-carbonMuted w-full" />
+        </div>
+        <a href="index.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="home">首页</a>
+        <a href="reviews.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="reviews">店长严选</a>
+        <a href="guide.html" class="mobile-nav-link active block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="guide">新手便当</a>
+        <a href="devices.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="devices">设备专柜</a>
+        <a href="speedtest.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="speedtest">测速冰箱</a>
+        <a href="blog.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="blog">便利店日志</a>
+        <a href="faq.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="faq">常见避坑</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-20 lg:pt-[76px]">
+
+    <!-- ===================== PAGE HEADER + BREADCRUMB ===================== -->
+    <section class="relative bg-oat/40 border-b border-oat/50 py-10 md:py-14 overflow-hidden">
+      <div class="absolute inset-0 dots-pattern pointer-events-none"></div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Breadcrumb -->
+        <nav class="mb-4" aria-label="面包屑导航">
+          <ol class="flex items-center gap-1.5 text-xs text-carbonMuted">
+            <li><a href="index.html" class="hover:text-warmOrange transition-colors">首页</a></li>
+            <li><svg class="w-3 h-3 text-carbonMuted/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></li>
+            <li class="text-warmOrange font-semibold">新手便当</li>
+          </ol>
+        </nav>
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 rounded-xl bg-buttercupLight flex items-center justify-center text-3xl flex-shrink-0 shadow-sm">🍱</div>
+          <div>
+            <h1 class="text-2xl md:text-3xl font-bold tracking-tight">新手便当</h1>
+            <p class="mt-1 text-sm md:text-base text-carbonMuted">全平台客户端 5 分钟极速上手 · 零基础保姆级教程</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: 新手便当三步极速上手指南 (Bento Box 3-Step Starter Kit) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+      <div class="bg-gradient-to-br from-buttercupLight/40 via-white to-cream rounded-2xl border-2 border-buttercup/60 shadow-card p-6 md:p-8 observe-fade relative overflow-hidden">
+        <!-- Decorative Background Blob -->
+        <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-warmOrange/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-oat pb-6 mb-6">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-semibold mb-2">
+              <span>🍱</span><span>像打包便当一样简单 · 零基础保姆级上手</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-carbon">新手便当三步极速上手 · 黄金标准流程</h2>
+            <p class="text-xs sm:text-sm text-carbonMuted mt-1">主食挑客户端、配菜导订阅、饮品调分流——5 分钟完成第一次科学漫游！</p>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-mono bg-white px-3.5 py-2 rounded-xl border border-oat shadow-sm text-carbon">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>新手平均通关时长：4分48秒</span>
+          </div>
+        </div>
+
+        <!-- 3-Step Bento Box Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+          <!-- Step 1: 主食篇 -->
+          <div class="bg-white rounded-2xl border-2 border-oat hover:border-warmOrange/60 p-5 shadow-sm transition-all flex flex-col justify-between group">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="w-8 h-8 rounded-xl bg-warmOrange/15 text-warmOrangeDeep text-xs font-bold font-mono flex items-center justify-center">STEP 1</span>
+                <span class="text-xs font-bold text-warmOrange">🍙 第一格 · 主食篇</span>
+              </div>
+              <h3 class="font-bold text-base text-carbon group-hover:text-warmOrange transition-colors mb-1.5">挑选趁手客户端</h3>
+              <p class="text-xs text-carbonMuted leading-relaxed mb-4">
+                根据手头设备选择对应软件：Windows / Mac 认准 <strong class="text-carbon">Clash Verge Rev</strong>；iOS 认准 <strong class="text-carbon">Shadowrocket</strong>；Android 认准 <strong class="text-carbon">Clash Meta</strong>。
+              </p>
+              <div class="space-y-1.5 text-xs bg-cream/70 rounded-xl p-3 border border-oat/70 text-carbonLight mb-4">
+                <div class="flex items-start gap-1.5">
+                  <span class="text-emerald-600 font-bold">✓</span>
+                  <span><strong>避坑要诀：</strong>认准 GitHub 官方 Release，绝不下载百度搜索的推广捆绑包。</span>
+                </div>
+              </div>
+            </div>
+            <a href="devices.html" class="w-full text-center py-2 px-3 bg-oat/60 hover:bg-warmOrange hover:text-white text-carbon font-bold text-xs rounded-xl transition-all">
+              前往设备专柜下载 →
+            </a>
+          </div>
+
+          <!-- Step 2: 配菜篇 -->
+          <div class="bg-white rounded-2xl border-2 border-oat hover:border-warmOrange/60 p-5 shadow-sm transition-all flex flex-col justify-between group">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="w-8 h-8 rounded-xl bg-skyBlue/30 text-blue-800 text-xs font-bold font-mono flex items-center justify-center">STEP 2</span>
+                <span class="text-xs font-bold text-blue-700">🥢 第二格 · 配菜篇</span>
+              </div>
+              <h3 class="font-bold text-base text-carbon group-hover:text-warmOrange transition-colors mb-1.5">导入订阅与节点</h3>
+              <p class="text-xs text-carbonMuted leading-relaxed mb-4">
+                在服务商后台复制 <strong class="text-carbon">Clash / Universal 订阅链接</strong>，在客户端「订阅/配置 (Profiles)」粘贴该链接并点击「保存/下载」，节点列表秒级获取完毕。
+              </p>
+              <div class="space-y-1.5 text-xs bg-cream/70 rounded-xl p-3 border border-oat/70 text-carbonLight mb-4">
+                <div class="flex items-start gap-1.5">
+                  <span class="text-sky-600 font-bold">✓</span>
+                  <span><strong>定时保鲜：</strong>建议勾选「自动定时更新 (Auto Update)」，设置为每 24 小时自动刷新节点。</span>
+                </div>
+              </div>
+            </div>
+            <a href="article.html" class="w-full text-center py-2 px-3 bg-oat/60 hover:bg-warmOrange hover:text-white text-carbon font-bold text-xs rounded-xl transition-all">
+              查看图文导入步骤 →
+            </a>
+          </div>
+
+          <!-- Step 3: 饮品篇 -->
+          <div class="bg-white rounded-2xl border-2 border-oat hover:border-warmOrange/60 p-5 shadow-sm transition-all flex flex-col justify-between group">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="w-8 h-8 rounded-xl bg-mintFresh/30 text-emerald-800 text-xs font-bold font-mono flex items-center justify-center">STEP 3</span>
+                <span class="text-xs font-bold text-emerald-700">🍵 第三格 · 饮品篇</span>
+              </div>
+              <h3 class="font-bold text-base text-carbon group-hover:text-warmOrange transition-colors mb-1.5">调好分流与开启系统代理</h3>
+              <p class="text-xs text-carbonMuted leading-relaxed mb-4">
+                将路由模式切换为 <strong class="text-carbon">「规则分流 (Rule)」</strong>；打开「System Proxy (系统代理)」开关。此时国内网站完全直连，海外网站自动秒开。
+              </p>
+              <div class="space-y-1.5 text-xs bg-cream/70 rounded-xl p-3 border border-oat/70 text-carbonLight mb-4">
+                <div class="flex items-start gap-1.5">
+                  <span class="text-amber-600 font-bold">✓</span>
+                  <span><strong>严禁全局：</strong>切勿长期开启「Global (全局代理)」，否则微信转圈且国内网速变慢。</span>
+                </div>
+              </div>
+            </div>
+            <a href="speedtest.html" class="w-full text-center py-2 px-3 bg-oat/60 hover:bg-warmOrange hover:text-white text-carbon font-bold text-xs rounded-xl transition-all">
+              前往测速冰箱验鲜 →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: 网络漫游白话小词典 (Bento Glossary & Slang Translator) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+      <div class="bg-white rounded-2xl border border-oat shadow-card p-6 md:p-8 observe-fade">
+        <div class="flex items-center justify-between border-b border-oat/80 pb-4 mb-6">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-skyBlue/20 text-blue-700 text-xs font-semibold mb-1.5">
+              <span>📖</span><span>黑话翻译机 · 拒绝云里雾里</span>
+            </div>
+            <h2 class="text-lg sm:text-xl font-extrabold text-carbon">网络漫游白话小词典 · 核心概念一览</h2>
+          </div>
+          <span class="text-xs text-carbonMuted font-mono hidden sm:inline">NO TECH JARGON · 100% 白话</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <!-- Item 1: 节点 -->
+          <div class="p-4 bg-cream/60 rounded-xl border border-oat/70 hover:border-warmOrange/50 transition-colors">
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="text-xl">🥪</span>
+              <h3 class="font-bold text-sm text-carbon">节点 (Node / Server)</h3>
+            </div>
+            <p class="text-xs text-carbonMuted leading-relaxed">
+              <strong>白话：</strong>相当于你在海外租用的一台高速电脑跳板。你的访问请求先发给它，由它代你前往海外网站并把结果传回给你。
+            </p>
+          </div>
+
+          <!-- Item 2: 订阅链接 -->
+          <div class="p-4 bg-cream/60 rounded-xl border border-oat/70 hover:border-warmOrange/50 transition-colors">
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="text-xl">📦</span>
+              <h3 class="font-bold text-sm text-carbon">订阅链接 (Subscription)</h3>
+            </div>
+            <p class="text-xs text-carbonMuted leading-relaxed">
+              <strong>白话：</strong>装满成百上千个节点服务器地址与密码的「配置清单链接」。客户端读取一次就能自动拉取全部节点，不用一个个手动敲。
+            </p>
+          </div>
+
+          <!-- Item 3: 规则分流 -->
+          <div class="p-4 bg-cream/60 rounded-xl border border-oat/70 hover:border-warmOrange/50 transition-colors">
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="text-xl">🧭</span>
+              <h3 class="font-bold text-sm text-carbon">规则分流 (Rule Routing)</h3>
+            </div>
+            <p class="text-xs text-carbonMuted leading-relaxed">
+              <strong>白话：</strong>客户端自带的「交通警察」。国内网站（淘宝/微信）直连本地宽带，海外网站（YouTube/Google）才引导走节点，互不干扰。
+            </p>
+          </div>
+
+          <!-- Item 4: Fake-IP -->
+          <div class="p-4 bg-cream/60 rounded-xl border border-oat/70 hover:border-warmOrange/50 transition-colors">
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="text-xl">💡</span>
+              <h3 class="font-bold text-sm text-carbon">Fake-IP 模式</h3>
+            </div>
+            <p class="text-xs text-carbonMuted leading-relaxed">
+              <strong>白话：</strong>快速发出的「取餐号码牌」。客户端收到解析请求后立即给应用返回一个 198.18 虚拟 IP 省去本地 DNS 等待，实现秒开。
+            </p>
+          </div>
+
+          <!-- Item 5: TUN 网卡 -->
+          <div class="p-4 bg-cream/60 rounded-xl border border-oat/70 hover:border-warmOrange/50 transition-colors">
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="text-xl">🛡️</span>
+              <h3 class="font-bold text-sm text-carbon">TUN 虚拟网卡</h3>
+            </div>
+            <p class="text-xs text-carbonMuted leading-relaxed">
+              <strong>白话：</strong>在系统里插上一根虚拟网线，强行接管电脑的所有流量。连没有代理设置开关的游戏、命令行或特殊软件也能被加速。
+            </p>
+          </div>
+
+          <!-- Item 6: IPLC 专线 -->
+          <div class="p-4 bg-cream/60 rounded-xl border border-oat/70 hover:border-warmOrange/50 transition-colors">
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="text-xl">🚇</span>
+              <h3 class="font-bold text-sm text-carbon">IPLC / IEPL 专线</h3>
+            </div>
+            <p class="text-xs text-carbonMuted leading-relaxed">
+              <strong>白话：</strong>公网中继像走繁忙的跨洋国道，晚高峰易拥堵丢包；专线则是运营商拉的海底专用直达光纤，不经公网，晚高峰极其平稳。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===================== CONTENT AREA ===================== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
+      <div class="flex flex-col lg:flex-row gap-8 lg:gap-10">
+
+        <!-- === LEFT SIDEBAR === -->
+        <aside class="w-full lg:w-64 xl:w-72 flex-shrink-0 lg:sticky lg:top-24 lg:self-start">
+          <div class="bg-white rounded-shelf shadow-card p-5">
+            <h2 class="text-sm font-bold text-carbon mb-4 flex items-center gap-2">
+              <svg class="w-4 h-4 text-warmOrange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              文章分类
+            </h2>
+            <nav class="space-y-0.5" id="guideSidebarNav" aria-label="文章分类导航">
+              <button data-cat="all" class="guide-cat-btn active w-full text-left sidebar-link block px-3 py-2.5 text-sm rounded-lg">📦 全部文章 <span class="text-xs text-carbonMuted ml-1">(12)</span></button>
+              <button data-cat="quickstart" class="guide-cat-btn w-full text-left sidebar-link block px-3 py-2.5 text-sm rounded-lg text-carbonLight">🚀 快速入门 <span class="text-xs text-carbonMuted ml-1">(4)</span></button>
+              <button data-cat="import" class="guide-cat-btn w-full text-left sidebar-link block px-3 py-2.5 text-sm rounded-lg text-carbonLight">📥 订阅导入 <span class="text-xs text-carbonMuted ml-1">(3)</span></button>
+              <button data-cat="advanced" class="guide-cat-btn w-full text-left sidebar-link block px-3 py-2.5 text-sm rounded-lg text-carbonLight">🔧 进阶配置 <span class="text-xs text-carbonMuted ml-1">(3)</span></button>
+              <button data-cat="rules" class="guide-cat-btn w-full text-left sidebar-link block px-3 py-2.5 text-sm rounded-lg text-carbonLight">📊 分流规则 <span class="text-xs text-carbonMuted ml-1">(2)</span></button>
+            </nav>
+          </div>
+
+          <!-- Rookie Pitfall Checklist -->
+          <div class="bg-white rounded-shelf p-5 mt-5 border border-oat shadow-card">
+            <div class="flex items-center gap-1.5 mb-3 text-red-600 font-bold text-sm">
+              <span>⚠️</span>
+              <span class="text-carbon">新手避雷清单 · 5条铁律</span>
+            </div>
+            <div class="space-y-3 text-xs leading-relaxed">
+              <div class="p-2.5 bg-cream/70 rounded-xl border border-oat/60">
+                <div class="font-bold text-carbon mb-0.5">1. 本地时间误差 &lt; 60 秒</div>
+                <div class="text-[11px] text-carbonMuted">时间不对会导致 TLS 握手校验硬失败，节点全报 Timeout。</div>
+              </div>
+              <div class="p-2.5 bg-cream/70 rounded-xl border border-oat/60">
+                <div class="font-bold text-carbon mb-0.5">2. 切忌长期开「全局代理」</div>
+                <div class="text-[11px] text-carbonMuted">误开 Global 会让微信、银行等国内流量绕道海外导致异常。</div>
+              </div>
+              <div class="p-2.5 bg-cream/70 rounded-xl border border-oat/60">
+                <div class="font-bold text-carbon mb-0.5">3. 关软件前先退出代理</div>
+                <div class="text-[11px] text-carbonMuted">强退软件会残留注册表代理，导致下次开机所有网页无法打开。</div>
+              </div>
+              <div class="p-2.5 bg-cream/70 rounded-xl border border-oat/60">
+                <div class="font-bold text-carbon mb-0.5">4. iOS 认准外区 Apple ID</div>
+                <div class="text-[11px] text-carbonMuted">国区 App Store 搜索不到小火箭，需准备美区或港区账号。</div>
+              </div>
+              <div class="p-2.5 bg-cream/70 rounded-xl border border-oat/60">
+                <div class="font-bold text-carbon mb-0.5">5. 认准 GitHub 官方发行版</div>
+                <div class="text-[11px] text-carbonMuted">绝不在第三方下载站下载带全家桶木马的客户端。</div>
+              </div>
+            </div>
+            <a href="faq.html" class="block text-center mt-3 text-xs text-warmOrange hover:text-warmOrangeDeep font-bold transition-colors">
+              查看全部 15 条避坑锦囊 →
+            </a>
+          </div>
+        </aside>
+
+        <!-- === RIGHT ARTICLE LIST === -->
+        <div class="flex-1 min-w-0">
+          <!-- Sort / Meta Bar -->
+          <div class="flex items-center justify-between mb-6">
+            <p class="text-sm text-carbonMuted">当前分类共 <span class="font-semibold text-warmOrange" id="currentGuideCount">12</span> 篇指引教程</p>
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-carbonMuted hidden sm:inline">排序：</span>
+              <select id="guideSortSelect" class="text-xs bg-white border border-oat rounded-lg px-3 py-1.5 text-carbon outline-none focus:ring-2 focus:ring-warmOrange/30 cursor-pointer">
+                <option value="newest">最新发布优先</option>
+                <option value="views">最多阅读优先</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Article Cards -->
+          <div class="space-y-5" id="guideArticleListContainer">
+            <!-- Guide Article -->
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="quickstart" data-date="20261015" data-views="5200">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    <span class="tag-pill bg-warmOrange/15 text-warmOrangeDeep">🔥 热门推荐</span>
+                    <span class="tag-pill bg-mintFresh/30 text-green-800">快速入门</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">从零开始：5 分钟完成你的第一次网络加速配置</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    从获取订阅链接、下载各平台客户端，到导入配置并验证连接连通性——全程零基础图文并茂，手把手带你极速通关。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-10-15
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      5 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      5.2k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+
+            <!-- Guide Article -->
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="quickstart" data-date="20261011" data-views="3800">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    
+                    <span class="tag-pill bg-mintFresh/30 text-green-800">快速入门</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">网络加速基础认知：代理、VPN、分流与专线到底是什么？</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    系统厘清正向代理、反向代理与传统 VPN 的本质差异，搞懂为什么科学分流才是现代网络加速的最优解。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-10-11
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      7 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      3.8k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+
+            <!-- Guide Article -->
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="quickstart" data-date="20261006" data-views="4100">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    
+                    <span class="tag-pill bg-mintFresh/30 text-green-800">快速入门</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">如何挑选靠谱的加速节点：延迟、带宽、晚高峰与倍率全解</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    看懂节点名称中的冷知识：BGP、IPLC、原生IP、0.5x~2.0x 倍率计算规则，教你挑选性价比最高、晚高峰不翻车的真香线路。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-10-06
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      6 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      4.1k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+
+            <!-- Guide Article -->
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="quickstart" data-date="20260929" data-views="2600">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    
+                    <span class="tag-pill bg-mintFresh/30 text-green-800">快速入门</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">新手上路网络测试第一课：三步验证网络连接是否真正就绪</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    节点显示 Ping 通不等于网页能开！通过真实出口 IP 查询、DNS 泄漏测试与海外关键资源握手，彻底排查假连现象。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-09-29
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      5 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      2.6k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+
+            <!-- Guide Article -->
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="import" data-date="20261012" data-views="4600">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    <span class="tag-pill bg-warmOrange/15 text-warmOrangeDeep">🔥 热门推荐</span>
+                    <span class="tag-pill bg-skyBlue/30 text-blue-800">订阅导入</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">Clash Verge Rev 订阅导入详解：一键拉取、自动更新与节点分组</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    全景解析 Windows / Mac 端导入订阅的核心步骤，配置自动定时同步周期，灵活使用延迟自动优选策略组（URL-Test）。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-10-12
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      8 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      4.6k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+
+            <!-- Guide Article -->
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="import" data-date="20261008" data-views="3900">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    
+                    <span class="tag-pill bg-skyBlue/30 text-blue-800">订阅导入</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">Shadowrocket (小火箭) 订阅导入全指南：扫码与链接双模式实操</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    iPhone 与 iPad 端导入订阅的最稳操作。包括扫码即时拉取、订阅链接定期自动更新设置，以及节点更新失败的应急修复。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-10-08
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      6 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      3.9k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+
+            <!-- Guide Article -->
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="import" data-date="20260927" data-views="3300">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    
+                    <span class="tag-pill bg-skyBlue/30 text-blue-800">订阅导入</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">订阅链接转换全解析：把 V2Ray / SS 订阅转为 Clash 与 Sing-box 规则</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    订阅格式不兼容怎么办？手把手教你使用安全无泄漏的 Subconverter 订阅转换工具，将单节点链接打包为全功能规则订阅。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-09-27
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      9 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      3.3k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+
+            <!-- Guide Article -->
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="advanced" data-date="20261009" data-views="4200">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    <span class="tag-pill bg-warmOrange/15 text-warmOrangeDeep">🔥 热门推荐</span>
+                    <span class="tag-pill bg-buttercupLight text-yellow-900">进阶配置</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">TUN 模式深度解析：接管整机流量与游戏联机无感加速配置</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    摆脱传统系统代理局限。开启 Wintun 虚拟网卡接管全机进程网络，无感加速外服 Steam 游戏、Docker 与终端 CLI 工具。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-10-09
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      11 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      4.2k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+
+            <!-- Guide Article -->
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="advanced" data-date="20261003" data-views="3400">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    
+                    <span class="tag-pill bg-buttercupLight text-yellow-900">进阶配置</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">DNS 深度优化实战：搞懂 Fake-IP 与 Redir-Host，彻底杜绝 DNS 污染</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    网络排障的核心关键。对比 Fake-IP 与 Redir-Host 的底层运作逻辑，配置双 DNS 分流解析，彻底根除域名污染与泄漏风险。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-10-03
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      10 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      3.4k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+
+            <!-- Guide Article -->
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="advanced" data-date="20260922" data-views="2800">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    
+                    <span class="tag-pill bg-buttercupLight text-yellow-900">进阶配置</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">BBR 拥塞控制算法：服务器端一键开启 TCP 抗拥塞提速实战</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    为什么开启 BBR 能在晚高峰骨干网丢包时维持几十兆码率？详解 Google BBR 算法原理，教你服务端一键开启 BBR+fq。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-09-22
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      8 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      2.8k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+
+            <!-- Guide Article -->
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="rules" data-date="20261001" data-views="4700">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    <span class="tag-pill bg-warmOrange/15 text-warmOrangeDeep">🔥 热门推荐</span>
+                    <span class="tag-pill bg-blushPink/30 text-red-800">分流规则</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">分流规则从入门到精通：让国内外流量各走各的路</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    理解直连 (DIRECT)、代理 (PROXY)、拦截 (REJECT) 三大策略动作，掌握 DOMAIN、IP-CIDR、GeoIP 匹配逻辑，从此告别全局慢卡。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-10-01
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      12 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      4.7k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+
+            <!-- Guide Article -->
+            <article class="article-card relative bg-white rounded-shelf border border-oat shadow-card p-5 md:p-6 observe-fade" data-category="rules" data-date="20260925" data-views="3100">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    
+                    <span class="tag-pill bg-blushPink/30 text-red-800">分流规则</span>
+                  </div>
+                  <h3 class="text-base md:text-lg font-bold leading-snug mb-1.5 hover:text-warmOrange transition-colors">
+                    <a href="article.html">自定义规则集（Rule-Set）实战：精准去广告与主流流媒体分流</a>
+                  </h3>
+                  <p class="text-sm text-carbonMuted leading-relaxed line-clamp-2 mb-3">
+                    使用 Meta 内核的 Rule-Provider 外部规则集机制，一键订阅 ACL4SSR 经典规则，实现流媒体指定节点与国内专网域名精准直连。
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-xs text-carbonMuted">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      2026-09-25
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      9 分钟阅读
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      3.1k
+                    </span>
+                  </div>
+                </div>
+                <a href="article.html" class="flex-shrink-0 hidden sm:flex items-center justify-center w-10 h-10 rounded-lg bg-oat/50 hover:bg-warmOrange/10 text-carbonMuted hover:text-warmOrange transition-colors" aria-label="阅读全文">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <!-- Pagination -->
+          <nav class="mt-10 flex items-center justify-center gap-1.5" aria-label="分页导航">
+            <span class="w-9 h-9 flex items-center justify-center rounded-lg bg-warmOrange text-white text-sm font-semibold shadow-sm">1</span>
+            <a href="#" class="w-9 h-9 flex items-center justify-center rounded-lg bg-white text-carbonLight text-sm font-medium hover:bg-warmOrange/10 hover:text-warmOrange border border-oat/50 transition-colors">2</a>
+            <a href="#" class="w-9 h-9 flex items-center justify-center rounded-lg bg-white text-carbonLight text-sm font-medium hover:bg-warmOrange/10 hover:text-warmOrange border border-oat/50 transition-colors">3</a>
+            <span class="text-carbonMuted text-sm px-1">…</span>
+            <a href="#" class="w-9 h-9 flex items-center justify-center rounded-lg bg-white text-carbonLight text-sm font-medium hover:bg-warmOrange/10 hover:text-warmOrange border border-oat/50 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+          </nav>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="bg-carbon text-cream/80 py-12 md:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
+        <div>
+          <div class="flex items-center gap-2.5 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-warmOrange flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div class="leading-tight">
+              <span class="block text-sm font-bold text-cream">光速便利店</span>
+              <span class="block text-[9px] font-display font-semibold text-cream/50 tracking-widest uppercase">Speed Mart</span>
+            </div>
+          </div>
+          <p class="text-xs text-cream/50 leading-relaxed max-w-xs">24 小时不打烊的网络漫游补给站。<br/>我们专注于提供客观、专业的网络优化技术内容。</p>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold text-cream mb-4">站点地图</h3>
+          <ul class="space-y-2.5">
+            <li><a href="index.html" class="text-xs text-cream/60 hover:text-warmOrange transition-colors">首页</a></li>
+            <li><a href="reviews.html" class="text-xs text-cream/60 hover:text-warmOrange transition-colors">店长严选</a></li>
+            <li><a href="guide.html" class="text-xs text-cream/60 hover:text-warmOrange transition-colors">新手便当</a></li>
+            <li><a href="devices.html" class="text-xs text-cream/60 hover:text-warmOrange transition-colors">设备专柜</a></li>
+            <li><a href="speedtest.html" class="text-xs text-cream/60 hover:text-warmOrange transition-colors">测速冰箱</a></li>
+            <li><a href="blog.html" class="text-xs text-cream/60 hover:text-warmOrange transition-colors">便利店日志</a></li>
+            <li><a href="faq.html" class="text-xs text-cream/60 hover:text-warmOrange transition-colors">常见避坑</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold text-cream mb-4">保持联络</h3>
+          <p class="text-xs text-cream/50 mb-3">订阅 RSS 或直接联络店长获取专属建议。</p>
+          <div class="flex flex-wrap items-center gap-2">
+            <a href="https://t.me/huanqiuti8899" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-[#229ED9]/20 hover:bg-[#229ED9]/30 text-[#229ED9] hover:text-[#5bc4f5] text-xs font-semibold px-4 py-2.5 rounded-lg transition-colors border border-[#229ED9]/30">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+              <span>联系店长</span>
+            </a>
+            <a href="#" class="inline-flex items-center gap-1.5 bg-warmOrange/15 hover:bg-warmOrange/25 text-warmOrangeLight text-xs font-semibold px-3 py-2.5 rounded-lg transition-colors">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+              <span>RSS</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="mt-10 pt-8 border-t border-cream/10">
+        <p class="text-[11px] text-cream/35 leading-relaxed text-center max-w-2xl mx-auto">⚠️ 免责声明：本站所有内容仅供合规网络优化与技术研究交流之用，不提供任何违反当地法律法规的服务或建议。用户应自行确保其使用行为符合所在地区的法律法规要求。</p>
+        <p class="mt-4 text-[11px] text-cream/25 text-center">© 2026 光速便利店 Speed Mart. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile Menu
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconOpen   = document.getElementById('menu-icon-open');
+    const iconClose  = document.getElementById('menu-icon-close');
+    if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.toggle('open');
+        iconOpen.classList.toggle('hidden', isOpen);
+        iconClose.classList.toggle('hidden', !isOpen);
+        menuToggle.setAttribute('aria-expanded', isOpen);
+      });
+    }
+    if (mobileMenu) {
+      mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
+        mobileMenu.classList.remove('open'); iconOpen.classList.remove('hidden'); iconClose.classList.add('hidden');
+      }));
+    }
+
+    // 1. Sidebar filter toggle & Live Filtering
+    const guideCatBtns = document.querySelectorAll('.guide-cat-btn');
+    const guideCards = document.querySelectorAll('.article-card');
+    const guideCountDisplay = document.getElementById('currentGuideCount');
+    const guideSortSelect = document.getElementById('guideSortSelect');
+    const guideContainer = document.getElementById('guideArticleListContainer');
+
+    function filterGuideArticles() {
+      const activeBtn = document.querySelector('.guide-cat-btn.active');
+      const cat = activeBtn ? activeBtn.getAttribute('data-cat') : 'all';
+      let visible = 0;
+
+      guideCards.forEach(card => {
+        if (cat === 'all' || card.getAttribute('data-category') === cat) {
+          card.style.display = 'block';
+          visible++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (guideCountDisplay) {
+        guideCountDisplay.textContent = visible;
+      }
+    }
+
+    guideCatBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        guideCatBtns.forEach(b => {
+          b.classList.remove('active');
+          b.classList.add('text-carbonLight');
+        });
+        btn.classList.add('active');
+        btn.classList.remove('text-carbonLight');
+        filterGuideArticles();
+      });
+    });
+
+    // 2. Sorting
+    if (guideSortSelect && guideContainer) {
+      guideSortSelect.addEventListener('change', () => {
+        const sortType = guideSortSelect.value;
+        const cardsArr = Array.from(guideCards);
+
+        cardsArr.sort((a, b) => {
+          if (sortType === 'views') {
+            return parseInt(b.getAttribute('data-views') || 0) - parseInt(a.getAttribute('data-views') || 0);
+          } else {
+            return parseInt(b.getAttribute('data-date') || 0) - parseInt(a.getAttribute('data-date') || 0);
+          }
+        });
+
+        cardsArr.forEach(c => guideContainer.appendChild(c));
+      });
+    }
+
+    // Intersection Observer
+    const obs = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { const idx = Array.from(e.target.parentElement?.children||[]).indexOf(e.target); e.target.style.transitionDelay = `${idx*.06}s`; e.target.classList.add('visible'); obs.unobserve(e.target); }
+    }), { threshold: .1, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.observe-fade').forEach(el => obs.observe(el));
+
+    // Navbar scroll shadow
+    window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('shadow-md', window.scrollY > 10); }, { passive: true });
+  </script>
+</body>
+</html>

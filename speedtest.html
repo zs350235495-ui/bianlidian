@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>测速冰箱 — 光速便利店 Speed Mart</title>
+  <meta name="description" content="光速便利店·测速冰箱：节点延迟在线测试、网络新鲜度保鲜检测、流媒体解锁诊断与全球主流线路性能测评。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#FFF8F0',
+            oat: '#F5EDE3',
+            warmOrange: '#E8935A',
+            warmOrangeLight: '#F4B88A',
+            warmOrangeDeep: '#D47A3F',
+            buttercup: '#F5D78E',
+            buttercupLight: '#FBE9B7',
+            carbon: '#2E2A27',
+            carbonLight: '#4A4541',
+            carbonMuted: '#8A8480',
+            mintFresh: '#A8D5BA',
+            skyBlue: '#9ECFEA',
+            iceBlue: '#E6F4FA',
+            iceBlueDeep: '#3B82F6',
+            blushPink: '#F2B8B5',
+          },
+          fontFamily: {
+            sans: ['"Noto Sans SC"', '"Outfit"', 'system-ui', 'sans-serif'],
+            display: ['"Outfit"', '"Noto Sans SC"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          borderRadius: {
+            'shelf': '1rem',
+            'pill': '9999px',
+          },
+          boxShadow: {
+            'card': '0 2px 16px 0 rgba(46,42,39,.07)',
+            'card-hover': '0 8px 32px 0 rgba(46,42,39,.13)',
+            'fridge': '0 12px 40px -10px rgba(59,130,246,0.18)',
+          },
+          animation: {
+            'pulse-soft': 'pulseSoft 3s ease-in-out infinite',
+            'steam': 'steam 4s ease-in-out infinite',
+          },
+          keyframes: {
+            pulseSoft: { '0%,100%': { transform: 'scale(1)' }, '50%': { transform: 'scale(1.05)' } },
+            steam: { '0%': { opacity: '0.3', transform: 'translateY(0) scaleX(1)' }, '50%': { opacity: '0.7', transform: 'translateY(-10px) scaleX(1.1)' }, '100%': { opacity: '0.3', transform: 'translateY(0) scaleX(1)' } }
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #F5EDE3; }
+    ::-webkit-scrollbar-thumb { background: #E8935A; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #D47A3F; }
+    html { scroll-behavior: smooth; }
+
+    .navbar-blur { backdrop-filter: blur(16px) saturate(1.6); -webkit-backdrop-filter: blur(16px) saturate(1.6); }
+    .store-icon-shadow { filter: drop-shadow(0 3px 8px rgba(232,147,90,.35)); }
+    .fridge-frost { background: linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(230,244,250,0.65) 100%); backdrop-filter: blur(8px); }
+
+    .mobile-menu-enter { max-height: 0; opacity: 0; overflow: hidden; transition: max-height .4s ease, opacity .3s ease; }
+    .mobile-menu-enter.open { max-height: 500px; opacity: 1; }
+
+    .nav-link { position: relative; }
+    .nav-link.active { color: #E8935A; font-weight: 600; }
+    .nav-link.active::after { content: ''; position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%); width: 18px; height: 3px; background: #E8935A; border-radius: 9999px; }
+    .mobile-nav-link.active { color: #E8935A; background: rgba(232,147,90,.08); font-weight: 600; }
+
+    .observe-fade { opacity: 0; transform: translateY(24px); transition: opacity .6s ease-out, transform .6s ease-out; }
+    .observe-fade.visible { opacity: 1; transform: translateY(0); }
+
+    .gauge-circle { stroke-dasharray: 283; stroke-dashoffset: 283; transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1); }
+  </style>
+</head>
+<body class="bg-cream text-carbon font-sans antialiased min-h-screen flex flex-col justify-between">
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="fixed top-0 left-0 right-0 z-50 navbar-blur bg-cream/80 border-b border-oat/60" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 lg:h-[72px]">
+        <a href="index.html" class="flex items-center group py-1" aria-label="光速便利店首页">
+          <svg class="h-10 sm:h-11 w-auto drop-shadow-sm select-none group-hover:scale-[1.02] transition-transform duration-300" viewBox="0 0 320 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="c1-bg-grad-s" x1="8" y1="8" x2="68" y2="72" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FF8A3D"/>
+                <stop offset="100%" stop-color="#EA580C"/>
+              </linearGradient>
+              <linearGradient id="c1-bolt-grad-s" x1="28" y1="20" x2="52" y2="60" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FEF08A"/>
+                <stop offset="100%" stop-color="#FBBF24"/>
+              </linearGradient>
+              <filter id="c1-soft-shadow-s" x="0" y="4" width="80" height="80" filterUnits="userSpaceOnUse">
+                <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#EA580C" flood-opacity="0.25"/>
+              </filter>
+            </defs>
+            <g filter="url(#c1-soft-shadow-s)">
+              <rect x="8" y="8" width="64" height="64" rx="20" fill="url(#c1-bg-grad-s)"/>
+              <rect x="9.5" y="9.5" width="61" height="61" rx="18.5" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1.5"/>
+            </g>
+            <path d="M16 28 C16 23.58 19.58 20 24 20 H56 C60.42 20 64 23.58 64 28 L62 33 C61.2 35 59 36.5 56.5 36.5 C54 36.5 52 35 51.5 33 C50.5 35 48.5 36.5 46 36.5 C43.5 36.5 41.5 35 40.5 33 C39.5 35 37.5 36.5 35 36.5 C32.5 36.5 30.5 35 29.5 33 C28.5 35 26.5 36.5 24 36.5 C21.5 36.5 19.5 35 18.5 33 L16 28 Z" fill="#FFFBEB" fill-opacity="0.95"/>
+            <path d="M26 20 L27 34 M38 20 L37 34 M49 20 L48 34" stroke="#F97316" stroke-width="2.5" stroke-linecap="round" stroke-opacity="0.85"/>
+            <path d="M44 26 L26 44 H38 L32 58 L54 38 H40 L44 26 Z" fill="url(#c1-bolt-grad-s)" stroke="#7C2D12" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+            <text x="88" y="44" fill="#0F172A" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="25" font-weight="900" letter-spacing="1.5">
+              光速便利店
+            </text>
+            <g transform="translate(89, 53)">
+              <circle cx="4" cy="9" r="3" fill="#10B981"/>
+              <circle cx="4" cy="9" r="5" stroke="#10B981" stroke-width="1" stroke-opacity="0.4"/>
+              <text x="13" y="12" fill="#64748B" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10.5" font-weight="700" letter-spacing="2.2">
+                SPEED MART
+              </text>
+              <rect x="94" y="6" width="1" height="8" fill="#CBD5E1"/>
+              <text x="102" y="12" fill="#94A3B8" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="9" font-weight="500">
+                24H 网络漫游
+              </text>
+            </g>
+          </svg>
+        </a>
+
+        <nav class="hidden lg:flex items-center gap-1" aria-label="主导航">
+          <a href="index.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="home">首页</a>
+          <a href="reviews.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="reviews">店长严选</a>
+          <a href="guide.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="guide">新手便当</a>
+          <a href="devices.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="devices">设备专柜</a>
+          <a href="speedtest.html" class="nav-link active px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="speedtest">测速冰箱</a>
+          <a href="blog.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="blog">便利店日志</a>
+          <a href="faq.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="faq">常见避坑</a>
+        </nav>
+
+        <div class="flex items-center gap-2">
+          <div class="hidden md:flex items-center bg-oat/70 rounded-full px-3.5 py-2 gap-2 focus-within:ring-2 focus-within:ring-warmOrange/40 transition-shadow">
+            <svg class="w-4 h-4 text-carbonMuted flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="搜索测速工具或节点..." class="bg-transparent outline-none text-sm text-carbon placeholder-carbonMuted w-36 lg:w-44" />
+          </div>
+          <button class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-oat/60 transition-colors" id="menu-toggle" aria-label="打开菜单">
+            <svg class="w-5 h-5 text-carbon" id="menu-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            <svg class="w-5 h-5 text-carbon hidden" id="menu-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div class="lg:hidden mobile-menu-enter bg-cream/95 navbar-blur border-t border-oat/40" id="mobile-menu">
+      <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
+        <a href="index.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="home">首页</a>
+        <a href="reviews.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="reviews">店长严选</a>
+        <a href="guide.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="guide">新手便当</a>
+        <a href="devices.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="devices">设备专柜</a>
+        <a href="speedtest.html" class="mobile-nav-link active block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="speedtest">测速冰箱</a>
+        <a href="blog.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="blog">便利店日志</a>
+        <a href="faq.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="faq">常见避坑</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== MAIN CONTENT ===================== -->
+  <main class="pt-20 lg:pt-[76px] flex-grow">
+    <!-- Breadcrumb & Header -->
+    <section class="bg-gradient-to-b from-oat/50 to-cream py-8 border-b border-oat/60">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Breadcrumb -->
+        <nav class="flex items-center gap-2 text-xs text-carbonMuted mb-3" aria-label="面包屑导航">
+          <a href="index.html" class="hover:text-warmOrange transition-colors">首页</a>
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          <span class="text-carbon font-medium">测速冰箱</span>
+        </nav>
+
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-skyBlue/20 text-blue-700 text-xs font-semibold mb-2">
+              <span>❄️</span>
+              <span>24h 恒温冷藏 · 保鲜网络新鲜度</span>
+            </div>
+            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-carbon tracking-tight">
+              测速冰箱 <span class="text-sky-600 font-display font-medium text-xl sm:text-2xl">Speed Fridge</span>
+            </h1>
+            <p class="text-sm sm:text-base text-carbonMuted mt-1.5 max-w-2xl leading-relaxed">
+              像挑冷饮一样直观感知网络新鲜度！提供一键节点延迟诊断、丢包率检测与流媒体解锁状态模拟，助你选出最顺畅的加速路线。
+            </p>
+          </div>
+
+          <!-- Quick Status Indicator -->
+          <div class="flex items-center gap-3 bg-white/90 border border-oat rounded-xl px-4 py-2.5 shadow-sm">
+            <span class="relative flex h-3 w-3">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+            </span>
+            <div class="text-xs">
+              <div class="text-carbon font-medium">冰箱工作状态：<span class="text-emerald-600 font-semibold">恒温运行中</span></div>
+              <div class="text-carbonMuted">当前本地协议栈：HTTP/3 QUIC Ready</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Speed Fridge Module -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Fridge Main Tester (Left 7 Cols) -->
+        <div class="lg:col-span-7 bg-white rounded-2xl border-2 border-sky-100 shadow-fridge p-6 md:p-8 relative overflow-hidden observe-fade">
+          <!-- Decorative Frost Background -->
+          <div class="absolute -right-16 -top-16 w-56 h-56 bg-gradient-to-br from-sky-100/60 to-transparent rounded-full blur-2xl pointer-events-none"></div>
+
+          <!-- Fridge Top Bar -->
+          <div class="flex items-center justify-between border-b border-oat/80 pb-4 mb-6">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-sky-50 flex items-center justify-center text-sky-600">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+              <div>
+                <h2 class="text-base font-bold text-carbon">网络新鲜度·冷风快检</h2>
+                <p class="text-xs text-carbonMuted">模拟实际请求握手与 RTT 往返时延</p>
+              </div>
+            </div>
+            <!-- Node Selector -->
+            <div class="flex items-center gap-1.5">
+              <span class="text-xs text-carbonMuted hidden sm:inline">选择货架节点：</span>
+              <select id="nodeSelector" class="text-xs bg-oat/40 border border-oat hover:border-warmOrange text-carbon font-medium rounded-lg px-3 py-1.5 outline-none transition-colors cursor-pointer">
+                <option value="hk" selected>🇭🇰 香港 01 · 极速回国优化 (CN2/BGP)</option>
+                <option value="jp">🇯🇵 东京 02 · IIJ/NTT 综合低延迟</option>
+                <option value="tw">🇹🇼 台北 01 · 动画疯/原生解锁 (HiNet)</option>
+                <option value="sg">🇸🇬 新加坡 01 · 东南亚低延迟 (BGP)</option>
+                <option value="kr">🇰🇷 首尔 01 · 电竞低跳Ping专线 (SK/KT)</option>
+                <option value="us">🇺🇸 圣何塞 01 · 9929 优质大带宽</option>
+                <option value="de">🇩🇪 法兰克福 01 · 欧洲核心枢纽 (DE-CIX)</option>
+                <option value="uk">🇬🇧 伦敦 01 · 英国/欧洲业务专用</option>
+                <option value="au">🇦🇺 悉尼 01 · 大洋洲直连低阻断</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Gauges & Metrics Display -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            <!-- Ping Gauge -->
+            <div class="bg-cream/60 border border-oat/70 rounded-xl p-4 text-center relative flex flex-col items-center justify-center">
+              <div class="relative w-28 h-28 my-1 flex items-center justify-center">
+                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="45" stroke="#E5E7EB" stroke-width="8" fill="none"></circle>
+                  <circle id="pingCircle" cx="50" cy="50" r="45" stroke="#3B82F6" stroke-width="8" fill="none" stroke-linecap="round" class="gauge-circle"></circle>
+                </svg>
+                <div class="absolute flex flex-col items-center">
+                  <span id="pingValue" class="text-2xl font-mono font-bold text-carbon">--</span>
+                  <span class="text-[11px] text-carbonMuted font-mono">ms 延迟</span>
+                </div>
+              </div>
+              <div class="text-xs font-semibold text-carbon mt-1">往返时延 (Latency)</div>
+              <div id="pingRating" class="text-[10px] text-emerald-600 font-medium">等待检测...</div>
+            </div>
+
+            <!-- Jitter / 抖动 -->
+            <div class="bg-cream/60 border border-oat/70 rounded-xl p-4 flex flex-col justify-between text-center">
+              <div class="text-xs font-semibold text-carbon">时延抖动 (Jitter)</div>
+              <div class="my-auto py-3">
+                <span id="jitterValue" class="text-3xl font-mono font-extrabold text-carbon">--</span>
+                <span class="text-xs font-mono text-carbonMuted"> ms</span>
+              </div>
+              <div class="text-[11px] text-carbonMuted">数值越小，游戏与通话越稳</div>
+            </div>
+
+            <!-- Bandwidth / 预估速度 -->
+            <div class="bg-cream/60 border border-oat/70 rounded-xl p-4 flex flex-col justify-between text-center">
+              <div class="text-xs font-semibold text-carbon">冷藏带宽 (Est. Speed)</div>
+              <div class="my-auto py-3">
+                <span id="speedValue" class="text-3xl font-mono font-extrabold text-warmOrangeDeep">--</span>
+                <span class="text-xs font-mono text-carbonMuted"> Mbps</span>
+              </div>
+              <div class="text-[11px] text-carbonMuted">足以轻松播放 4K 60FPS</div>
+            </div>
+          </div>
+
+          <!-- Streaming Unlock Status Card -->
+          <div class="bg-oat/30 border border-oat rounded-xl p-4 mb-6">
+            <div class="text-xs font-bold text-carbon mb-3 flex items-center justify-between">
+              <span>流媒体与服务保鲜度 (Unlock Diagnosis)</span>
+              <span class="text-[10px] text-carbonMuted">由 IP 纯净度算法判定</span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5" id="unlockGrid">
+              <div class="bg-white rounded-lg p-2.5 border border-oat/80 flex items-center gap-2">
+                <span class="text-sm">🍿</span>
+                <div class="min-w-0">
+                  <div class="text-xs font-bold text-carbon truncate">Netflix</div>
+                  <div class="text-[10px] text-carbonMuted unlock-status">待测</div>
+                </div>
+              </div>
+              <div class="bg-white rounded-lg p-2.5 border border-oat/80 flex items-center gap-2">
+                <span class="text-sm">🏰</span>
+                <div class="min-w-0">
+                  <div class="text-xs font-bold text-carbon truncate">Disney+</div>
+                  <div class="text-[10px] text-carbonMuted unlock-status">待测</div>
+                </div>
+              </div>
+              <div class="bg-white rounded-lg p-2.5 border border-oat/80 flex items-center gap-2">
+                <span class="text-sm">📺</span>
+                <div class="min-w-0">
+                  <div class="text-xs font-bold text-carbon truncate">YouTube 4K</div>
+                  <div class="text-[10px] text-carbonMuted unlock-status">待测</div>
+                </div>
+              </div>
+              <div class="bg-white rounded-lg p-2.5 border border-oat/80 flex items-center gap-2">
+                <span class="text-sm">🤖</span>
+                <div class="min-w-0">
+                  <div class="text-xs font-bold text-carbon truncate">ChatGPT/AI</div>
+                  <div class="text-[10px] text-carbonMuted unlock-status">待测</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Button & Console Log -->
+          <div class="flex flex-col sm:flex-row items-center gap-4">
+            <button id="startTestBtn" class="w-full sm:w-auto px-7 py-3 bg-warmOrange hover:bg-warmOrangeDeep text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <span>开启冷风极速测速</span>
+            </button>
+            <div id="testStatusText" class="text-xs text-carbonMuted text-center sm:text-left flex-1 truncate">
+              就绪：请点击按钮开始对选定节点发起握手测试
+            </div>
+          </div>
+        </div>
+
+        <!-- Fridge Sidebar: Tips & Line Specs (Right 5 Cols) -->
+        <div class="lg:col-span-5 space-y-6">
+          
+          <!-- Route Line Explainer Card -->
+          <div class="bg-white rounded-2xl border border-oat shadow-card p-6 observe-fade">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="text-lg">🧭</span>
+              <h3 class="text-base font-bold text-carbon">主流回国与漫游线路速查</h3>
+            </div>
+            <div class="space-y-3.5 text-xs">
+              <div class="p-3 bg-cream/70 rounded-xl border border-oat/60">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-bold text-carbon">电信 CN2 GIA (AS4809)</span>
+                  <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-medium text-[10px]">尊享特调</span>
+                </div>
+                <p class="text-carbonMuted leading-relaxed">晚高峰最坚挺的线路，双向 GIA 几乎无丢包，延迟低且稳定，适合追求极致体验。</p>
+              </div>
+
+              <div class="p-3 bg-cream/70 rounded-xl border border-oat/60">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-bold text-carbon">联通 9929 / CUG (AS9929)</span>
+                  <span class="px-2 py-0.5 rounded-full bg-sky-100 text-blue-800 font-medium text-[10px]">稳定平衡</span>
+                </div>
+                <p class="text-carbonMuted leading-relaxed">前网通骨干 A 网，负载低，欧美大带宽性价比极佳，晚高峰表现紧随 CN2 GIA。</p>
+              </div>
+
+              <div class="p-3 bg-cream/70 rounded-xl border border-oat/60">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-bold text-carbon">移动 CMIN2 (AS58807)</span>
+                  <span class="px-2 py-0.5 rounded-full bg-warmOrange/20 text-warmOrangeDeep font-medium text-[10px]">移动新宠</span>
+                </div>
+                <p class="text-carbonMuted leading-relaxed">移动对标 CN2 GIA 的精品精品网络，解决移动直连高丢包难题，晚高峰体验显著跃升。</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Freshness Notice Card -->
+          <div class="bg-gradient-to-br from-buttercupLight/50 to-cream rounded-2xl border border-buttercup/60 p-6 shadow-card observe-fade">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg bg-warmOrange/15 text-warmOrangeDeep flex items-center justify-center flex-shrink-0 text-base">
+                💡
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-carbon mb-1">店长的网络保鲜小贴士</h4>
+                <p class="text-xs text-carbonMuted leading-relaxed mb-3">
+                  测速显示的延迟仅为到节点测速服务器的 ICMP/TCP 握手时延。实际访问网站时还会受到目标站点 CDN、本地 DNS 解析缓存及 TCP 拥塞控制算法（如 BBR）的影响。
+                </p>
+                <a href="guide.html" class="inline-flex items-center gap-1 text-xs font-bold text-warmOrange hover:text-warmOrangeDeep transition-colors">
+                  前往新手便当查看 BBR 加速配置 →
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    
+    <!-- Section 1: 网络营养成分表 (Food Label Style) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-3 mb-6">
+        <div>
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-buttercupLight/60 text-amber-900 text-xs font-semibold mb-2">
+            <span>🏷️</span><span>网络营养标签 · 像看食品配料表一样懂网络</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-carbon">网络营养成分表 · 四大核心指标透视</h2>
+          <p class="text-xs sm:text-sm text-carbonMuted mt-1">别被虚标的峰值带宽忽悠！时延、抖动、丢包与缓冲膨胀才是决定网络是否顺畅的命门。</p>
+        </div>
+        <div class="text-xs text-carbonMuted font-mono bg-white px-3 py-1.5 rounded-lg border border-oat">
+          标准检测基准：RFC 2544 / ITU-T Y.1564
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <!-- 指标 1: 往返时延 -->
+        <div class="bg-white rounded-2xl border-2 border-oat p-5 shadow-card hover:border-warmOrange/60 transition-all observe-fade">
+          <div class="flex items-center justify-between border-b border-oat pb-3 mb-3">
+            <span class="text-xs font-bold text-warmOrangeDeep uppercase tracking-wider font-mono">01. LATENCY / RTT</span>
+            <span class="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-[10px] font-bold">基础口感</span>
+          </div>
+          <h3 class="font-bold text-base text-carbon mb-1">往返时延 (RTT)</h3>
+          <div class="text-xs text-carbonMuted leading-relaxed mb-4">
+            数据包从发出到接收端返回的总耗时。决定网页第一帧渲染、DNS 响应与操作即时反馈。
+          </div>
+          <div class="space-y-2 text-[11px] bg-cream/70 rounded-xl p-3 border border-oat/70">
+            <div class="flex justify-between text-carbon"><span class="text-carbonMuted">电竞级极鲜：</span><strong class="text-emerald-600">&lt; 40 ms</strong></div>
+            <div class="flex justify-between text-carbon"><span class="text-carbonMuted">日常秒开：</span><strong class="text-sky-600">40 ~ 90 ms</strong></div>
+            <div class="flex justify-between text-carbon"><span class="text-carbonMuted">跨洋平稳：</span><strong class="text-amber-600">120 ~ 180 ms</strong></div>
+          </div>
+          <div class="mt-3 text-[11px] text-amber-800 bg-amber-50 rounded-lg p-2 leading-relaxed">
+            💡 <strong>店长避坑：</strong>客户端测出的 Ping 往往只是国内中继入口握手，实际境外落地拥堵依然会导致网页卡顿。
+          </div>
+        </div>
+
+        <!-- 指标 2: 时延抖动 -->
+        <div class="bg-white rounded-2xl border-2 border-oat p-5 shadow-card hover:border-warmOrange/60 transition-all observe-fade">
+          <div class="flex items-center justify-between border-b border-oat pb-3 mb-3">
+            <span class="text-xs font-bold text-sky-600 uppercase tracking-wider font-mono">02. JITTER</span>
+            <span class="px-2 py-0.5 rounded-md bg-sky-50 text-sky-700 text-[10px] font-bold">平稳细腻</span>
+          </div>
+          <h3 class="font-bold text-base text-carbon mb-1">时延抖动 (Jitter)</h3>
+          <div class="text-xs text-carbonMuted leading-relaxed mb-4">
+            前后数据包到达时间差的波动方差。数值越小，音视频连麦不吞字、电竞对战不瞬移。
+          </div>
+          <div class="space-y-2 text-[11px] bg-cream/70 rounded-xl p-3 border border-oat/70">
+            <div class="flex justify-between text-carbon"><span class="text-carbonMuted">极稳无感：</span><strong class="text-emerald-600">&lt; 2 ms</strong></div>
+            <div class="flex justify-between text-carbon"><span class="text-carbonMuted">通话清晰：</span><strong class="text-sky-600">2 ~ 6 ms</strong></div>
+            <div class="flex justify-between text-carbon"><span class="text-carbonMuted">波动明显：</span><strong class="text-red-500">&gt; 12 ms</strong></div>
+          </div>
+          <div class="mt-3 text-[11px] text-blue-900 bg-blue-50 rounded-lg p-2 leading-relaxed">
+            💡 <strong>店长避坑：</strong>平均延迟 50ms 但抖动 30ms，体验会远差于平稳 120ms 的专线，网络最怕坐过山车。
+          </div>
+        </div>
+
+        <!-- 指标 3: 丢包率 -->
+        <div class="bg-white rounded-2xl border-2 border-oat p-5 shadow-card hover:border-warmOrange/60 transition-all observe-fade">
+          <div class="flex items-center justify-between border-b border-oat pb-3 mb-3">
+            <span class="text-xs font-bold text-red-600 uppercase tracking-wider font-mono">03. PACKET LOSS</span>
+            <span class="px-2 py-0.5 rounded-md bg-red-50 text-red-700 text-[10px] font-bold">纯净无损</span>
+          </div>
+          <h3 class="font-bold text-base text-carbon mb-1">数据丢包率 (Loss)</h3>
+          <div class="text-xs text-carbonMuted leading-relaxed mb-4">
+            骨干网超载时被路由器直接抛弃的数据包比率。TCP 协议遭遇丢包会断崖式触发降速惩罚。
+          </div>
+          <div class="space-y-2 text-[11px] bg-cream/70 rounded-xl p-3 border border-oat/70">
+            <div class="flex justify-between text-carbon"><span class="text-carbonMuted">专线金标：</span><strong class="text-emerald-600">0.00 %</strong></div>
+            <div class="flex justify-between text-carbon"><span class="text-carbonMuted">公网良好：</span><strong class="text-sky-600">&lt; 0.5 %</strong></div>
+            <div class="flex justify-between text-carbon"><span class="text-carbonMuted">严重恶化：</span><strong class="text-red-600">&gt; 3.0 %</strong></div>
+          </div>
+          <div class="mt-3 text-[11px] text-red-900 bg-red-50 rounded-lg p-2 leading-relaxed">
+            💡 <strong>店长避坑：</strong>传统 TCP 在 3% 丢包时速度会腰斩，晚高峰推荐换用抗丢包的 Hysteria2 或开启 BBR。
+          </div>
+        </div>
+
+        <!-- 指标 4: 缓冲区膨胀 -->
+        <div class="bg-white rounded-2xl border-2 border-oat p-5 shadow-card hover:border-warmOrange/60 transition-all observe-fade">
+          <div class="flex items-center justify-between border-b border-oat pb-3 mb-3">
+            <span class="text-xs font-bold text-purple-600 uppercase tracking-wider font-mono">04. BUFFERBLOAT</span>
+            <span class="px-2 py-0.5 rounded-md bg-purple-50 text-purple-700 text-[10px] font-bold">抗压能力</span>
+          </div>
+          <h3 class="font-bold text-base text-carbon mb-1">缓冲区膨胀</h3>
+          <div class="text-xs text-carbonMuted leading-relaxed mb-4">
+            高负载上传或下载时，路由器排队等待造成的延迟剧烈恶化，全家抢网卡顿的根源。
+          </div>
+          <div class="space-y-2 text-[11px] bg-cream/70 rounded-xl p-3 border border-oat/70">
+            <div class="flex justify-between text-carbon"><span class="text-carbonMuted">抗压 A+：</span><strong class="text-emerald-600">+0 ~ +10 ms</strong></div>
+            <div class="flex justify-between text-carbon"><span class="text-carbonMuted">中等 B级：</span><strong class="text-sky-600">+10 ~ +40 ms</strong></div>
+            <div class="flex justify-between text-carbon"><span class="text-carbonMuted">重度阻塞：</span><strong class="text-red-500">&gt; +100 ms</strong></div>
+          </div>
+          <div class="mt-3 text-[11px] text-purple-900 bg-purple-50 rounded-lg p-2 leading-relaxed">
+            💡 <strong>店长避坑：</strong>一人满速下载全家打不开网页，需在软路由中开启 SQM (CAKE / fq_codel) 算法控流。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: 冷饮节点横评矩阵 · 全景保鲜货架 -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" id="nodeMatrixSection">
+      <div class="bg-white rounded-2xl border border-oat shadow-card p-6 md:p-8 observe-fade">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-oat/80 pb-6 mb-6">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-skyBlue/20 text-blue-700 text-xs font-semibold mb-2">
+              <span>🥤</span><span>冷藏货架全景横评</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-carbon">冷饮节点横评矩阵 · 综合性能档案</h2>
+            <p class="text-xs sm:text-sm text-carbonMuted mt-1">横向对比各节点线路类型、延迟表现、晚高峰抗性及主流解锁支持，支持一键载入上方冰箱测试。</p>
+          </div>
+
+          <!-- Region Filter Pills -->
+          <div class="flex items-center gap-1.5 bg-oat/40 p-1.5 rounded-xl text-xs overflow-x-auto scrollbar-none" id="matrixFilter">
+            <button data-region="all" class="matrix-filter-btn px-3 py-1.5 rounded-lg font-bold bg-warmOrange text-white shadow-sm transition-all">全部货架</button>
+            <button data-region="asia" class="matrix-filter-btn px-3 py-1.5 rounded-lg font-medium text-carbonLight hover:text-warmOrange transition-all">亚太极速</button>
+            <button data-region="western" class="matrix-filter-btn px-3 py-1.5 rounded-lg font-medium text-carbonLight hover:text-warmOrange transition-all">欧美大带宽</button>
+            <button data-region="special" class="matrix-filter-btn px-3 py-1.5 rounded-lg font-medium text-carbonLight hover:text-warmOrange transition-all">特调解锁</button>
+          </div>
+        </div>
+
+        <!-- Table Container -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="border-b border-oat text-carbonMuted uppercase font-mono text-[11px] pb-3">
+                <th class="py-3 px-3">节点货架代号</th>
+                <th class="py-3 px-3">底层骨干线路</th>
+                <th class="py-3 px-3 text-center">往返延迟</th>
+                <th class="py-3 px-3 text-center">晚高峰抗性</th>
+                <th class="py-3 px-3">流媒体/AI 解锁</th>
+                <th class="py-3 px-3">最佳推荐场景</th>
+                <th class="py-3 px-3 text-right">操作</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-oat/60" id="matrixTableBody">
+              <!-- HK -->
+              <tr class="hover:bg-cream/50 transition-colors" data-region="asia">
+                <td class="py-3.5 px-3 font-bold text-carbon flex items-center gap-2">
+                  <span class="text-base">🇭🇰</span>
+                  <div>
+                    <div class="font-bold">香港 01 旗舰中继</div>
+                    <span class="text-[10px] text-carbonMuted font-mono">HK-BGP-CN2-01</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold text-[10px]">IPLC内网专线 + BGP</span>
+                </td>
+                <td class="py-3.5 px-3 text-center font-mono font-bold text-emerald-600">~22 ms</td>
+                <td class="py-3.5 px-3 text-center">
+                  <span class="text-warmOrange font-bold">★★★★★</span>
+                  <div class="text-[10px] text-carbonMuted">0丢包</div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <div class="flex items-center gap-1 text-[11px]">
+                    <span title="Netflix">🍿</span>
+                    <span title="Disney+">🏰</span>
+                    <span title="YouTube">📺</span>
+                    <span title="OpenAI">🤖</span>
+                    <span class="text-[10px] text-emerald-700 bg-emerald-50 px-1 rounded">全绿</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3 text-carbonLight">电竞联机、网页秒开、无感日常主力</td>
+                <td class="py-3.5 px-3 text-right">
+                  <button onclick="loadNodeIntoFridge('hk')" class="px-3 py-1 bg-warmOrange/15 hover:bg-warmOrange text-warmOrangeDeep hover:text-white rounded-lg font-bold text-[11px] transition-all">
+                    载入测速
+                  </button>
+                </td>
+              </tr>
+
+              <!-- JP -->
+              <tr class="hover:bg-cream/50 transition-colors" data-region="asia">
+                <td class="py-3.5 px-3 font-bold text-carbon flex items-center gap-2">
+                  <span class="text-base">🇯🇵</span>
+                  <div>
+                    <div class="font-bold">东京 02 综合线路</div>
+                    <span class="text-[10px] text-carbonMuted font-mono">JP-IIJ-NTT-02</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <span class="px-2 py-0.5 rounded-full bg-sky-100 text-blue-800 font-semibold text-[10px]">IIJ / NTT 骨干直连</span>
+                </td>
+                <td class="py-3.5 px-3 text-center font-mono font-bold text-sky-600">~58 ms</td>
+                <td class="py-3.5 px-3 text-center">
+                  <span class="text-warmOrange font-bold">★★★★☆</span>
+                  <div class="text-[10px] text-carbonMuted">&lt;1% 丢包</div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <div class="flex items-center gap-1 text-[11px]">
+                    <span title="Netflix">🍿</span>
+                    <span title="Disney+">🏰</span>
+                    <span title="YouTube">📺</span>
+                    <span title="DMM/Abema">🎌</span>
+                    <span class="text-[10px] text-emerald-700 bg-emerald-50 px-1 rounded">日区专属</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3 text-carbonLight">日区手游 (FGO/蔚蓝)、AbemaTV、DMM</td>
+                <td class="py-3.5 px-3 text-right">
+                  <button onclick="loadNodeIntoFridge('jp')" class="px-3 py-1 bg-warmOrange/15 hover:bg-warmOrange text-warmOrangeDeep hover:text-white rounded-lg font-bold text-[11px] transition-all">
+                    载入测速
+                  </button>
+                </td>
+              </tr>
+
+              <!-- TW -->
+              <tr class="hover:bg-cream/50 transition-colors" data-region="special">
+                <td class="py-3.5 px-3 font-bold text-carbon flex items-center gap-2">
+                  <span class="text-base">🇹🇼</span>
+                  <div>
+                    <div class="font-bold">台北 01 特调解锁</div>
+                    <span class="text-[10px] text-carbonMuted font-mono">TW-HINET-01</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <span class="px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 font-semibold text-[10px]">中华电信 HiNet 原生</span>
+                </td>
+                <td class="py-3.5 px-3 text-center font-mono font-bold text-emerald-600">~38 ms</td>
+                <td class="py-3.5 px-3 text-center">
+                  <span class="text-warmOrange font-bold">★★★★★</span>
+                  <div class="text-[10px] text-carbonMuted">家宽原生</div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <div class="flex items-center gap-1 text-[11px]">
+                    <span title="巴哈姆特动画疯">🎮</span>
+                    <span title="Netflix">🍿</span>
+                    <span title="YouTube">📺</span>
+                    <span class="text-[10px] text-purple-700 bg-purple-50 px-1 rounded">动画疯解锁</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3 text-carbonLight">巴哈姆特动画疯、Line TV、中文字幕库</td>
+                <td class="py-3.5 px-3 text-right">
+                  <button onclick="loadNodeIntoFridge('tw')" class="px-3 py-1 bg-warmOrange/15 hover:bg-warmOrange text-warmOrangeDeep hover:text-white rounded-lg font-bold text-[11px] transition-all">
+                    载入测速
+                  </button>
+                </td>
+              </tr>
+
+              <!-- SG -->
+              <tr class="hover:bg-cream/50 transition-colors" data-region="asia">
+                <td class="py-3.5 px-3 font-bold text-carbon flex items-center gap-2">
+                  <span class="text-base">🇸🇬</span>
+                  <div>
+                    <div class="font-bold">新加坡 01 东南亚</div>
+                    <span class="text-[10px] text-carbonMuted font-mono">SG-BGP-01</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <span class="px-2 py-0.5 rounded-full bg-sky-100 text-blue-800 font-semibold text-[10px]">Singtel / StarHub BGP</span>
+                </td>
+                <td class="py-3.5 px-3 text-center font-mono font-bold text-sky-600">~68 ms</td>
+                <td class="py-3.5 px-3 text-center">
+                  <span class="text-warmOrange font-bold">★★★★☆</span>
+                  <div class="text-[10px] text-carbonMuted">稳定低噪</div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <div class="flex items-center gap-1 text-[11px]">
+                    <span title="Netflix">🍿</span>
+                    <span title="YouTube">📺</span>
+                    <span title="TikTok">🎵</span>
+                    <span class="text-[10px] text-sky-700 bg-sky-50 px-1 rounded">TikTok首选</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3 text-carbonLight">TikTok 东南亚运营、Steam 亚太服务器、Shopee</td>
+                <td class="py-3.5 px-3 text-right">
+                  <button onclick="loadNodeIntoFridge('sg')" class="px-3 py-1 bg-warmOrange/15 hover:bg-warmOrange text-warmOrangeDeep hover:text-white rounded-lg font-bold text-[11px] transition-all">
+                    载入测速
+                  </button>
+                </td>
+              </tr>
+
+              <!-- KR -->
+              <tr class="hover:bg-cream/50 transition-colors" data-region="asia">
+                <td class="py-3.5 px-3 font-bold text-carbon flex items-center gap-2">
+                  <span class="text-base">🇰🇷</span>
+                  <div>
+                    <div class="font-bold">首尔 01 电竞专线</div>
+                    <span class="text-[10px] text-carbonMuted font-mono">KR-SK-KT-01</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold text-[10px]">SK Broadband / KT 直连</span>
+                </td>
+                <td class="py-3.5 px-3 text-center font-mono font-bold text-emerald-600">~42 ms</td>
+                <td class="py-3.5 px-3 text-center">
+                  <span class="text-warmOrange font-bold">★★★★★</span>
+                  <div class="text-[10px] text-carbonMuted">超低抖动</div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <div class="flex items-center gap-1 text-[11px]">
+                    <span title="LOL韩服">⚔️</span>
+                    <span title="PUBG">🎯</span>
+                    <span title="Netflix">🍿</span>
+                    <span class="text-[10px] text-emerald-700 bg-emerald-50 px-1 rounded">电竞特供</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3 text-carbonLight">LOL 韩服排位、绝地求生韩服、瓦罗兰特直连</td>
+                <td class="py-3.5 px-3 text-right">
+                  <button onclick="loadNodeIntoFridge('kr')" class="px-3 py-1 bg-warmOrange/15 hover:bg-warmOrange text-warmOrangeDeep hover:text-white rounded-lg font-bold text-[11px] transition-all">
+                    载入测速
+                  </button>
+                </td>
+              </tr>
+
+              <!-- US -->
+              <tr class="hover:bg-cream/50 transition-colors" data-region="western">
+                <td class="py-3.5 px-3 font-bold text-carbon flex items-center gap-2">
+                  <span class="text-base">🇺🇸</span>
+                  <div>
+                    <div class="font-bold">圣何塞 01 优质大带宽</div>
+                    <span class="text-[10px] text-carbonMuted font-mono">US-9929-SJC-01</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-semibold text-[10px]">联通 9929 / CUG A网</span>
+                </td>
+                <td class="py-3.5 px-3 text-center font-mono font-bold text-amber-600">~145 ms</td>
+                <td class="py-3.5 px-3 text-center">
+                  <span class="text-warmOrange font-bold">★★★★☆</span>
+                  <div class="text-[10px] text-carbonMuted">1Gbps 吞吐</div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <div class="flex items-center gap-1 text-[11px]">
+                    <span title="ChatGPT">🤖</span>
+                    <span title="Claude">🧠</span>
+                    <span title="Netflix">🍿</span>
+                    <span title="Disney+">🏰</span>
+                    <span class="text-[10px] text-purple-700 bg-purple-50 px-1 rounded">AI原生全解</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3 text-carbonLight">ChatGPT/Claude 原生、4K超大码率视频、海外大文件拉取</td>
+                <td class="py-3.5 px-3 text-right">
+                  <button onclick="loadNodeIntoFridge('us')" class="px-3 py-1 bg-warmOrange/15 hover:bg-warmOrange text-warmOrangeDeep hover:text-white rounded-lg font-bold text-[11px] transition-all">
+                    载入测速
+                  </button>
+                </td>
+              </tr>
+
+              <!-- DE -->
+              <tr class="hover:bg-cream/50 transition-colors" data-region="western">
+                <td class="py-3.5 px-3 font-bold text-carbon flex items-center gap-2">
+                  <span class="text-base">🇩🇪</span>
+                  <div>
+                    <div class="font-bold">法兰克福 01 欧洲枢纽</div>
+                    <span class="text-[10px] text-carbonMuted font-mono">DE-FRA-CIX-01</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-semibold text-[10px]">DE-CIX 交换中心直连</span>
+                </td>
+                <td class="py-3.5 px-3 text-center font-mono font-bold text-amber-600">~172 ms</td>
+                <td class="py-3.5 px-3 text-center">
+                  <span class="text-warmOrange font-bold">★★★★☆</span>
+                  <div class="text-[10px] text-carbonMuted">欧洲腹地</div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <div class="flex items-center gap-1 text-[11px]">
+                    <span title="Spotify">🎵</span>
+                    <span title="Steam德区">🎮</span>
+                    <span title="ChatGPT">🤖</span>
+                    <span class="text-[10px] text-amber-700 bg-amber-50 px-1 rounded">欧洲合规</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3 text-carbonLight">欧洲跨境电商 (Amazon DE)、外贸独立站后台、欧洲学术网</td>
+                <td class="py-3.5 px-3 text-right">
+                  <button onclick="loadNodeIntoFridge('de')" class="px-3 py-1 bg-warmOrange/15 hover:bg-warmOrange text-warmOrangeDeep hover:text-white rounded-lg font-bold text-[11px] transition-all">
+                    载入测速
+                  </button>
+                </td>
+              </tr>
+
+              <!-- UK -->
+              <tr class="hover:bg-cream/50 transition-colors" data-region="western">
+                <td class="py-3.5 px-3 font-bold text-carbon flex items-center gap-2">
+                  <span class="text-base">🇬🇧</span>
+                  <div>
+                    <div class="font-bold">伦敦 01 英国业务</div>
+                    <span class="text-[10px] text-carbonMuted font-mono">UK-LON-LINX-01</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <span class="px-2 py-0.5 rounded-full bg-sky-100 text-blue-800 font-semibold text-[10px]">LINX 伦敦交换中心</span>
+                </td>
+                <td class="py-3.5 px-3 text-center font-mono font-bold text-amber-600">~198 ms</td>
+                <td class="py-3.5 px-3 text-center">
+                  <span class="text-warmOrange font-bold">★★★☆☆</span>
+                  <div class="text-[10px] text-carbonMuted">欧洲业务</div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <div class="flex items-center gap-1 text-[11px]">
+                    <span title="BBC iPlayer">🇬🇧</span>
+                    <span title="YouTube">📺</span>
+                    <span title="Claude">🧠</span>
+                    <span class="text-[10px] text-blue-700 bg-blue-50 px-1 rounded">BBC解锁</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3 text-carbonLight">BBC iPlayer、英国留学生教务系统、英区流媒体</td>
+                <td class="py-3.5 px-3 text-right">
+                  <button onclick="loadNodeIntoFridge('uk')" class="px-3 py-1 bg-warmOrange/15 hover:bg-warmOrange text-warmOrangeDeep hover:text-white rounded-lg font-bold text-[11px] transition-all">
+                    载入测速
+                  </button>
+                </td>
+              </tr>
+
+              <!-- AU -->
+              <tr class="hover:bg-cream/50 transition-colors" data-region="special">
+                <td class="py-3.5 px-3 font-bold text-carbon flex items-center gap-2">
+                  <span class="text-base">🇦🇺</span>
+                  <div>
+                    <div class="font-bold">悉尼 01 大洋洲</div>
+                    <span class="text-[10px] text-carbonMuted font-mono">AU-SYD-TEL-01</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold text-[10px]">Telstra 大洋洲直连</span>
+                </td>
+                <td class="py-3.5 px-3 text-center font-mono font-bold text-amber-600">~165 ms</td>
+                <td class="py-3.5 px-3 text-center">
+                  <span class="text-warmOrange font-bold">★★★★☆</span>
+                  <div class="text-[10px] text-carbonMuted">阻断率极低</div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <div class="flex items-center gap-1 text-[11px]">
+                    <span title="Stan">🦘</span>
+                    <span title="Netflix">🍿</span>
+                    <span title="YouTube">📺</span>
+                    <span class="text-[10px] text-emerald-700 bg-emerald-50 px-1 rounded">澳区原生</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3 text-carbonLight">澳洲高校网课、Stan/Kayo 澳区流媒体、低阻断备用</td>
+                <td class="py-3.5 px-3 text-right">
+                  <button onclick="loadNodeIntoFridge('au')" class="px-3 py-1 bg-warmOrange/15 hover:bg-warmOrange text-warmOrangeDeep hover:text-white rounded-lg font-bold text-[11px] transition-all">
+                    载入测速
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: 主流流媒体与 AI 服务解锁特征全景速查 -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mb-4">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-3 mb-6">
+        <div>
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-mintFresh/30 text-emerald-800 text-xs font-semibold mb-2">
+            <span>🛡️</span><span>流媒体与 AI 权限专柜</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-carbon">主流流媒体 & AI 服务解锁特征速查</h2>
+          <p class="text-xs sm:text-sm text-carbonMuted mt-1">各大平台风控策略与 IP 属性要求大相径庭，对号入座挑选最保鲜的落地节点。</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Card 1: Netflix -->
+        <div class="bg-white rounded-2xl border border-oat p-6 shadow-card hover:shadow-card-hover transition-all observe-fade">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2.5">
+              <span class="text-2xl">🍿</span>
+              <div>
+                <h3 class="font-bold text-base text-carbon">Netflix (网飞)</h3>
+                <span class="text-[11px] text-carbonMuted font-mono">Stream Quality: 4K HDR</span>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-full bg-red-100 text-red-700 text-xs font-bold">高风控</span>
+          </div>
+          <div class="text-xs text-carbonLight leading-relaxed mb-4">
+            拥有全行业最严密的商业 IP 风险库（如 MaxMind）。机房托管 IP（DCH）通常仅能观看自制剧（Netflix Originals），需家庭住宅原生 IP 才能解锁全版权非自制库。
+          </div>
+          <div class="space-y-2 text-xs border-t border-oat/70 pt-3">
+            <div class="flex items-center justify-between text-carbonMuted text-[11px]">
+              <span>解锁标准：</span><strong class="text-emerald-600">非自制剧全量加载 (Full Unlock)</strong>
+            </div>
+            <div class="flex items-center justify-between text-carbonMuted text-[11px]">
+              <span>推荐节点：</span><strong class="text-carbon">🇭🇰 香港、🇹🇼 台湾 HiNet、🇺🇸 圣何塞</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Disney+ -->
+        <div class="bg-white rounded-2xl border border-oat p-6 shadow-card hover:shadow-card-hover transition-all observe-fade">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2.5">
+              <span class="text-2xl">🏰</span>
+              <div>
+                <h3 class="font-bold text-base text-carbon">Disney+ (迪士尼)</h3>
+                <span class="text-[11px] text-carbonMuted font-mono">IMAX Enhanced</span>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold">极严 IP</span>
+          </div>
+          <div class="text-xs text-carbonLight leading-relaxed mb-4">
+            对登录区域与 CDN 反代节点匹配度极度敏感，常见报错 <code class="bg-oat/60 px-1 py-0.5 rounded font-mono">Error 73 / 83</code>。必须确保节点未被云服务黑名单收录，且 DNS 不发生旁路分流。
+          </div>
+          <div class="space-y-2 text-xs border-t border-oat/70 pt-3">
+            <div class="flex items-center justify-between text-carbonMuted text-[11px]">
+              <span>解锁标准：</span><strong class="text-emerald-600">登录顺利播放无 Error 73</strong>
+            </div>
+            <div class="flex items-center justify-between text-carbonMuted text-[11px]">
+              <span>推荐节点：</span><strong class="text-carbon">🇸🇬 新加坡、🇯🇵 日本、🇺🇸 美国原生</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: ChatGPT / OpenAI -->
+        <div class="bg-white rounded-2xl border border-oat p-6 shadow-card hover:shadow-card-hover transition-all observe-fade">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2.5">
+              <span class="text-2xl">🤖</span>
+              <div>
+                <h3 class="font-bold text-base text-carbon">ChatGPT / OpenAI</h3>
+                <span class="text-[11px] text-carbonMuted font-mono">GPT-4o & Search</span>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">CF防护</span>
+          </div>
+          <div class="text-xs text-carbonLight leading-relaxed mb-4">
+            依靠 Cloudflare Turnstile 验证码拦截高风险 IP。若节点为低质合租线路，会遭遇无休止的「Verify you are human」死循环或 1020 拒绝访问。纯净 ASN 是解题关键。
+          </div>
+          <div class="space-y-2 text-xs border-t border-oat/70 pt-3">
+            <div class="flex items-center justify-between text-carbonMuted text-[11px]">
+              <span>解锁标准：</span><strong class="text-emerald-600">免验证秒进聊天界面</strong>
+            </div>
+            <div class="flex items-center justify-between text-carbonMuted text-[11px]">
+              <span>推荐节点：</span><strong class="text-carbon">🇺🇸 圣何塞 9929、🇯🇵 东京、🇩🇪 德国</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Claude (Anthropic) -->
+        <div class="bg-white rounded-2xl border border-oat p-6 shadow-card hover:shadow-card-hover transition-all observe-fade">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2.5">
+              <span class="text-2xl">🧠</span>
+              <div>
+                <h3 class="font-bold text-base text-carbon">Claude (Anthropic)</h3>
+                <span class="text-[11px] text-carbonMuted font-mono">Claude 3.5 Sonnet</span>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-full bg-red-100 text-red-800 text-xs font-bold">地狱级风控</span>
+          </div>
+          <div class="text-xs text-carbonLight leading-relaxed mb-4">
+            全网对 IP 洁净度要求最苛刻的 AI 服务平台！严查多设备同 IP 登录，任何机房垃圾 IP 均可能直接触发账号封禁。强烈建议独享住宅 IP 或高品质小众专线。
+          </div>
+          <div class="space-y-2 text-xs border-t border-oat/70 pt-3">
+            <div class="flex items-center justify-between text-carbonMuted text-[11px]">
+              <span>解锁标准：</span><strong class="text-emerald-600">稳定提问且不封号 (Zero Block)</strong>
+            </div>
+            <div class="flex items-center justify-between text-carbonMuted text-[11px]">
+              <span>推荐节点：</span><strong class="text-carbon">🇺🇸 美国纯净家宽 / 🇬🇧 伦敦独立中继</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5: YouTube Premium -->
+        <div class="bg-white rounded-2xl border border-oat p-6 shadow-card hover:shadow-card-hover transition-all observe-fade">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2.5">
+              <span class="text-2xl">📺</span>
+              <div>
+                <h3 class="font-bold text-base text-carbon">YouTube 4K & Premium</h3>
+                <span class="text-[11px] text-carbonMuted font-mono">AV1 / VP9 60FPS</span>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold">大带宽要求</span>
+          </div>
+          <div class="text-xs text-carbonLight leading-relaxed mb-4">
+            YouTube 本身不限制地区，但后台播放与免广告特权依赖对应地区的 Premium 会员权益。更重要的是单线程持续吞吐速度需稳定在 50Mbps 以上才能流畅 4K 60FPS。
+          </div>
+          <div class="space-y-2 text-xs border-t border-oat/70 pt-3">
+            <div class="flex items-center justify-between text-carbonMuted text-[11px]">
+              <span>解锁标准：</span><strong class="text-emerald-600">4K 60帧无缓冲秒播</strong>
+            </div>
+            <div class="flex items-center justify-between text-carbonMuted text-[11px]">
+              <span>推荐节点：</span><strong class="text-carbon">🇭🇰 香港、🇹🇼 台湾、🇸🇬 新加坡</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6: TikTok (国际版抖音) -->
+        <div class="bg-white rounded-2xl border border-oat p-6 shadow-card hover:shadow-card-hover transition-all observe-fade">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2.5">
+              <span class="text-2xl">🎵</span>
+              <div>
+                <h3 class="font-bold text-base text-carbon">TikTok (国际版)</h3>
+                <span class="text-[11px] text-carbonMuted font-mono">Mobile App & Web</span>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-bold">硬件级检测</span>
+          </div>
+          <div class="text-xs text-carbonLight leading-relaxed mb-4">
+            除了检测出口 IP 归属地，App 端还会检测手机 SIM 卡运营商归属、系统语言及时区设置。需在代理客户端中配置规则分流，并结合无卡/海外卡运行。
+          </div>
+          <div class="space-y-2 text-xs border-t border-oat/70 pt-3">
+            <div class="flex items-center justify-between text-carbonMuted text-[11px]">
+              <span>解锁标准：</span><strong class="text-emerald-600">正常刷出海外推流无黑屏</strong>
+            </div>
+            <div class="flex items-center justify-between text-carbonMuted text-[11px]">
+              <span>推荐节点：</span><strong class="text-carbon">🇺🇸 圣何塞、🇸🇬 新加坡、🇬🇧 伦敦</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Speed Benchmarks & Knowledge Section -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mb-12">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-xl font-bold text-carbon">测速便携工具箱</h2>
+          <p class="text-xs text-carbonMuted mt-0.5">除了网页在线测速，更推荐使用以下专业客户端与开源脚本</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Tool 1 -->
+        <div class="bg-white rounded-xl border border-oat p-5 shadow-card hover:shadow-card-hover transition-all observe-fade">
+          <div class="w-10 h-10 rounded-lg bg-skyBlue/20 text-sky-700 flex items-center justify-center font-bold text-base mb-3">
+            ⚡️
+          </div>
+          <h3 class="text-base font-bold text-carbon mb-1">Ookla Speedtest CLI</h3>
+          <p class="text-xs text-carbonMuted leading-relaxed mb-4">
+            全球公认的权威带宽测试基准，支持终端一键测试上下行真实物理极限，避免浏览器引擎渲染造成的速率偏差。
+          </p>
+          <div class="bg-oat/50 rounded-lg p-2.5 font-mono text-[11px] text-carbonLight mb-3 overflow-x-auto">
+            curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
+          </div>
+          <a href="https://www.speedtest.net/apps/cli" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-warmOrange hover:underline flex items-center gap-1">
+            查看官方使用文档 ↗
+          </a>
+        </div>
+
+        <!-- Tool 2 -->
+        <div class="bg-white rounded-xl border border-oat p-5 shadow-card hover:shadow-card-hover transition-all observe-fade">
+          <div class="w-10 h-10 rounded-lg bg-mintFresh/20 text-emerald-700 flex items-center justify-center font-bold text-base mb-3">
+            🍿
+          </div>
+          <h3 class="text-base font-bold text-carbon mb-1">Fast.com 节点压测</h3>
+          <p class="text-xs text-carbonMuted leading-relaxed mb-4">
+            Netflix 官方托管的 CDN 节点测速工具，可准确探测你的网络连接到流媒体服务器的无阻碍下行速率与突发缓冲。
+          </p>
+          <div class="bg-oat/50 rounded-lg p-2.5 font-mono text-[11px] text-carbonLight mb-3">
+            直连 Netflix Open Connect 节点集群，无干扰测试
+          </div>
+          <a href="https://fast.com" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-warmOrange hover:underline flex items-center gap-1">
+            打开 Fast.com 页面 ↗
+          </a>
+        </div>
+
+        <!-- Tool 3 -->
+        <div class="bg-white rounded-xl border border-oat p-5 shadow-card hover:shadow-card-hover transition-all observe-fade">
+          <div class="w-10 h-10 rounded-lg bg-buttercup/30 text-amber-800 flex items-center justify-center font-bold text-base mb-3">
+            🧰
+          </div>
+          <h3 class="text-base font-bold text-carbon mb-1">NextTrace 路由可视化</h3>
+          <p class="text-xs text-carbonMuted leading-relaxed mb-4">
+            开源的高性能可视路由追踪工具，精准显示数据包经过的每个骨干网自治系统（AS号）、地理位置和线路类型。
+          </p>
+          <div class="bg-oat/50 rounded-lg p-2.5 font-mono text-[11px] text-carbonLight mb-3 overflow-x-auto">
+            nexttrace 1.1.1.1
+          </div>
+          <a href="https://github.com/nxtrace/NTrace-core" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-warmOrange hover:underline flex items-center gap-1">
+            访问开源项目 GitHub ↗
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="bg-white border-t border-oat/80 py-12 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div class="space-y-3 md:col-span-1">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-md bg-warmOrange flex items-center justify-center text-white text-xs font-bold">SM</div>
+            <span class="font-bold text-carbon">光速便利店</span>
+          </div>
+          <p class="text-xs text-carbonMuted leading-relaxed">
+            24小时不打烊的网络漫游补给站。让复杂的网络优化像在货架挑冷饮一样直观简单。
+          </p>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold text-carbon uppercase tracking-wider mb-3">货架指引</h4>
+          <ul class="space-y-2 text-xs text-carbonMuted">
+            <li><a href="index.html" class="hover:text-warmOrange transition-colors">首页</a></li>
+            <li><a href="reviews.html" class="hover:text-warmOrange transition-colors">店长严选</a></li>
+            <li><a href="guide.html" class="hover:text-warmOrange transition-colors">新手便当</a></li>
+            <li><a href="devices.html" class="hover:text-warmOrange transition-colors">设备专柜</a></li>
+            <li><a href="speedtest.html" class="hover:text-warmOrange text-warmOrange font-semibold transition-colors">测速冰箱</a></li>
+            <li><a href="blog.html" class="hover:text-warmOrange transition-colors">便利店日志</a></li>
+            <li><a href="faq.html" class="hover:text-warmOrange transition-colors">常见避坑</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold text-carbon uppercase tracking-wider mb-3">热门标签</h4>
+          <div class="flex flex-wrap gap-1.5 text-[11px] text-carbonMuted">
+            <span class="bg-oat/60 px-2 py-0.5 rounded">Clash</span>
+            <span class="bg-oat/60 px-2 py-0.5 rounded">Sing-box</span>
+            <span class="bg-oat/60 px-2 py-0.5 rounded">Surge</span>
+            <span class="bg-oat/60 px-2 py-0.5 rounded">BBR加速</span>
+            <span class="bg-oat/60 px-2 py-0.5 rounded">CN2 GIA</span>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold text-carbon uppercase tracking-wider mb-3">店长联络</h4>
+          <p class="text-xs text-carbonMuted leading-relaxed mb-3">
+            测速数据异常或线路推荐反馈：
+          </p>
+          <a href="https://t.me/huanqiuti8899" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-[#229ED9]/15 hover:bg-[#229ED9]/25 text-[#1b80af] text-xs font-semibold px-3.5 py-2 rounded-lg transition-colors border border-[#229ED9]/30">
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+            <span>联系店长 Telegram</span>
+          </a>
+        </div>
+      </div>
+      <div class="border-t border-oat pt-6 text-center text-xs text-carbonMuted">
+        © 2026 光速便利店 Speed Mart. All rights reserved. Keep your internet fresh.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== JAVASCRIPT ===================== -->
+  <script>
+    // Mobile Menu Toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('menu-icon-open');
+    const iconClose = document.getElementById('menu-icon-close');
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      iconOpen.classList.toggle('hidden', isOpen);
+      iconClose.classList.toggle('hidden', !isOpen);
+      menuToggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Node Mock Test Data
+    const nodeData = {
+      hk: { ping: 22, jitter: 1.8, speed: 485, unlocked: [true, true, true, true], label: '🇭🇰 香港 01 · 极速回国优化' },
+      jp: { ping: 58, jitter: 3.2, speed: 360, unlocked: [true, true, true, true], label: '🇯🇵 东京 02 · IIJ/NTT 综合线路' },
+      tw: { ping: 38, jitter: 2.1, speed: 420, unlocked: [true, true, true, true], label: '🇹🇼 台北 01 · 动画疯/原生解锁' },
+      sg: { ping: 68, jitter: 4.1, speed: 290, unlocked: [true, false, true, true], label: '🇸🇬 新加坡 01 · 东南亚低延迟' },
+      kr: { ping: 42, jitter: 1.9, speed: 390, unlocked: [true, true, true, true], label: '🇰🇷 首尔 01 · 电竞低跳Ping专线' },
+      us: { ping: 145, jitter: 5.5, speed: 520, unlocked: [true, true, true, true], label: '🇺🇸 圣何塞 01 · 9929 优质大带宽' },
+      de: { ping: 172, jitter: 6.8, speed: 310, unlocked: [true, true, true, true], label: '🇩🇪 法兰克福 01 · 欧洲核心枢纽' },
+      uk: { ping: 198, jitter: 8.4, speed: 180, unlocked: [false, true, true, true], label: '🇬🇧 伦敦 01 · 英国/欧洲业务专用' },
+      au: { ping: 165, jitter: 6.2, speed: 240, unlocked: [true, true, true, true], label: '🇦🇺 悉尼 01 · 大洋洲直连低阻断' },
+    };
+
+    // 从矩阵表格一键载入冰箱测速
+    window.loadNodeIntoFridge = function(nodeKey) {
+      if (nodeSelector) {
+        nodeSelector.value = nodeKey;
+        // 平滑滚动回冰箱测试台
+        document.getElementById('nodeSelector').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // 稍作延迟后自动触发测试
+        setTimeout(() => {
+          if (!isTesting && startTestBtn) {
+            startTestBtn.click();
+          }
+        }, 400);
+      }
+    };
+
+    // 矩阵表格区域分类筛选
+    const matrixFilterBtns = document.querySelectorAll('.matrix-filter-btn');
+    const matrixRows = document.querySelectorAll('#matrixTableBody tr');
+    matrixFilterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        matrixFilterBtns.forEach(b => {
+          b.className = 'matrix-filter-btn px-3 py-1.5 rounded-lg font-medium text-carbonLight hover:text-warmOrange transition-all';
+        });
+        btn.className = 'matrix-filter-btn px-3 py-1.5 rounded-lg font-bold bg-warmOrange text-white shadow-sm transition-all';
+        const region = btn.getAttribute('data-region');
+        matrixRows.forEach(row => {
+          if (region === 'all' || row.getAttribute('data-region') === region) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    const startTestBtn = document.getElementById('startTestBtn');
+    const nodeSelector = document.getElementById('nodeSelector');
+    const pingValue = document.getElementById('pingValue');
+    const jitterValue = document.getElementById('jitterValue');
+    const speedValue = document.getElementById('speedValue');
+    const pingRating = document.getElementById('pingRating');
+    const pingCircle = document.getElementById('pingCircle');
+    const testStatusText = document.getElementById('testStatusText');
+    const unlockStatusList = document.querySelectorAll('.unlock-status');
+
+    let isTesting = false;
+
+    startTestBtn.addEventListener('click', () => {
+      if (isTesting) return;
+      isTesting = true;
+      startTestBtn.disabled = true;
+      startTestBtn.classList.add('opacity-70', 'cursor-not-allowed');
+
+      const selectedKey = nodeSelector.value;
+      const target = nodeData[selectedKey] || nodeData.hk;
+
+      testStatusText.innerHTML = `🧊 冷风正在吹送... 连接 <span class="font-bold text-carbon">${target.label}</span> 握手中...`;
+
+      // Reset values
+      pingValue.textContent = '--';
+      jitterValue.textContent = '--';
+      speedValue.textContent = '--';
+      pingCircle.style.strokeDashoffset = '283';
+      unlockStatusList.forEach(el => {
+        el.textContent = '测试中...';
+        el.className = 'text-[10px] text-sky-600 font-medium unlock-status';
+      });
+
+      // Step 1: Simulate Ping
+      setTimeout(() => {
+        let currentP = 120;
+        const interval = setInterval(() => {
+          currentP = Math.floor(Math.random() * 40 + target.ping);
+          pingValue.textContent = currentP;
+        }, 80);
+
+        setTimeout(() => {
+          clearInterval(interval);
+          pingValue.textContent = target.ping;
+          jitterValue.textContent = target.jitter;
+          
+          // Calculate circle offset (max 300ms)
+          const fraction = Math.min(target.ping / 250, 1);
+          const offset = 283 - (283 * (1 - fraction * 0.8));
+          pingCircle.style.strokeDashoffset = offset;
+
+          if (target.ping < 50) {
+            pingRating.textContent = '超冷极鲜 · 电竞级';
+            pingRating.className = 'text-[10px] text-emerald-600 font-bold';
+            pingCircle.style.stroke = '#10B981';
+          } else if (target.ping < 120) {
+            pingRating.textContent = '保鲜良好 · 秒开4K';
+            pingRating.className = 'text-[10px] text-blue-600 font-bold';
+            pingCircle.style.stroke = '#3B82F6';
+          } else {
+            pingRating.textContent = '大容量冷冻 · 跨洋平稳';
+            pingRating.className = 'text-[10px] text-amber-600 font-bold';
+            pingCircle.style.stroke = '#F59E0B';
+          }
+
+          testStatusText.textContent = '正在压测多线程下行保鲜带宽...';
+
+          // Step 2: Speed calculation
+          setTimeout(() => {
+            let currSpeed = 50;
+            const spdInterval = setInterval(() => {
+              currSpeed += Math.floor(Math.random() * 60 + 40);
+              if (currSpeed > target.speed) currSpeed = target.speed;
+              speedValue.textContent = currSpeed;
+            }, 60);
+
+            setTimeout(() => {
+              clearInterval(spdInterval);
+              speedValue.textContent = target.speed;
+
+              // Step 3: Unlock status
+              target.unlocked.forEach((status, idx) => {
+                if (unlockStatusList[idx]) {
+                  if (status) {
+                    unlockStatusList[idx].textContent = '✅ 原生解锁';
+                    unlockStatusList[idx].className = 'text-[10px] text-emerald-600 font-bold unlock-status';
+                  } else {
+                    unlockStatusList[idx].textContent = '⚠️ 地区限制';
+                    unlockStatusList[idx].className = 'text-[10px] text-amber-600 font-bold unlock-status';
+                  }
+                }
+              });
+
+              testStatusText.innerHTML = `🎉 检测完成！<span class="text-carbon font-semibold">${target.label}</span> 状态非常新鲜。`;
+              isTesting = false;
+              startTestBtn.disabled = false;
+              startTestBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+            }, 900);
+
+          }, 400);
+
+        }, 800);
+      }, 300);
+    });
+
+    // Fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.observe-fade').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
