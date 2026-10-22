@@ -30,17 +30,35 @@
 
 | 文件名称 | 拟物化货架栏目 | 核心功能定位与内容说明 | 目标受众 |
 | :--- | :--- | :--- | :--- |
-| **`index.html`** | 🏪 **便利店首页** | 全站品牌首屏、本季三大爆款橱窗速览、核心场景选型入口与服务导览 | 初次进店全量访客 |
-| **`reviews.html`** | 🍱 **店长严选货架** | 6+ 款主流机场深度横评天梯榜、晚高峰测速参数对比、多维分类筛选、全系套餐与 7 折优惠码弹窗 | 寻找稳定优质节点的用户 |
-| **`top3-airports-2026.html`** | 🏆 **前三名深度横评** | 2026 年度前三名（环球梯、大佬云、榴莲云）万字级实盘测试长文，包含双 ISP 解锁与选购决策树 | 深度比选、追求极致性价比 |
-| **`blog.html`** | 📖 **便利店日志专栏** | 技术博客单页平铺陈列，支持协议、流媒体、分流规则等多维度分类药丸筛选 | 进阶折腾与技术爱好者 |
-| **`article.html`** | 💡 **网络漫游避坑指南** | 站内基石型（Pillar Content）SEO 指南长文，深度剖析公网直连、中继与 IPLC 专线本质 | 频繁遇到晚高峰卡顿断流者 |
-| **`guide.html`** | 🍙 **新手便当教程** | 零基础 Windows / macOS / iOS / Android 全平台 5 分钟极速上手图文与订阅导入 | 刚接触外网的新手小白 |
-| **`devices.html`** | 📱 **设备专柜** | 全平台主流开源客户端（Clash Verge、Sing-box、Surge、Shadowrocket）下载与配置指引 | 寻找安全纯净客户端者 |
-| **`speedtest.html`** | 🧊 **测速冰箱** | 节点延迟监控、实时丢包测试工具箱与 NextTrace 路由可视化追踪使用指引 | 需要排查网络抖动与路由者 |
-| **`faq.html`** | 🧯 **常见避坑手册** | 汇总 Fake-IP 冲突、TUN 虚拟网卡断网、微信打不开、异地登录风控等高频疑难排错 | 遇到各种奇葩断网报错者 |
-| **`sitemap.xml`** | 🗺️ **站点地图** | 遵循 sitemaps.org 标准格式，收录全站核心页面，优先配置权重以便爬虫索引 | 搜索引擎爬虫 (Google/Baidu) |
-| **`robots.txt`** | 🤖 **爬虫规则文件** | 明确爬虫抓取边界并指定站点地图入口路径 | 搜索引擎规范索引 |
+| **`index.html`** | 🏪 **[便利店首页](https://jichangbianli.org/)** | 全站品牌首屏、本季三大爆款橱窗速览、核心场景选型入口与服务导览 | 初次进店全量访客 |
+| **`reviews.html`** | 🍱 **[店长严选货架](https://jichangbianli.org/reviews.html)** | 6+ 款主流机场深度横评天梯榜、晚高峰测速参数对比、多维分类筛选、全系套餐与 7 折优惠码弹窗 | 寻找稳定优质节点的用户 |
+| **`blog.html`** | 📖 **[便利店日志专栏 (博客首页)](https://jichangbianli.org/blog.html)** | 技术博客单页平铺陈列，支持协议、流媒体、分流规则等多维度分类药丸筛选 | 进阶折腾与技术爱好者 |
+| **`top3-airports-2026.html`** | 🏆 **[2026 前三名深度横评](https://jichangbianli.org/top3-airports-2026.html)** | 2026 年度前三名（环球梯、大佬云、榴莲云）万字级实盘测试长文，包含双 ISP 解锁与选购决策树 | 深度比选、追求极致性价比 |
+| **`article.html`** | 💡 **[网络漫游避坑终极指南](https://jichangbianli.org/article.html)** | 站内基石型（Pillar Content）SEO 指南长文，深度剖析公网直连、中继与 IPLC 专线本质 | 频繁遇到晚高峰卡顿断流者 |
+| **`guide.html`** | 🍙 **[新手便当教程](https://jichangbianli.org/guide.html)** | 零基础 Windows / macOS / iOS / Android 全平台 5 分钟极速上手图文与订阅导入 | 刚接触外网的新手小白 |
+| **`devices.html`** | 📱 **[设备专柜](https://jichangbianli.org/devices.html)** | 全平台主流开源客户端（Clash Verge、Sing-box、Surge、Shadowrocket）下载与配置指引 | 寻找安全纯净客户端者 |
+| **`speedtest.html`** | 🧊 **[测速冰箱](https://jichangbianli.org/speedtest.html)** | 节点延迟监控、实时丢包测试工具箱与 NextTrace 路由可视化追踪使用指引 | 需要排查网络抖动与路由者 |
+| **`faq.html`** | 🧯 **[常见避坑手册](https://jichangbianli.org/faq.html)** | 汇总 Fake-IP 冲突、TUN 虚拟网卡断网、微信打不开、异地登录风控等高频疑难排错 | 遇到各种奇葩断网报错者 |
+| **`sitemap.xml`** | 🗺️ **[站点地图 (Sitemap)](https://jichangbianli.org/sitemap.xml)** | 遵循 sitemaps.org 标准格式，收录全站核心页面，优先配置权重以便爬虫索引 | 搜索引擎爬虫 (Google/Baidu) |
+| **`robots.txt`** | 🤖 **[爬虫规则 (Robots)](https://jichangbianli.org/robots.txt)** | 明确爬虫抓取边界并指定站点地图入口路径 | 搜索引擎规范索引 |
+
+---
+
+## 📖 便利店日志（精选博客文章直达专栏）
+
+「便利店日志」是光速便利店专为网络爱好者、出海办公族与极客打造的深度技术博客专栏。所有文章均经过真实环境抓包验证，提供干货满满的实战指南：
+
+- 📌 **博客总目录入口**：👉 [https://jichangbianli.org/blog.html](https://jichangbianli.org/blog.html)
+- 🏆 **年度权威评测博文**：
+  - [《2026年机场推荐前三名深度横评：晚高峰实测、性价比与专线避坑指南》](https://jichangbianli.org/top3-airports-2026.html) —— 深度实测第一名环球梯、第二名大佬云、第三名榴莲云，拆解双 ISP 原生住宅 IP 与 0 丢包物理专线。
+- 💡 **底层架构与协议选型博文**：
+  - [《2026 网络漫游避坑终极指南：从协议选型、晚高峰抗劣化到客户端全平台配置》](https://jichangbianli.org/article.html) —— 深入剖析公网直连（单车道）、BGP中继（高架桥）与IPLC物理专线（高铁）本质区别，Hysteria2 暴力重传抗丢包原理。
+- 🍱 **新手入门上手图文**：
+  - [《新手便当：全平台 5 分钟上手教程（Win/Mac/iOS/Android）》](https://jichangbianli.org/guide.html) —— 从订阅链接获取、导入客户端到节点切换的保姆级新手图文。
+- 📱 **客户端工具库精选**：
+  - [《全平台推荐客户端与安全下载指引》](https://jichangbianli.org/devices.html) —— 涵盖 Clash Verge Rev、Sing-box、Surge、Shadowrocket 纯净开源版本。
+- 🧯 **疑难排错速查**：
+  - [《常见避坑指南：微信异地风控、TUN 虚拟网卡断网与 DNS 泄漏排查》](https://jichangbianli.org/faq.html) —— 解决国内 App 弹验证码、网银风控与代理假死的实操避坑手册。
 
 ---
 
