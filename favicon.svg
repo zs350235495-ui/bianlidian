@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="martGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF7A30"/>
+      <stop offset="100%" stop-color="#E85D04"/>
+    </linearGradient>
+    <linearGradient id="boltGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE382"/>
+      <stop offset="100%" stop-color="#F5D78E"/>
+    </linearGradient>
+  </defs>
+  <!-- Rounded Base Background -->
+  <rect width="64" height="64" rx="16" fill="url(#martGrad)"/>
+  <!-- Convenience Store Awning Accent -->
+  <path d="M12 18 C12 15 15 13 18 13 L46 13 C49 13 52 15 52 18 L52 23 C52 25 50 27 48 27 C46 27 44 25 44 23 C44 25 42 27 40 27 C38 27 36 25 36 23 C36 25 34 27 32 27 C30 27 28 25 28 23 C28 25 26 27 24 27 C22 27 20 25 20 23 C20 25 18 27 16 27 C14 27 12 25 12 23 Z" fill="#FFF8F0" opacity="0.95"/>
+  <!-- Speed Mart Lightning Bolt -->
+  <path d="M35 24 L21 38 L31 38 L27 52 L43 36 L33 36 Z" fill="url(#boltGrad)" stroke="#2E2A27" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+</svg>

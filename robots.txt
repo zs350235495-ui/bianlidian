@@ -1,5 +1,29 @@
+# robots.txt for https://jichangbianli.org
+
 User-agent: *
+Allow: /
+
+# Allow AI & Search Engine Spiders
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
 Allow: /
 
 # Sitemap Index
 Sitemap: https://jichangbianli.org/sitemap.xml
+
+# LLM Content Index for AI Search
+# https://jichangbianli.org/llms.txt

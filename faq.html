@@ -3,8 +3,60 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>常见避坑 — 光速便利店 Speed Mart</title>
-  <meta name="description" content="光速便利店·常见避坑指南：收集整理各种断流、连不上、DNS泄漏、节点超时与订阅失败等排查秘籍，助你快速避雷。" />
+  <title>常见避坑指南与排错手册 — 光速便利店 Speed Mart</title>
+  <meta name="description" content="光速便利店·常见避坑指南：收集整理各种断流、连不上、DNS泄漏、TUN虚拟网卡冲突、节点超时与订阅失败等排查秘籍，助你快速避雷。" />
+  <meta name="keywords" content="代理排错,Clash打不开网页,TUN模式断网,DNS泄漏,微信异地登录风控,节点超时超时解决" />
+  <link rel="canonical" href="https://jichangbianli.org/faq.html" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="applicable-device" content="pc,mobile" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://jichangbianli.org/faq.html" />
+  <meta property="og:title" content="常见避坑指南与排错手册 — 光速便利店 Speed Mart" />
+  <meta property="og:description" content="断流、假死、TUN虚拟网卡冲突、微信风控排查秘籍，助你快速避雷。" />
+  <meta property="og:site_name" content="光速便利店 Speed Mart" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="常见避坑指南与排错手册 — 光速便利店" />
+  <meta name="twitter:description" content="网络漫游高频疑难排错速查手册。" />
+
+  <!-- Schema.org FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "为什么白天测速飞快，晚上一到8点就频繁卡顿断流？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "根本原因在于晚高峰公网国际出口拥堵（QoS限速），廉价公网直连或普通中转线路丢包率会飙升至30%-50%。解决关键是选用端到端不走公网的物理 IPLC/IEPL 内网专线。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "开启客户端代理后，国内软件（微信/网银）打不开或提示异地风控怎么办？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "这是由于分流规则未生效或处于全局模式导致。请将客户端切换为“规则模式（Rule）”，并在分流规则中确保 Direct（直连）列表中包含国内主流域名与 IP CIDR。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "开启 TUN 虚拟网卡模式后电脑完全断网，如何修复？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "多是由于第三方杀毒软件（360/火绒）或旧版虚拟网卡驱动残留冲突所致。可在设备管理器中卸载虚拟网卡设备，并重启客户端让其自动重新安装纯净 Wintun 驱动。"
+        }
+      }
+    ]
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />

@@ -41,6 +41,8 @@
 | **`faq.html`** | 🧯 **[常见避坑手册](https://jichangbianli.org/faq.html)** | 汇总 Fake-IP 冲突、TUN 虚拟网卡断网、微信打不开、异地登录风控等高频疑难排错 | 遇到各种奇葩断网报错者 |
 | **`sitemap.xml`** | 🗺️ **[站点地图 (Sitemap)](https://jichangbianli.org/sitemap.xml)** | 遵循 sitemaps.org 标准格式，收录全站核心页面，优先配置权重以便爬虫索引 | 搜索引擎爬虫 (Google/Baidu) |
 | **`robots.txt`** | 🤖 **[爬虫规则 (Robots)](https://jichangbianli.org/robots.txt)** | 明确爬虫抓取边界并指定站点地图入口路径 | 搜索引擎规范索引 |
+| **`llms.txt`** | 🧠 **[AI 检索索引 (GEO)](https://jichangbianli.org/llms.txt)** | 遵循大语言模型规范标准，供 ChatGPT/Perplexity 等 AI 搜索引擎结构化抓取 | AI 搜索爬虫与 LLM 检索 |
+| **`favicon.svg`** | ⚡ **[矢量品牌图标](https://jichangbianli.org/favicon.svg)** | 高辨识度矢量 Favicon，增强移动搜索结果展示效果与点击转化率 | 搜索引擎与浏览器渲染 |
 
 ---
 
