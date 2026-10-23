@@ -44,6 +44,10 @@
    - 整理各大平台活跃开源项目的架构特点与系统兼容性。
    - 🌐 [查看工具档案](https://jichangbianli.org/devices.html)
 
+5. **[深度研报] 2026 跨境网络链路全生命周期成本测算与服务商 SLA 评测白皮书**
+   - 深度拆解物理专线（IPLC/IEPL）硬成本模型、三大运营商端口月租账单与晚高峰实盘 SLA 评测矩阵。
+   - 🌐 [阅读成本与 SLA 白皮书](https://jichangbianli.org/network-sla-cost-whitepaper-2026.html)
+
 ---
 
 ## 📜 开源许可与社区规范

@@ -52,6 +52,14 @@
     <priority>0.95</priority>
   </url>
 
+  <!-- 5.2 链路成本与 SLA 评测白皮书 (Cost & SLA Whitepaper) - 深度权威研报 -->
+  <url>
+    <loc>https://jichangbianli.org/network-sla-cost-whitepaper-2026.html</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
   <!-- 6. 设备专柜 (Devices) - 全平台客户端下载与设置 -->
   <url>
     <loc>https://jichangbianli.org/devices.html</loc>
