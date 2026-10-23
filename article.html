@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>2026 网络漫游避坑终极指南：从协议选型、晚高峰抗劣化到客户端全平台配置 — 光速便利店</title>
-  <meta name="description" content="光速便利店核心技术专栏：深度拆解公网直连与IPLC专线本质区别，剖析晚高峰QoS卡顿断流成因，Hysteria2与经典协议实测选型，手把手分流规则与全平台客户端防断连配置。" />
+  <title>2026 网络漫游避坑终极指南：从协议选型、晚高峰抗劣化到客户端全平台配置 — 机场便利店</title>
+  <meta name="description" content="机场便利店核心技术专栏：深度拆解公网直连与IPLC专线本质区别，剖析晚高峰QoS卡顿断流成因，Hysteria2与经典协议实测选型，手把手分流规则与全平台客户端防断连配置。" />
   <meta name="keywords" content="网络加速避坑, IPLC专线与公网区别, 晚高峰抗断流, Hysteria2协议, 分流规则配置, 网络漫游指南, 双ISP家宽, Clash分流, Sing-box教程" />
   <link rel="canonical" href="https://jichangbianli.org/article.html" />
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="applicable-device" content="pc,mobile" />
   <meta http-equiv="Cache-Control" content="no-transform" />
 
@@ -15,35 +16,76 @@
   <meta property="og:description" content="为什么一到晚上8点就频繁卡顿？90%的卡顿不是本地宽带问题，而是踩了线路架构与协议错配的坑。店长深度拆解专线底层与分流避坑指南。" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://jichangbianli.org/article.html" />
-  <meta property="og:site_name" content="光速便利店 Speed Mart" />
+  <meta property="og:site_name" content="机场便利店 Speed Mart" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:image" content="https://jichangbianli.org/favicon.svg" />
   <meta property="article:published_time" content="2026-10-20T19:00:00+08:00" />
   <meta property="article:author" content="店长小光" />
 
   <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2026 网络漫游避坑终极指南 — 光速便利店" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="2026 网络漫游避坑终极指南 — 机场便利店" />
   <meta name="twitter:description" content="从协议选型、晚高峰抗劣化到客户端全平台配置。" />
+  <meta name="twitter:image" content="https://jichangbianli.org/favicon.svg" />
 
   <!-- 结构化数据 (Schema.org TechArticle) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "2026 网络漫游避坑终极指南：从协议选型、晚高峰抗劣化到客户端全平台配置",
-    "description": "深入浅出剖析公网直连、中继与IPLC专线底层机制，解决晚高峰丢包与客户端断流问题。",
-    "author": {
-      "@type": "Person",
-      "name": "店长小光",
-      "jobTitle": "光速便利店总值班"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "光速便利店 Speed Mart",
-      "logo": "https://jichangbianli.org/logo.png"
-    },
-    "datePublished": "2026-10-20",
-    "dateModified": "2026-10-22"
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": "https://jichangbianli.org/article.html#article",
+        "headline": "2026 网络漫游避坑终极指南：从协议选型、晚高峰抗劣化到客户端全平台配置",
+        "description": "深入浅出剖析公网直连、中继与IPLC专线底层机制，解决晚高峰丢包与客户端断流问题。",
+        "inLanguage": "zh-CN",
+        "datePublished": "2026-10-20T08:00:00+08:00",
+        "dateModified": "2026-10-24T00:00:00+08:00",
+        "mainEntityOfPage": "https://jichangbianli.org/article.html",
+        "author": {
+          "@type": "Person",
+          "name": "网络测试巡检员",
+          "jobTitle": "网络性能与协议测试巡检工程师",
+          "worksFor": {
+            "@type": "Organization",
+            "name": "机场便利店",
+            "url": "https://jichangbianli.org/"
+          }
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "机场便利店",
+          "url": "https://jichangbianli.org/",
+          "logo": "https://jichangbianli.org/favicon.svg"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://jichangbianli.org/article.html#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "首页",
+            "item": "https://jichangbianli.org/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "便利指南库",
+            "item": "https://jichangbianli.org/blog.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "网络漫游避坑终极指南",
+            "item": "https://jichangbianli.org/article.html"
+          }
+        ]
+      }
+    ]
   }
+
   </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -169,7 +211,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 lg:h-[72px]">
         <!-- Brand Logo -->
-        <a href="index.html" class="flex items-center gap-2.5 group">
+        <a href="/index.html" class="flex items-center gap-2.5 group">
           <svg class="h-10 w-auto" viewBox="0 0 160 48" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="160" height="48" rx="8" fill="none"/>
             <g transform="translate(6, 4)">
@@ -179,7 +221,7 @@
               <polygon points="19,15 15,24 18,24 16,30 22,21 19,21" fill="#E8935A"/>
             </g>
             <g transform="translate(48, 6)">
-              <text x="0" y="22" fill="#2E2A27" font-family="'Noto Sans SC', system-ui" font-size="17" font-weight="900">光速便利店</text>
+              <text x="0" y="22" fill="#2E2A27" font-family="'Noto Sans SC', system-ui" font-size="17" font-weight="900">机场便利店</text>
               <text x="94" y="14" fill="#E8935A" font-family="'Outfit', system-ui" font-size="10" font-weight="700">24H</text>
               <text x="0" y="34" fill="#8A8480" font-family="'Outfit', system-ui" font-size="9" font-weight="600" letter-spacing="1.2">SPEED MART</text>
             </g>
@@ -188,17 +230,17 @@
 
         <!-- Desktop Nav -->
         <nav class="hidden lg:flex items-center gap-1" aria-label="主导航">
-          <a href="index.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="home">首页</a>
-          <a href="reviews.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="reviews">店长严选</a>
-          <a href="guide.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="guide">新手便当</a>
-          <a href="devices.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="devices">设备专柜</a>
-          <a href="speedtest.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="speedtest">测速冰箱</a>
-          <a href="blog.html" class="nav-link active px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="blog">便利店日志</a>
-          <a href="faq.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="faq">常见避坑</a>
+          <a href="/index.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="home">首页</a>
+          <a href="/reviews.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="reviews">店长严选</a>
+          <a href="/guide.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="guide">新手便当</a>
+          <a href="/devices.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="devices">设备专柜</a>
+          <a href="/speedtest.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="speedtest">测速冰箱</a>
+          <a href="/blog.html" class="nav-link active px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="blog">便利店日志</a>
+          <a href="/faq.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="faq">常见避坑</a>
         </nav>
 
         <div class="flex items-center gap-2">
-          <a href="reviews.html" class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-bold hover:bg-warmOrange/25 transition-colors">
+          <a href="/reviews.html" class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-bold hover:bg-warmOrange/25 transition-colors">
             <span>👑</span>
             <span>精选稳定机场</span>
           </a>
@@ -213,13 +255,13 @@
     <!-- Mobile Drawer Menu -->
     <div class="lg:hidden mobile-menu-enter bg-cream/95 navbar-blur border-t border-oat/40" id="mobile-menu">
       <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
-        <a href="index.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg">首页</a>
-        <a href="reviews.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg">店长严选</a>
-        <a href="guide.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg">新手便当</a>
-        <a href="devices.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg">设备专柜</a>
-        <a href="speedtest.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg">测速冰箱</a>
-        <a href="blog.html" class="mobile-nav-link active block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg">便利店日志</a>
-        <a href="faq.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg">常见避坑</a>
+        <a href="/index.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg">首页</a>
+        <a href="/reviews.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg">店长严选</a>
+        <a href="/guide.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg">新手便当</a>
+        <a href="/devices.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg">设备专柜</a>
+        <a href="/speedtest.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg">测速冰箱</a>
+        <a href="/blog.html" class="mobile-nav-link active block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg">便利店日志</a>
+        <a href="/faq.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg">常见避坑</a>
       </div>
     </div>
   </header>
@@ -233,9 +275,9 @@
         
         <!-- 面包屑导航 -->
         <nav class="flex items-center gap-1.5 text-xs text-carbonMuted mb-5 flex-wrap" aria-label="面包屑导航">
-          <a href="index.html" class="hover:text-warmOrange transition-colors">首页</a>
+          <a href="/index.html" class="hover:text-warmOrange transition-colors">首页</a>
           <span>/</span>
-          <a href="blog.html" class="hover:text-warmOrange transition-colors">便利店日志</a>
+          <a href="/blog.html" class="hover:text-warmOrange transition-colors">便利店日志</a>
           <span>/</span>
           <span class="text-warmOrange font-semibold truncate">网络漫游避坑终极指南</span>
         </nav>
@@ -319,7 +361,7 @@
             </p>
           </div>
           <p>
-            在光速便利店的这篇基石指南中，店长将剥离所有晦涩的商业营销黑话，用生活化的大白话结合一线网络工程逻辑，为你把网络漫游背后的<strong>底层线路、协议架构与分流调优</strong>讲个透彻。
+            在机场便利店的这篇基石指南中，店长将剥离所有晦涩的商业营销黑话，用生活化的大白话结合一线网络工程逻辑，为你把网络漫游背后的<strong>底层线路、协议架构与分流调优</strong>讲个透彻。
           </p>
         </section>
 
@@ -558,7 +600,7 @@
 
           <!-- 文末专属导流卡片 -->
           <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <a href="guide.html" class="p-5 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200/80 hover:border-warmOrange shadow-xs hover:shadow-card transition-all flex items-center justify-between group">
+            <a href="/guide.html" class="p-5 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200/80 hover:border-warmOrange shadow-xs hover:shadow-card transition-all flex items-center justify-between group">
               <div class="flex items-center gap-3">
                 <span class="text-3xl">🍱</span>
                 <div>
@@ -569,7 +611,7 @@
               <span class="text-warmOrange font-bold text-sm group-hover:translate-x-1 transition-transform">→</span>
             </a>
 
-            <a href="reviews.html" class="p-5 rounded-2xl bg-gradient-to-br from-orange-50 to-rose-50 border border-orange-200/80 hover:border-warmOrange shadow-xs hover:shadow-card transition-all flex items-center justify-between group">
+            <a href="/reviews.html" class="p-5 rounded-2xl bg-gradient-to-br from-orange-50 to-rose-50 border border-orange-200/80 hover:border-warmOrange shadow-xs hover:shadow-card transition-all flex items-center justify-between group">
               <div class="flex items-center gap-3">
                 <span class="text-3xl">👑</span>
                 <div>
@@ -587,7 +629,7 @@
 
       <!-- 文章分享与返回专栏条 -->
       <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 py-4 px-6 bg-white rounded-2xl border border-oat shadow-xs">
-        <a href="blog.html" class="inline-flex items-center gap-2 text-xs font-bold text-carbonLight hover:text-warmOrange transition-colors">
+        <a href="/blog.html" class="inline-flex items-center gap-2 text-xs font-bold text-carbonLight hover:text-warmOrange transition-colors">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
           <span>返回「便利店日志」文章列表</span>
         </a>
@@ -611,7 +653,7 @@
               <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 12 15 12 15 22"/></svg>
             </div>
             <div class="leading-tight">
-              <span class="block text-sm font-bold text-cream">光速便利店</span>
+              <span class="block text-sm font-bold text-cream">机场便利店</span>
               <span class="block text-[9px] font-display font-semibold text-cream/50 tracking-widest uppercase">Speed Mart</span>
             </div>
           </div>
@@ -623,13 +665,13 @@
         <div>
           <h3 class="text-sm font-bold text-cream mb-4">便利店专柜</h3>
           <ul class="space-y-2 text-xs text-cream/60">
-            <li><a href="index.html" class="hover:text-warmOrange transition-colors">首页入口</a></li>
-            <li><a href="reviews.html" class="hover:text-warmOrange transition-colors">店长严选货架</a></li>
-            <li><a href="guide.html" class="hover:text-warmOrange transition-colors">新手便当</a></li>
-            <li><a href="devices.html" class="hover:text-warmOrange transition-colors">设备专柜</a></li>
-            <li><a href="speedtest.html" class="hover:text-warmOrange transition-colors">测速冰箱</a></li>
-            <li><a href="blog.html" class="text-warmOrange font-semibold transition-colors">便利店日志</a></li>
-            <li><a href="faq.html" class="hover:text-warmOrange transition-colors">常见避坑指南</a></li>
+            <li><a href="/index.html" class="hover:text-warmOrange transition-colors">首页入口</a></li>
+            <li><a href="/reviews.html" class="hover:text-warmOrange transition-colors">店长严选货架</a></li>
+            <li><a href="/guide.html" class="hover:text-warmOrange transition-colors">新手便当</a></li>
+            <li><a href="/devices.html" class="hover:text-warmOrange transition-colors">设备专柜</a></li>
+            <li><a href="/speedtest.html" class="hover:text-warmOrange transition-colors">测速冰箱</a></li>
+            <li><a href="/blog.html" class="text-warmOrange font-semibold transition-colors">便利店日志</a></li>
+            <li><a href="/faq.html" class="hover:text-warmOrange transition-colors">常见避坑指南</a></li>
           </ul>
         </div>
 
@@ -637,10 +679,7 @@
           <h3 class="text-sm font-bold text-cream mb-4">店长联络</h3>
           <p class="text-xs text-cream/50 mb-3">若有技术探讨或文章投稿：</p>
           <div class="space-y-2">
-            <a href="https://t.me/huanqiuti8899" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-[#229ED9]/20 hover:bg-[#229ED9]/30 text-[#229ED9] hover:text-[#5bc4f5] text-xs font-semibold px-4 py-2 rounded-lg transition-colors border border-[#229ED9]/30">
-              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
-              <span>联系店长 Telegram</span>
-            </a>
+            <a href="/faq.html" class="inline-flex items-center gap-2 bg-warmOrange/20 hover:bg-warmOrange/30 text-warmOrangeLight hover:text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition-colors border border-warmOrange/30"><svg class="w-4 h-4 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>常见问题排错 ↗</span></a>
           </div>
         </div>
       </div>
@@ -649,7 +688,7 @@
         <p class="text-[11px] text-cream/35 max-w-2xl mx-auto">
           ⚠️ 免责声明：本站所有内容仅供合规网络优化与技术研究交流之用，不提供任何违反当地法律法规的服务或建议。
         </p>
-        <p class="mt-4 text-[11px] text-cream/25">© 2026 光速便利店 Speed Mart. All rights reserved.</p>
+        <p class="mt-4 text-[11px] text-cream/25">© 2026 机场便利店 Speed Mart. All rights reserved.</p>
       </div>
     </div>
   </footer>

@@ -7,7 +7,7 @@
   <!-- 1. 首页 (Home) - 核心入口 -->
   <url>
     <loc>https://jichangbianli.org/</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-10-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -15,39 +15,39 @@
   <!-- 2. 店长严选 (Reviews) - 核心横评天梯榜 -->
   <url>
     <loc>https://jichangbianli.org/reviews.html</loc>
-    <lastmod>2026-10-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
   </url>
 
   <!-- 3. 新手便当 (Guide) - 快速上手入门指南 -->
   <url>
     <loc>https://jichangbianli.org/guide.html</loc>
-    <lastmod>2026-10-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
   </url>
 
   <!-- 4. 便利店日志 (Blog) - 技术专栏与教程索引 -->
   <url>
     <loc>https://jichangbianli.org/blog.html</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-10-24</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
 
   <!-- 5. 核心基石长文 (Pillar Article) - SEO 高权重深度指南 -->
   <url>
     <loc>https://jichangbianli.org/article.html</loc>
-    <lastmod>2026-10-22</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- 5.1 热门深度横评 (Top 3 Airports Review) - 机场推荐前三名深度横评 -->
+  <!-- 5.1 热门深度横评 (Top 3 Airports Review) - 机场推荐深度横评 -->
   <url>
     <loc>https://jichangbianli.org/top3-airports-2026.html</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-10-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
@@ -55,25 +55,25 @@
   <!-- 6. 设备专柜 (Devices) - 全平台客户端下载与设置 -->
   <url>
     <loc>https://jichangbianli.org/devices.html</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-10-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
 
   <!-- 7. 测速冰箱 (Speedtest) - 节点实时监控与测速工具 -->
   <url>
     <loc>https://jichangbianli.org/speedtest.html</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-10-24</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
 
   <!-- 8. 常见避坑 (FAQ) - 疑难解答与排错手册 -->
   <url>
     <loc>https://jichangbianli.org/faq.html</loc>
-    <lastmod>2026-10-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
   </url>
 
 </urlset>
