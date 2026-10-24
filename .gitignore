@@ -24,3 +24,7 @@ yarn-error.log*
 tmp/
 temp/
 scratch/
+
+# Node Modules
+node_modules/
+package-lock.json

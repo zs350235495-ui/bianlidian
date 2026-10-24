@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* SVG 防爆兜底防御体系 */
+svg {
+  max-width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+header svg {
+  max-height: 48px;
+}

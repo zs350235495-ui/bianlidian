@@ -1,0 +1,25 @@
+{
+  "name": "jichangbianli.org",
+  "version": "1.0.0",
+  "description": "本项目为跨境网络基础设施选型成本精算、多平台轻量化快速接入、节点真实性价比模型及连接阻断排障的开源知识货架。秉持中立、公开、实用的原则，基于端到端实际吞吐与真实带宽计费模型，为日常轻量浏览、跨国协作办公及新手用户提供清晰、透明的选型参考与便携使用指引。",
+  "main": "test-seo-audit.js",
+  "scripts": {
+    "test": "node test-seo-audit.js",
+    "build:css": "tailwindcss -i ./css/input.css -o ./css/style.css --minify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zs350235495-ui/bianlidian.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/zs350235495-ui/bianlidian/issues"
+  },
+  "homepage": "https://github.com/zs350235495-ui/bianlidian#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}

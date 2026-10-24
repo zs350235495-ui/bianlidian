@@ -91,9 +91,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preload" href="/css/style.css" as="style" />
+  <link rel="stylesheet" href="/css/style.css" />
 
   <style>
+    /* === 全局 SVG 防爆物理兜底 === */
+    svg { max-width: 100%; height: auto; }
+    header svg { max-height: 48px; }
+  
     :root {
       --bg-store: #FDFBF7;
       --card-bg: #FFFFFF;
@@ -684,7 +689,7 @@ ipconfig /flushdns
         <div>
           <div class="flex items-center gap-2.5 mb-4">
             <div class="w-8 h-8 rounded-lg bg-[#FF6B35] flex items-center justify-center">
-              <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" height="16" style="width:16px;height:16px;flex-shrink:0;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
             </div>
             <div class="leading-tight">
               <span class="block text-sm font-bold text-[#FFFDF9]">机场便利店</span>
@@ -712,7 +717,7 @@ ipconfig /flushdns
           <p class="text-xs text-[#FFFDF9]/50 mb-3">查看技术答疑手册或查阅常见避坑指南。</p>
           <div class="flex flex-wrap items-center gap-2">
             <a href="/faq.html" class="inline-flex items-center gap-2 bg-[#FF6B35]/20 hover:bg-[#FF6B35]/30 text-warmOrangeLight hover:text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition-colors border border-[#FF6B35]/30">
-              <svg class="w-4 h-4 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              <svg class="w-4 h-4 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2" height="16" style="width:16px;height:16px;flex-shrink:0;"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
               <span>常见问题排错 ↗</span>
             </a>
             <a href="/guide.html" class="inline-flex items-center gap-1.5 bg-[#FFFDF9]/10 hover:bg-[#FFFDF9]/20 text-[#FFFDF9]/80 text-xs font-semibold px-3 py-2.5 rounded-lg transition-colors">
