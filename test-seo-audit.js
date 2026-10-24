@@ -63,13 +63,22 @@ for (const f of htmlFiles) {
 
   // E. Check affiliate & telegram links
     const allowedPartnerHosts = [
-      '123pps01.huanqiutiaff.com',
-      'pps123.shenxingaff.com',
-      '123pp01.liulianyunaff.com',
-      'pp01.yunjiexianaff.com',
-      'ppsvip01.shandianshuaff.com',
-      'ppsvip01.dalaoyunaff.com'
-    ];
+    '123pps01.huanqiutiaff.com',
+    'pps123.shenxingaff.com',
+    '123pp01.liulianyunaff.com',
+    'pp01.yunjiexianaff.com',
+    'ppsvip01.shandianshuaff.com',
+    'ppsvip01.dalaoyunaff.com',
+    'everett7623.kosingaff.com',
+    'pygllc.speedworldaff.cc',
+    'fanxiaobin.kuailiaff.com',
+    'wep.edgenovaaff.com',
+    'super.ytjcok.org',
+    'kunpengjiasu.com',
+    'ddd.jichang.best',
+    'haozevpn.jlyvipaff.com',
+    'gnt001.gntvipaff.cc'
+  ];
     const linkMatches = content.match(/href=["'](https?:\/\/[^"']+)["']/gi) || [];
     for (const linkStr of linkMatches) {
       const urlMatch = linkStr.match(/href=["'](https?:\/\/[^"']+)["']/i);
