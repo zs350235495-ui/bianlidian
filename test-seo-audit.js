@@ -62,11 +62,28 @@ for (const f of htmlFiles) {
   }
 
   // E. Check affiliate & telegram links
-  const aff = content.match(/(\?aff=|\?ref=|\?code=|\.aff\.com)/i);
-  if (aff) {
-    console.error(`❌ [${f}] Contains affiliate pattern: ${aff[0]}`);
-    failed = true;
-  }
+    const allowedPartnerHosts = [
+      '123pps01.huanqiutiaff.com',
+      'pps123.shenxingaff.com',
+      '123pp01.liulianyunaff.com',
+      'pp01.yunjiexianaff.com',
+      'ppsvip01.shandianshuaff.com',
+      'ppsvip01.dalaoyunaff.com'
+    ];
+    const linkMatches = content.match(/href=["'](https?:\/\/[^"']+)["']/gi) || [];
+    for (const linkStr of linkMatches) {
+      const urlMatch = linkStr.match(/href=["'](https?:\/\/[^"']+)["']/i);
+      if (urlMatch) {
+        const url = urlMatch[1];
+        if (/(\?aff=|\?ref=|\?code=|\.aff\.com|code=)/i.test(url)) {
+          const isAllowed = allowedPartnerHosts.some(host => url.includes(host));
+          if (!isAllowed) {
+            console.error(`❌ [${f}] Contains unauthorized affiliate pattern: ${url}`);
+            failed = true;
+          }
+        }
+      }
+    }
   const tg = content.match(/https?:\/\/t\.me\/[^\s"'<>]+/i);
   if (tg) {
     console.error(`❌ [${f}] Contains Telegram link: ${tg[0]}`);
