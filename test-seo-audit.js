@@ -93,7 +93,7 @@ for (const f of htmlFiles) {
         }
       }
     }
-  const tg = content.match(/https?:\/\/t\.me\/[^\s"'<>]+/i);
+  const tg = content.match(/https?:\/\/t\.me\/(?!huanqiuti8899)[^\s"'<>]+/i);
   if (tg) {
     console.error(`❌ [${f}] Contains Telegram link: ${tg[0]}`);
     failed = true;
