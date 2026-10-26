@@ -23,6 +23,10 @@ if (!fs.existsSync('go.html')) {
     console.error(`❌ [go.html] Missing strict <meta name="robots" content="noindex, nofollow"> tag!`);
     failed = true;
   }
+  if (!goContent.includes('name="description"')) {
+    console.error(`❌ [go.html] Missing <meta name="description"> tag!`);
+    failed = true;
+  }
 }
 
 // 1.1 Check 301 Configuration Files
