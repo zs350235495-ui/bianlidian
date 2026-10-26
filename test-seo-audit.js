@@ -7,9 +7,42 @@ console.log('==============================================\n');
 
 let failed = false;
 
-// 1. Check HTML files
-const htmlFiles = fs.readdirSync('.').filter(f => f.endsWith('.html'));
-console.log(`Found ${htmlFiles.length} HTML files: ${htmlFiles.join(', ')}\n`);
+// 1. Check HTML files (Excluding redirection landing page go.html which has dedicated audit)
+const allHtmlFiles = fs.readdirSync('.').filter(f => f.endsWith('.html'));
+const htmlFiles = allHtmlFiles.filter(f => f !== 'go.html');
+console.log(`Found ${htmlFiles.length} content HTML files: ${htmlFiles.join(', ')}\n`);
+
+// 1.0 Dedicated Check for /go.html Gateway
+console.log('Checking /go.html Redirection Gateway Compliance...');
+if (!fs.existsSync('go.html')) {
+  console.error(`❌ [go.html] Missing /go.html redirection landing page!`);
+  failed = true;
+} else {
+  const goContent = fs.readFileSync('go.html', 'utf8');
+  if (!goContent.includes('content="noindex, nofollow"')) {
+    console.error(`❌ [go.html] Missing strict <meta name="robots" content="noindex, nofollow"> tag!`);
+    failed = true;
+  }
+}
+
+// 1.1 Check 301 Configuration Files
+console.log('Checking 301 redirection configuration files (_redirects, nginx-redirects.conf)...');
+if (!fs.existsSync('_redirects')) {
+  console.error(`❌ Missing _redirects configuration for Cloudflare Pages / Netlify!`);
+  failed = true;
+}
+if (!fs.existsSync('nginx-redirects.conf')) {
+  console.error(`❌ Missing nginx-redirects.conf configuration for VPS / BT-Panel!`);
+  failed = true;
+}
+
+// 1.2 Check robots.txt for Bing/Google Compliance
+console.log('Checking robots.txt compliance...');
+const robotsContent = fs.readFileSync('robots.txt', 'utf8');
+if (/Disallow:\s*(\/go|\/go\.html)/i.test(robotsContent)) {
+  console.error(`❌ [robots.txt] Contains Disallow for /go or /go.html (Violates Bing Webmaster guidelines)!`);
+  failed = true;
+}
 
 for (const f of htmlFiles) {
   const content = fs.readFileSync(f, 'utf8');
@@ -61,41 +94,38 @@ for (const f of htmlFiles) {
     });
   }
 
-  // E. Check affiliate & telegram links
-    const allowedPartnerHosts = [
-    '123pps01.huanqiutiaff.com',
-    'pps123.shenxingaff.com',
-    '123pp01.liulianyunaff.com',
-    'pp01.yunjiexianaff.com',
-    'ppsvip01.shandianshuaff.com',
-    'ppsvip01.dalaoyunaff.com',
-    'everett7623.kosingaff.com',
-    'pygllc.speedworldaff.cc',
-    'fanxiaobin.kuailiaff.com',
-    'wep.edgenovaaff.com',
-    'super.ytjcok.org',
-    'kunpengjiasu.com',
-    'ddd.jichang.best',
-    'haozevpn.jlyvipaff.com',
-    'gnt001.gntvipaff.cc'
+  // E. Check affiliate & 301 gateway links
+  const affDirectRegex = /href=["'](https?:\/\/[^"']*(?:aff\.com|\?code=|\?aff=|\?ref=|kunpengjiasu\.com|jichang\.best|ytjcok\.org)[^"']*)["']/gi;
+  let affDirectMatch;
+  while ((affDirectMatch = affDirectRegex.exec(content)) !== null) {
+    console.error(`❌ [${f}] Contains direct affiliate link without 301 isolation: ${affDirectMatch[1]}`);
+    failed = true;
+  }
+
+  // Ensure all /go.html links have proper rel="nofollow sponsored noopener noreferrer" and valid id
+  const goLinkMatches = content.match(/<a\s+[^>]*href=["']\/go\.html\?id=([^"']+)["'][^>]*>/gi) || [];
+  const validGoIds = [
+    'huanqiuti', 'dalaoyun', 'liulianyun', 'yunjiexian', 'shandianshu',
+    'shenxing', 'kexinyun', 'kosing', 'sujie', 'kuaili', 'edgenode',
+    'edgenova', 'yuntu', 'kunpeng', 'shunyun', 'jilianyun', 'guangnianti',
+    'tg-huanqiuti'
   ];
-    const linkMatches = content.match(/href=["'](https?:\/\/[^"']+)["']/gi) || [];
-    for (const linkStr of linkMatches) {
-      const urlMatch = linkStr.match(/href=["'](https?:\/\/[^"']+)["']/i);
-      if (urlMatch) {
-        const url = urlMatch[1];
-        if (/(\?aff=|\?ref=|\?code=|\.aff\.com|code=)/i.test(url)) {
-          const isAllowed = allowedPartnerHosts.some(host => url.includes(host));
-          if (!isAllowed) {
-            console.error(`❌ [${f}] Contains unauthorized affiliate pattern: ${url}`);
-            failed = true;
-          }
-        }
-      }
+  for (const aTag of goLinkMatches) {
+    const idMatch = aTag.match(/href=["']\/go\.html\?id=([^"']+)["']/i);
+    if (idMatch && !validGoIds.includes(idMatch[1].toLowerCase())) {
+      console.error(`❌ [${f}] Invalid or unregistered go id: ${idMatch[1]}`);
+      failed = true;
     }
+    const relMatch = aTag.match(/rel=["']([^"']+)["']/i);
+    if (!relMatch || !relMatch[1].includes('nofollow') || !relMatch[1].includes('sponsored')) {
+      console.error(`❌ [${f}] /go.html link missing rel="nofollow sponsored": ${aTag}`);
+      failed = true;
+    }
+  }
+
   const tg = content.match(/https?:\/\/t\.me\/(?!huanqiuti8899)[^\s"'<>]+/i);
   if (tg) {
-    console.error(`❌ [${f}] Contains Telegram link: ${tg[0]}`);
+    console.error(`❌ [${f}] Contains unauthorized Telegram link: ${tg[0]}`);
     failed = true;
   }
 
@@ -123,6 +153,11 @@ for (const f of htmlFiles) {
 // 2. Check sitemap.xml
 console.log('Checking sitemap.xml...');
 const sitemap = fs.readFileSync('sitemap.xml', 'utf8');
+
+if (sitemap.includes('go.html') || sitemap.includes('/go/')) {
+  console.error(`❌ [sitemap.xml] /go.html or /go/ must NEVER be included in sitemap.xml!`);
+  failed = true;
+}
 const locMatches = [...sitemap.matchAll(/<loc>https:\/\/jichangbianli\.org\/([^<]*)<\/loc>/g)].map(m => m[1]);
 
 for (const loc of locMatches) {
