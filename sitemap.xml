@@ -60,6 +60,14 @@
     <priority>0.95</priority>
   </url>
 
+  <!-- 5.3 缓冲区膨胀与现代队列调度算法指南 (Bufferbloat & AQM CAKE) - 深度网络架构师手记 -->
+  <url>
+    <loc>https://jichangbianli.org/post-bufferbloat-aqm-cake.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
   <!-- 6. 设备专柜 (Devices) - 全平台客户端下载与设置 -->
   <url>
     <loc>https://jichangbianli.org/devices.html</loc>

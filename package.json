@@ -5,7 +5,8 @@
   "main": "test-seo-audit.js",
   "scripts": {
     "test": "node test-seo-audit.js",
-    "build:css": "tailwindcss -i ./css/input.css -o ./css/style.css --minify"
+    "build:css": "tailwindcss -i ./css/input.css -o ./css/style.css --minify",
+    "indexnow": "node submit-indexnow.js"
   },
   "repository": {
     "type": "git",
