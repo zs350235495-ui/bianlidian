@@ -409,11 +409,54 @@
             <h3 class="text-lg sm:text-xl font-black text-carbon">最新文章陈列架</h3>
             <span class="text-xs text-carbonMuted font-normal" id="currentCategoryTitle">（全部文章）</span>
           </div>
-          <span class="text-xs text-carbonMuted" id="showingCount">显示 8 篇精选</span>
+          <span class="text-xs text-carbonMuted" id="showingCount">显示 9 篇精选</span>
         </div>
 
         <!-- 2~3 列文章卡片网格 -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="blogCardsContainer">
+
+          <!-- CARD WebRTC STUN/TURN: 实时音视频穿透与防卡顿实测 -->
+          <article class="blog-card group bg-white rounded-2xl border-2 border-sky-500/40 shadow-card hover:shadow-card-hover overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-category="protocol">
+            <div>
+              <div class="relative h-44 bg-gradient-to-tr from-[#E0F2FE] to-[#BAE6FD] overflow-hidden flex items-center justify-center border-b border-oat/60">
+                <div class="text-6xl group-hover:scale-110 transition-transform duration-500 select-none">
+                  📡
+                </div>
+                <div class="absolute top-3 left-3 bg-sky-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+                  技术实测
+                </div>
+                <div class="absolute top-3 right-3 bg-warmOrange text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+                  WebRTC 调优
+                </div>
+                <div class="absolute bottom-2 right-3 text-[10px] text-sky-800 font-mono font-bold">
+                  STUN / TURN / ICE
+                </div>
+              </div>
+
+              <div class="p-5 sm:p-6">
+                <a href="/articles/webrtc-stun-turn-p2p-optimization-2026.html" class="block group">
+                  <h4 class="text-base sm:text-lg font-bold text-carbon group-hover:text-warmOrange transition-colors leading-snug line-clamp-2">
+                    2026跨境WebRTC穿透调优与P2P实时音视频防卡顿实测
+                  </h4>
+                </a>
+                <p class="mt-2.5 text-xs sm:text-sm text-carbonMuted leading-relaxed line-clamp-2">
+                  深度解析STUN/TURN穿透机制对在线会议、外服语音与P2P传输的影响，提供防止NAT打洞失败与UDP丢包卡顿的最佳分流配置指南。
+                </p>
+              </div>
+            </div>
+
+            <div class="px-5 pb-5 sm:px-6 sm:pb-6 pt-3 border-t border-oat/50 flex items-center justify-between text-[11px] text-carbonMuted">
+              <div class="flex items-center gap-1.5">
+                <span>📡 网络实验室</span>
+                <span>•</span>
+                <span>实时通信</span>
+              </div>
+              <a href="/articles/webrtc-stun-turn-p2p-optimization-2026.html" class="flex items-center gap-1 text-warmOrange font-bold group-hover:translate-x-0.5 transition-transform">
+                <span>深度精读</span>
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            </div>
+          </article>
 
           <!-- CARD Bufferbloat & CAKE: 现代队列调度算法 -->
           <article class="blog-card group bg-white rounded-2xl border-2 border-emerald-500/40 shadow-card hover:shadow-card-hover overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-category="protocol">

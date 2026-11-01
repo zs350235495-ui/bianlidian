@@ -25,7 +25,9 @@
 
 便利店精选的一系列新手操作、带宽精算与避坑档案，提供站内标准独立 Clean URL 静态页索引：
 
-1. **[2026 跨境网络链路全生命周期成本测算与服务商 SLA 评测白皮书](https://jichangbianli.org/network-sla-cost-whitepaper-2026.html)**
+1. **[2026跨境WebRTC穿透调优与P2P实时音视频防卡顿实测](https://jichangbianli.org/articles/webrtc-stun-turn-p2p-optimization-2026.html)**
+   * 深度解析 STUN/TURN 穿透机制对在线会议、外服语音与 P2P 传输的影响，提供防止 NAT 打洞失败与 UDP 丢包卡顿的最佳分流配置指南。
+2. **[2026 跨境网络链路全生命周期成本测算与服务商 SLA 评测白皮书](https://jichangbianli.org/network-sla-cost-whitepaper-2026.html)**
    * 深度拆解物理专线（IPLC/IEPL）硬成本模型、三大运营商端口月租账单与晚高峰实盘 SLA 评测矩阵。
 2. **[2026 年度主流服务商深度综合横评天梯榜](https://jichangbianli.org/reviews.html)**
    * 汇总核心服务商晚高峰实测吞吐、解锁矩阵、工单响应与全月抖动散点图。

@@ -68,6 +68,14 @@
     <priority>0.95</priority>
   </url>
 
+  <!-- 5.4 跨境WebRTC穿透调优与P2P实时音视频防卡顿实测 (WebRTC STUN/TURN Optimization) -->
+  <url>
+    <loc>https://jichangbianli.org/articles/webrtc-stun-turn-p2p-optimization-2026.html</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
   <!-- 6. 设备专柜 (Devices) - 全平台客户端下载与设置 -->
   <url>
     <loc>https://jichangbianli.org/devices.html</loc>

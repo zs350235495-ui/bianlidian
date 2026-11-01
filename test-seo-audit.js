@@ -8,7 +8,13 @@ console.log('==============================================\n');
 let failed = false;
 
 // 1. Check HTML files (Excluding redirection landing page go.html which has dedicated audit)
-const allHtmlFiles = fs.readdirSync('.').filter(f => f.endsWith('.html'));
+let allHtmlFiles = fs.readdirSync('.').filter(f => f.endsWith('.html'));
+if (fs.existsSync('articles')) {
+  const articleFiles = fs.readdirSync('articles')
+    .filter(f => f.endsWith('.html'))
+    .map(f => `articles/${f}`);
+  allHtmlFiles = allHtmlFiles.concat(articleFiles);
+}
 const htmlFiles = allHtmlFiles.filter(f => f !== 'go.html');
 console.log(`Found ${htmlFiles.length} content HTML files: ${htmlFiles.join(', ')}\n`);
 
