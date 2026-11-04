@@ -17,6 +17,7 @@
 - [2026 跨境网络链路全生命周期成本测算与服务商 SLA 评测白皮书](https://jichangbianli.org/network-sla-cost-whitepaper-2026.html): 物理专线（IPLC/IEPL）硬成本模型、三大运营商端口月租账单拆解、低价超售机理与六大核心服务商晚高峰实盘 SLA 评测矩阵。
 - [网络满载延迟与缓冲区膨胀算法解密 (Bufferbloat & CAKE)](https://jichangbianli.org/post-bufferbloat-aqm-cake.html): 深入剖析路由器 FIFO 队列缺陷，FQ-CoDel 与 CAKE 主动队列管理算法工程机制与软路由 SQM 流量调度实操配置。
 - [2026跨境WebRTC穿透调优与P2P实时音视频防卡顿实测](https://jichangbianli.org/articles/webrtc-stun-turn-p2p-optimization-2026.html): 深度解析STUN/TURN穿透机制对在线会议、外服语音与P2P传输的影响，提供防止NAT打洞失败与UDP丢包卡顿的最佳分流配置指南。
+- [2026外服游戏加速器翻墙梯子推荐及低延迟节点横评](https://jichangbianli.org/articles/online-gaming-low-latency-vpn-ladder-rankings-2026.html): 深度实测Steam、Valorant、Apex等外服联机在IEPL专线与普通中转下的UDP丢包、Jitter抖动与NAT类型优化，提供电竞级节点天梯榜。
 - [网络漫游避坑终极指南 (Pillar Article)](https://jichangbianli.org/article.html): 深入解析公网直连、BGP中继与 IPLC 物理专线本质区别，Hysteria2 协议原理与晚高峰抗拥堵实战。
 - [新手便当教程 (Guide)](https://jichangbianli.org/guide.html): 零基础 Windows / macOS / iOS / Android 客户端 5 分钟上手教程与订阅导入指南。
 - [设备专柜 (Devices)](https://jichangbianli.org/devices.html): Clash Verge Rev、Sing-box、Surge、Shadowrocket 纯净开源客户端安全下载与配置指导。

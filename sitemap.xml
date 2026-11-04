@@ -76,6 +76,14 @@
     <priority>0.95</priority>
   </url>
 
+  <!-- 5.5 2026外服游戏加速器翻墙梯子推荐及低延迟节点横评 (Gaming Low Latency Ladder Rankings) -->
+  <url>
+    <loc>https://jichangbianli.org/articles/online-gaming-low-latency-vpn-ladder-rankings-2026.html</loc>
+    <lastmod>2026-11-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
   <!-- 6. 设备专柜 (Devices) - 全平台客户端下载与设置 -->
   <url>
     <loc>https://jichangbianli.org/devices.html</loc>

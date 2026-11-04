@@ -254,7 +254,7 @@
               <span class="text-2xl">📰</span>
               <div>
                 <div class="text-[11px] text-carbonMuted font-medium">已收录日志</div>
-                <div class="text-base font-black text-carbon" id="totalArticleCounter">12 篇实战笔记</div>
+                <div class="text-base font-black text-carbon" id="totalArticleCounter">13 篇实战笔记</div>
               </div>
             </div>
           </div>
@@ -263,10 +263,10 @@
         <!-- 2. 分类药丸筛选栏 (Category Tabs) -->
         <div class="mt-8 pt-6 border-t border-oat/60 flex flex-wrap items-center gap-2 sm:gap-3" id="categoryFilterBar">
           <button class="pill-filter active px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight transition-all" data-category="all">
-            全部文章 (12)
+            全部文章 (13)
           </button>
           <button class="pill-filter px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight transition-all" data-category="protocol">
-            协议与测速 (4)
+            协议与测速 (5)
           </button>
           <button class="pill-filter px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight transition-all" data-category="streaming">
             流媒体与AI (3)
@@ -409,11 +409,54 @@
             <h3 class="text-lg sm:text-xl font-black text-carbon">最新文章陈列架</h3>
             <span class="text-xs text-carbonMuted font-normal" id="currentCategoryTitle">（全部文章）</span>
           </div>
-          <span class="text-xs text-carbonMuted" id="showingCount">显示 9 篇精选</span>
+          <span class="text-xs text-carbonMuted" id="showingCount">显示 10 篇精选</span>
         </div>
 
         <!-- 2~3 列文章卡片网格 -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="blogCardsContainer">
+
+          <!-- CARD Gaming Ladder: 2026外服游戏加速器翻墙梯子推荐及低延迟节点横评 -->
+          <article class="blog-card group bg-white rounded-2xl border-2 border-red-500/40 shadow-card hover:shadow-card-hover overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-category="protocol">
+            <div>
+              <div class="relative h-44 bg-gradient-to-tr from-[#FEE2E2] to-[#FECACA] overflow-hidden flex items-center justify-center border-b border-oat/60">
+                <div class="text-6xl group-hover:scale-110 transition-transform duration-500 select-none">
+                  🎮
+                </div>
+                <div class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+                  电竞横评
+                </div>
+                <div class="absolute top-3 right-3 bg-warmOrange text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+                  游戏专线
+                </div>
+                <div class="absolute bottom-2 right-3 text-[10px] text-red-800 font-mono font-bold">
+                  IEPL / Full Cone / Jitter &lt; 2ms
+                </div>
+              </div>
+
+              <div class="p-5 sm:p-6">
+                <a href="/articles/online-gaming-low-latency-vpn-ladder-rankings-2026.html" class="block group">
+                  <h4 class="text-base sm:text-lg font-bold text-carbon group-hover:text-warmOrange transition-colors leading-snug line-clamp-2">
+                    2026外服游戏加速器翻墙梯子推荐及低延迟节点横评
+                  </h4>
+                </a>
+                <p class="mt-2.5 text-xs sm:text-sm text-carbonMuted leading-relaxed line-clamp-2">
+                  深度实测Steam、Valorant、Apex等外服联机在IEPL专线与普通中转下的UDP丢包、Jitter抖动与NAT类型优化，提供电竞级节点天梯榜。
+                </p>
+              </div>
+            </div>
+
+            <div class="px-5 pb-5 sm:px-6 sm:pb-6 pt-3 border-t border-oat/50 flex items-center justify-between text-[11px] text-carbonMuted">
+              <div class="flex items-center gap-1.5">
+                <span>🎮 电竞实验室</span>
+                <span>•</span>
+                <span>游戏专线</span>
+              </div>
+              <a href="/articles/online-gaming-low-latency-vpn-ladder-rankings-2026.html" class="flex items-center gap-1 text-warmOrange font-bold group-hover:translate-x-0.5 transition-transform">
+                <span>深度精读</span>
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            </div>
+          </article>
 
           <!-- CARD WebRTC STUN/TURN: 实时音视频穿透与防卡顿实测 -->
           <article class="blog-card group bg-white rounded-2xl border-2 border-sky-500/40 shadow-card hover:shadow-card-hover overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-category="protocol">
