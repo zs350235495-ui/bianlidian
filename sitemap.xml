@@ -84,6 +84,14 @@
     <priority>0.95</priority>
   </url>
 
+  <!-- 5.6 2026手机移动端翻墙梯子省电保活与高速机场推荐指南 (Mobile Battery Keepalive & Airport Ladder Recommendations) -->
+  <url>
+    <loc>https://jichangbianli.org/articles/mobile-battery-keepalive-airport-ladder-recommendations-2026.html</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
   <!-- 6. 设备专柜 (Devices) - 全平台客户端下载与设置 -->
   <url>
     <loc>https://jichangbianli.org/devices.html</loc>
