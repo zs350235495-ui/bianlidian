@@ -35,8 +35,8 @@ if (!fs.existsSync('go.html')) {
   }
 }
 
-// 1.1 Check 301 Configuration Files
-console.log('Checking 301 redirection configuration files (_redirects, nginx-redirects.conf)...');
+// 1.1 Check 302 Redirection Configuration Files
+console.log('Checking 302 redirection configuration files (_redirects, nginx-redirects.conf)...');
 if (!fs.existsSync('_redirects')) {
   console.error(`❌ Missing _redirects configuration for Cloudflare Pages / Netlify!`);
   failed = true;
@@ -104,11 +104,11 @@ for (const f of htmlFiles) {
     });
   }
 
-  // E. Check affiliate & 301 gateway links
+  // E. Check affiliate & 302 gateway links
   const affDirectRegex = /href=["'](https?:\/\/[^"']*(?:aff\.com|\?code=|\?aff=|\?ref=|kunpengjiasu\.com|jichang\.best|ytjcok\.org)[^"']*)["']/gi;
   let affDirectMatch;
   while ((affDirectMatch = affDirectRegex.exec(content)) !== null) {
-    console.error(`❌ [${f}] Contains direct affiliate link without 301 isolation: ${affDirectMatch[1]}`);
+    console.error(`❌ [${f}] Contains direct affiliate link without 302 isolation: ${affDirectMatch[1]}`);
     failed = true;
   }
 
