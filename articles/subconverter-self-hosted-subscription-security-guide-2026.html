@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2026全平台客户端订阅转换与Subconverter私有化防泄露部署指南 - 机场便利</title>
+  <meta name="description" content="深度解析第三方公共订阅转换接口的机场节点泄露与DNS劫持风险，提供Docker私有化部署Subconverter实战教程，附带Clash/Mihomo、Sing-box与Shadowrocket高可用分流规则模板。" />
+  <meta name="keywords" content="2026机场推荐, 2026梯子推荐, 手机梯子省电, 移动端翻墙保活, iOS后台闪退解决, NetworkExtension内存限制, 安卓Doze休眠断流, 5G基站切网优化, 手机翻墙发热" />
+
+  <!-- Canonical & Open Graph -->
+  <link rel="canonical" href="https://jichangbianli.org/articles/subconverter-self-hosted-subscription-security-guide-2026.html" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="applicable-device" content="pc,mobile" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="2026手机移动端翻墙梯子省电保活与高速机场推荐指南" />
+  <meta property="og:description" content="2026年最新手机移动端翻墙梯子省电保活与高速机场推荐指南。深入拆解iOS NetworkExtension内存限制闪退、安卓Doze休眠断流机制、5G基站切网优化与低能耗低发热协议，提供移动端专线技术天梯榜。" />
+  <meta property="og:url" content="https://jichangbianli.org/articles/subconverter-self-hosted-subscription-security-guide-2026.html" />
+  <meta property="og:site_name" content="机场便利店 Speed Mart" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:image" content="https://jichangbianli.org/favicon.svg" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="2026手机移动端翻墙梯子省电保活与高速机场推荐指南" />
+  <meta name="twitter:description" content="2026年最新手机移动端翻墙梯子省电保活与高速机场推荐指南。深入拆解iOS NetworkExtension内存限制闪退、安卓Doze休眠断流机制、5G基站切网优化与低能耗低发热协议，提供移动端专线技术天梯榜。" />
+  <meta name="twitter:image" content="https://jichangbianli.org/favicon.svg" />
+
+  <!-- Schema.org 结构化数据 (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": "https://jichangbianli.org/articles/subconverter-self-hosted-subscription-security-guide-2026.html#article",
+        "headline": "2026手机移动端翻墙梯子省电保活与高速机场推荐指南",
+        "description": "2026年最新手机移动端翻墙梯子省电保活与高速机场推荐指南。深入拆解iOS NetworkExtension内存限制闪退、安卓Doze休眠断流机制、5G基站切网优化与低能耗低发热协议，提供移动端专线技术天梯榜。",
+        "inLanguage": "zh-CN",
+        "datePublished": "2026-11-08T19:00:00+08:00",
+        "dateModified": "2026-11-08T19:00:00+08:00",
+        "mainEntityOfPage": "https://jichangbianli.org/articles/subconverter-self-hosted-subscription-security-guide-2026.html",
+        "author": {
+          "@type": "Organization",
+          "name": "移动系统工程评测组",
+          "url": "https://jichangbianli.org/"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "机场便利店",
+          "url": "https://jichangbianli.org/",
+          "logo": "https://jichangbianli.org/favicon.svg"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://jichangbianli.org/articles/subconverter-self-hosted-subscription-security-guide-2026.html#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "首页",
+            "item": "https://jichangbianli.org/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "便利店日志",
+            "item": "https://jichangbianli.org/blog.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "移动端省电保活与机场推荐指南",
+            "item": "https://jichangbianli.org/articles/subconverter-self-hosted-subscription-security-guide-2026.html"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Google Fonts & CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="preload" href="/css/style.css" as="style" />
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    /* === 全局 SVG 防爆物理兜底 === */
+    svg { max-width: 100%; height: auto; }
+    header svg { max-height: 48px; }
+  
+    :root {
+      --bg-store: #FDFBF7;
+      --card-bg: #FFFFFF;
+      --text-main: #2D3139;
+      --text-muted: #6B7280;
+      --orange-primary: #E8935A;
+      --orange-light: #FFF0EB;
+      --orange-hover: #D47A3F;
+      --yellow-cream: #F5D78E;
+      --border-soft: #F0EAE1;
+      --border-dark: #2D3139;
+    }
+
+    body {
+      background-color: var(--bg-store);
+      color: var(--text-main);
+      font-family: 'Noto Sans SC', 'Plus Jakarta Sans', sans-serif;
+    }
+
+    #readingProgressBar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--orange-primary), var(--yellow-cream));
+      width: 0%;
+      z-index: 9999;
+      transition: width 0.1s ease-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+  <!-- 顶部阅读进度条 -->
+  <div id="readingProgressBar"></div>
+
+  <!-- 顶部导航栏 -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-[#FDFBF7]/90 backdrop-blur-md border-b border-[#F0EAE1]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="/index.html" class="flex items-center gap-2 group">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <rect width="36" height="36" rx="8" fill="#E8935A"/>
+          <path d="M10 18L16 12V24L10 18Z" fill="#FFF8F0"/>
+          <path d="M18 12L26 18L18 24V12Z" fill="#F5D78E"/>
+        </svg>
+        <span class="font-extrabold text-xl tracking-tight text-[#2E2A27]">
+          机场便利店 <span class="text-xs bg-[#E8935A]/15 text-[#E8935A] px-2 py-0.5 rounded-full font-bold ml-1">24H</span>
+        </span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-[#4B5563]">
+        <a href="/index.html" class="hover:text-[#E8935A] transition-colors">首页</a>
+        <a href="/reviews.html" class="hover:text-[#E8935A] transition-colors">店长严选</a>
+        <a href="/guide.html" class="hover:text-[#E8935A] transition-colors">新手便当</a>
+        <a href="/devices.html" class="hover:text-[#E8935A] transition-colors">设备专柜</a>
+        <a href="/speedtest.html" class="hover:text-[#E8935A] transition-colors">测速冰箱</a>
+        <a href="/blog.html" class="text-[#E8935A] font-semibold">便利店日志</a>
+        <a href="/faq.html" class="hover:text-[#E8935A] transition-colors">常见避坑</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="/blog.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#E8935A] bg-[#E8935A]/10 hover:bg-[#E8935A]/20 px-3.5 py-2 rounded-full transition-all">
+          <span>← 返回日志专栏</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主体容器 -->
+  <main class="flex-grow pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full">
+    
+    <!-- 面包屑导航 -->
+    <nav class="mb-6 text-xs text-gray-500 flex items-center gap-2 flex-wrap">
+      <a href="/index.html" class="hover:text-[#E8935A]">首页</a>
+      <span>/</span>
+      <a href="/blog.html" class="hover:text-[#E8935A]">便利店日志</a>
+      <span>/</span>
+      <span class="text-[#2E2A27] font-semibold">移动端省电保活与机场推荐指南</span>
+    </nav>
+
+    <!-- 文章正文区域 -->
+    <article class="max-w-4xl mx-auto px-4 py-8">
+
+      <!-- 文章头部元数据 -->
+      <header class="mb-10 text-center md:text-left border-b border-[#F0EAE1] pb-8">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E8935A]/10 text-[#E8935A] text-xs font-bold mb-4">
+          <span>订阅转换安全与私有化实战</span>
+          <span>•</span>
+          <span>技术深度解析</span>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-extrabold text-[#2E2A27] leading-tight mb-4 tracking-tight">
+          2026全平台客户端订阅转换与Subconverter私有化防泄露部署指南
+        </h1>
+        <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 text-xs text-gray-500">
+          <span>发布时间：2026-11-15</span>
+          <span>•</span>
+          <span>阅读时长：约 15 分钟</span>
+          <span>•</span>
+          <span>标签：Subconverter / 订阅安全 / Docker / 私有化运维</span>
+        </div>
+      </header>
+
+      <!-- 引言 -->
+      <section class="mb-12">
+        <h2 class="text-xl md:text-2xl font-bold text-[#2E2A27] mb-4 flex items-center gap-2">
+          <span class="w-2 h-6 bg-[#E8935A] rounded-full inline-block"></span>
+          引言
+        </h2>
+        <div class="prose max-w-none text-[#4B5563] leading-relaxed space-y-4 text-sm md:text-base">
+          <p>
+            在当代分布式代理网络生态中，客户端的多样化与核心配置格式的割裂构成了长期存在的技术矛盾。从桌面端的 Clash Verge Rev、Mihomo Party 到移动端的 Sing-box、Shadowrocket 与 Surge，不同内核对节点配置、规则集（Rule Provider）以及路由链的语法定义截然不同。为了抹平异构客户端之间的配置鸿沟，基于 Subconverter 生态的订阅转换服务成为了数以千万计网络用户的核心工具链。
+          </p>
+          <p>
+            然而，随着网络审查对抗强度的持续升级以及凭据黑产市场的规模化运作，便利性背后所隐藏的供应链与通道安全隐患正呈指数级放大。大量用户习惯于通过公开搜索引擎或第三方社群获取所谓“免费、免搭建”的公共在线订阅转换平台，直接将机场下发的原始订阅 URL 贴入网页输入框。这一操作在协议层面上等同于向完全未知的第三方服务器全量托付了个人凭据资产。
+          </p>
+          <p>
+            在缺乏端到端加密与访问审计约束的环境下，公共订阅转换后端本质上是一个随时可能发生数据截流与单向劫持的“透明代理中继”。本文将从底层协议报文流动与服务端解析机制切入，客观剖析依赖公共订阅转换接口所面临的三大核心安全威胁，并为构建完全受控的私有化转换管道提供工程指引。
+          </p>
+        </div>
+      </section>
+
+      <!-- 一、公共在线订阅转换接口的三大底层安全隐患 -->
+      <section class="mb-12">
+        <h2 class="text-xl md:text-2xl font-bold text-[#2E2A27] mb-6 flex items-center gap-2">
+          <span class="w-2 h-6 bg-[#E8935A] rounded-full inline-block"></span>
+          一、公共在线订阅转换接口的三大底层安全隐患
+        </h2>
+        <div class="space-y-6 text-[#4B5563] text-sm md:text-base leading-relaxed">
+          <p>
+            当客户端向公共订阅转换前端发起转换请求时，浏览器会将包含服务商原始订阅地址的 HTTP GET 查询参数（如 <code>target=clash&amp;url=https%3A%2F%2F...</code>）发往后端转换进程。Subconverter 后端作为上游拉取器，解析该 URL 并向机场 API 获取节点 Base64 列表。整个数据管道跨越了不可信的公共网络边界与宿主机环境，其三大深层风险具体体现如下：
+          </p>
+
+          <div class="bg-white border border-[#F0EAE1] rounded-2xl p-6 shadow-sm space-y-4">
+            <h3 class="text-lg font-bold text-[#2E2A27] flex items-center gap-2">
+              <span class="w-6 h-6 rounded-lg bg-[#E8935A]/10 text-[#E8935A] flex items-center justify-center text-xs font-bold">1</span>
+              明文凭据落盘窃取与节点资产未授权转售
+            </h3>
+            <p>
+              机场原始订阅链接的核心载荷是高度敏感的用户身份认证凭据。在 VMess 协议中，包含了唯一鉴权标识 UUID；在 Trojan 与 Shadowsocks-2022 协议中，包含了明文密码或预共享密钥（PSK）；在 VLESS-Reality 中，包含了私有公钥、ShortId 与 SNI 伪装标头。
+            </p>
+            <p>
+              当这些参数传递至不受信的公共 Subconverter 实例时，反向代理层（如 Nginx、Caddy）的 <code>access.log</code> 会完整记录带有订阅 Token 的 Query String，而后端运行日志更可能在 Debug 级别下将解码后的所有节点 IP、端口与密码明文输出至磁盘。恶意运营者无需进行高难度攻击，只需挂载定时爬虫脚本扫描本地日志目录，即可将所有用户的订阅节点提取入库，进而分流转售、并入黑产公用代理池或用于高并发扫描，最终导致合法付费用户的带宽配额迅速耗尽。
+            </p>
+          </div>
+
+          <div class="bg-white border border-[#F0EAE1] rounded-2xl p-6 shadow-sm space-y-4">
+            <h3 class="text-lg font-bold text-[#2E2A27] flex items-center gap-2">
+              <span class="w-6 h-6 rounded-lg bg-[#E8935A]/10 text-[#E8935A] flex items-center justify-center text-xs font-bold">2</span>
+              服务端篡改注入恶意分流规则与流量旁路监听
+            </h3>
+            <p>
+              Subconverter 在完成协议解析后，会依据服务端指定的外部配置模板（External Config）进行路由重写与 YAML/JSON 序列化打包。这意味着配置最终解释权完全掌握在转换服务端手中。
+            </p>
+            <p>
+              一个遭受投毒或具备恶意动机的公共接口，能够在用户毫不知情的情况下动态篡改分流逻辑：其一，在生成的配置文件中强制注入攻击者架设的中间人抓包节点，并将 <code>DOMAIN-KEYWORD</code> 为银行金融、去中心化钱包、个人云存储或工作邮箱的匹配规则定向至该恶意节点；其二，篡改内置 DNS 模块，将客户端安全 DNS 上游（DoH/DoT）替换为未经加密的恶意递归解析器，通过 DNS 投毒与伪造解析记录实施钓鱼引导；其三，将本应直连的内网回环与局域网段改写为代理转发，导致内部网络拓扑泄露。
+            </p>
+          </div>
+
+          <div class="bg-white border border-[#F0EAE1] rounded-2xl p-6 shadow-sm space-y-4">
+            <h3 class="text-lg font-bold text-[#2E2A27] flex items-center gap-2">
+              <span class="w-6 h-6 rounded-lg bg-[#E8935A]/10 text-[#E8935A] flex items-center justify-center text-xs font-bold">3</span>
+              集中式高频请求触发服务商风控与账号熔断封禁
+            </h3>
+            <p>
+              现代商业机场与接入集群普遍部署了严格的 Web 应用防火墙（WAF）与订阅分发风控策略。为了防范多用户合租滥用与机器人抓取，服务端会对调用订阅接口的 IP 分布、请求频率、User-Agent 特征及并发连接数进行协同画像。
+            </p>
+            <p>
+              主流公共订阅转换服务通常架设在少数几台廉价海外 VPS 上，承载着数以万计的并发转换需求。当大量用户在短时间内通过同一台公共服务器 IP 密集调用不同机场的订阅地址，或者公共接口因缓存失效而对上游订阅接口发起高频重试探测时，极易直接命中机场风控系统的阈值拦截网。其结果不仅是转换请求被返回 HTTP 429（Too Many Requests）或 HTTP 403，用户的服务凭据更会被标记为“可疑多 IP 共享”，轻则导致单日拉取次数耗尽，重则直接触发风控自动化脚本实施永久封号且不予退费。
+            </p>
+          </div>
+        </div>
+      </section>
+      <!-- 二、2026 主流代理内核配置架构与规则集演进 -->
+      <section class="mb-12">
+        <h2 class="text-xl md:text-2xl font-bold text-[#2E2A27] mb-6 flex items-center gap-2">
+          <span class="w-2 h-6 bg-[#E8935A] rounded-full inline-block"></span>
+          二、2026 主流代理内核配置架构与规则集演进
+        </h2>
+        <div class="space-y-6 text-[#4B5563] text-sm md:text-base leading-relaxed">
+          <p>
+            配置转换不仅是协议参数（如 Server、Port、Cipher）的语法搬运，更本质的任务是适配不同内核的路由决策引擎与规则匹配机制。进入 2026 年，主流代理内核已全面告别早期松散的纯文本行级遍历，演进为以“二进制预编译”与“内存零拷贝”为核心的高性能路由架构。
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Mihomo .mrs -->
+            <div class="bg-white border border-[#F0EAE1] rounded-2xl p-5 shadow-sm space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-[#2E2A27] text-base">Clash / Mihomo</span>
+                <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#E8935A]/10 text-[#E8935A] font-bold">.mrs 二进制</span>
+              </div>
+              <p class="text-xs text-gray-500">
+                <strong>架构机制：</strong>采用 Mihomo Rule Set（.mrs）预编译二进制文件。相比传统 YAML 文本中动辄数万行的 <code>rules</code> 列表，.mrs 采用高效序列化结构与紧凑编码。
+              </p>
+              <p class="text-xs text-gray-500">
+                <strong>性能表现：</strong>规则集加载时利用零拷贝（Zero-Copy）内存映射技术，将解析耗时由数百毫秒级压缩至微秒级。大幅消除了冷启动时的垃圾回收（GC）开销，使路由内存占用骤降 60% 以上，特别契合移动设备与轻量路由。
+              </p>
+            </div>
+
+            <!-- Sing-box .srs -->
+            <div class="bg-white border border-[#F0EAE1] rounded-2xl p-5 shadow-sm space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-[#2E2A27] text-base">Sing-box</span>
+                <span class="text-xs px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-600 font-bold">.srs 路由集</span>
+              </div>
+              <p class="text-xs text-gray-500">
+                <strong>架构机制：</strong>以 Headless 纯架构设计为基石，通过编译工具将复杂 JSON 规则编译为 .srs 二进制规则集，内部构建高度优化的 Radix Tree 域名树与 IP-CIDR 前缀查找树。
+              </p>
+              <p class="text-xs text-gray-500">
+                <strong>性能表现：</strong>具备极致的解析吞吐量与极低内存开销。无冗余字符串运行时二次解析负担，单条报文路由决策延迟处于亚微秒级别，对高并发突发连接具有天然的抗抖动弹性。
+              </p>
+            </div>
+
+            <!-- Shadowrocket 模块 -->
+            <div class="bg-white border border-[#F0EAE1] rounded-2xl p-5 shadow-sm space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-[#2E2A27] text-base">Shadowrocket</span>
+                <span class="text-xs px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-600 font-bold">文本 / 模块体系</span>
+              </div>
+              <p class="text-xs text-gray-500">
+                <strong>架构机制：</strong>沿用基于行级文本的分流配置文件与动态覆盖模块（.sgmodule / .module），由应用层在启动时解析文本并注入至系统 NetworkExtension 进程。
+              </p>
+              <p class="text-xs text-gray-500">
+                <strong>性能表现：</strong>缺乏通用二进制编译分发能力，面对数万条全量去广告或地区 IP 规则时，文本解析占用大量瞬时 CPU 时间。受限于 iOS 扩展 15MB–50MB 的苛刻内存水位，极易因规则超载引发 OOM 闪退断连。
+              </p>
+            </div>
+          </div>
+
+          <p>
+            这一内核架构演变直接倒逼了订阅转换工具的技术升级：现代转换后端不仅需要准确翻译节点属性，还必须具备在线将远程规则集即时编译为 <code>.mrs</code> 与 <code>.srs</code> 紧凑二进制格式的引擎能力。
+          </p>
+        </div>
+      </section>
+
+      <!-- 三、2026 订阅转换与配置管理方案横向对比天梯 -->
+      <section class="mb-12">
+        <h2 class="text-xl md:text-2xl font-bold text-[#2E2A27] mb-6 flex items-center gap-2">
+          <span class="w-2 h-6 bg-[#E8935A] rounded-full inline-block"></span>
+          三、2026 订阅转换与配置管理方案横向对比天梯
+        </h2>
+        <div class="space-y-6 text-[#4B5563] text-sm md:text-base leading-relaxed">
+          <p>
+            针对不同网络场景与技术熟练度，目前业界存在四种主流的订阅处理与规则编排范式。综合其底层通信暴露面、运行时环境与可定制维度，横向对比评级如下：
+          </p>
+
+          <!-- 对比表格 -->
+          <div class="overflow-x-auto border border-[#F0EAE1] rounded-2xl shadow-sm bg-white">
+            <table class="w-full text-left border-collapse text-xs md:text-sm">
+              <thead>
+                <tr class="bg-[#FDFBF7] border-b border-[#F0EAE1] text-[#2E2A27] font-bold">
+                  <th class="py-3.5 px-4">方案分类</th>
+                  <th class="py-3.5 px-4">运行与通信形态</th>
+                  <th class="py-3.5 px-4">隐私安全等级</th>
+                  <th class="py-3.5 px-4">自定义规则深度</th>
+                  <th class="py-3.5 px-4">跨内核转换能力</th>
+                  <th class="py-3.5 px-4">维护门槛与适用场景</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[#F0EAE1] text-gray-600">
+                <tr class="hover:bg-[#FFFDFB] transition-colors">
+                  <td class="py-4 px-4 font-bold text-[#2E2A27] whitespace-nowrap">
+                    私有 Docker 部署<br>
+                    <span class="text-[11px] font-normal text-gray-400">Subconverter + Sub-Store</span>
+                  </td>
+                  <td class="py-4 px-4">受控私有 VPS 或本地 NAS 隔离容器，Token 访问鉴权</td>
+                  <td class="py-4 px-4">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">
+                      ★★★★★ 极高
+                    </span>
+                  </td>
+                  <td class="py-4 px-4">完整脚本/正则重写，支持二进制规则即时构建</td>
+                  <td class="py-4 px-4">全协议转换（Clash、Sing-box、Surge、QX等）</td>
+                  <td class="py-4 px-4">需基础 Linux 与 Docker 运维能力，适于多设备深度用户</td>
+                </tr>
+                <tr class="hover:bg-[#FFFDFB] transition-colors">
+                  <td class="py-4 px-4 font-bold text-[#2E2A27] whitespace-nowrap">
+                    客户端原生覆写脚本<br>
+                    <span class="text-[11px] font-normal text-gray-400">Mihomo Script / Surge 模块</span>
+                  </td>
+                  <td class="py-4 px-4">客户端本地进程直接拉取原生订阅并在内存中链式处理</td>
+                  <td class="py-4 px-4">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">
+                      ★★★★★ 极高
+                    </span>
+                  </td>
+                  <td class="py-4 px-4">完全受控于本地代码逻辑，支持动态插桩与策略组生成</td>
+                  <td class="py-4 px-4">局限于对应客户端自身支持的原生协议，无法跨平台分发</td>
+                  <td class="py-4 px-4">零服务器成本，需掌握 JavaScript 或 YAML 覆写语法</td>
+                </tr>
+                <tr class="hover:bg-[#FFFDFB] transition-colors">
+                  <td class="py-4 px-4 font-bold text-[#2E2A27] whitespace-nowrap">
+                    纯前端本地转换<br>
+                    <span class="text-[11px] font-normal text-gray-400">WebAssembly / 本地单机工具</span>
+                  </td>
+                  <td class="py-4 px-4">浏览器沙箱或单机二进制执行，数据不离开本地计算域</td>
+                  <td class="py-4 px-4">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-800">
+                      ★★★★☆ 高
+                    </span>
+                  </td>
+                  <td class="py-4 px-4">受限于静态预置模板，动态策略过滤与规则微调能力较弱</td>
+                  <td class="py-4 px-4">支持常见主流客户端格式，但更新滞后于最新内核规范</td>
+                  <td class="py-4 px-4">零运维开箱即用，需警惕浏览器插件注入与跨域劫持</td>
+                </tr>
+                <tr class="hover:bg-[#FFFDFB] transition-colors">
+                  <td class="py-4 px-4 font-bold text-[#2E2A27] whitespace-nowrap">
+                    第三方公共在线转换站<br>
+                    <span class="text-[11px] font-normal text-gray-400">免费公开 Web 转换接口</span>
+                  </td>
+                  <td class="py-4 px-4">明文 URL 发送至未知远端服务器由其代为拉取解析</td>
+                  <td class="py-4 px-4">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-800">
+                      ★☆☆☆☆ 极危
+                    </span>
+                  </td>
+                  <td class="py-4 px-4">几乎无自主权，受制于站长设置的默认模板或强制广告规则</td>
+                  <td class="py-4 px-4">格式覆盖广泛，但服务可用性差，经常遭受限流宕机</td>
+                  <td class="py-4 px-4">门槛最低，但面临节点凭据泄露、分流被篡改与封号风险</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            纵观技术演进天梯，对于拥有多平台异构设备（如同时拥有 Windows、macOS、iOS 与 Android）、需要统一分流规则集与定期自动去重的资深网络工程师而言，<strong>“私有容器化部署 Subconverter + Sub-Store”</strong> 是兼具最高安全等级与无限扩展自由度的终极解决范式。
+          </p>
+        </div>
+      </section>
+      <!-- 四、零成本私有化部署实战：Docker Compose 搭建加密订阅转换后端 -->
+      <section class="mb-12">
+        <h2 class="text-xl md:text-2xl font-bold text-[#2E2A27] mb-6 flex items-center gap-2">
+          <span class="w-2 h-6 bg-[#E8935A] rounded-full inline-block"></span>
+          四、零成本私有化部署实战：Docker Compose 搭建加密订阅转换后端
+        </h2>
+        <div class="space-y-6 text-[#4B5563] text-sm md:text-base leading-relaxed">
+          <p>
+            构建私有订阅转换节点的核心安全目标是：<strong>隔绝公共暴露面、强制传输链路加密、实现鉴权防盗刷</strong>。在工程实践中，推荐采用 C++ 原生编译的 <code>tindy2013/subconverter</code> 官方镜像。该二进制版本内存占用常驻仅 20MB–30MB，具备微秒级文本解析性能。
+          </p>
+          <p>
+            为杜绝端口扫描与 Docker 原生 iptables 绕过宿主机防火墙的安全隐患，容器进程必须且只能监听于本地回环地址 <code>127.0.0.1</code>，并由前端 Nginx 负责 TLS 1.3 终结、请求限流与 <code>api_access_token</code> 鉴权防护。以下为生产级一体化配置方案：
+          </p>
+
+          <!-- 代码块 -->
+          <div class="bg-[#1E1E2E] rounded-2xl p-5 text-gray-200 font-mono text-xs md:text-sm overflow-x-auto shadow-lg border border-gray-800">
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-700/60 text-gray-400 text-xs">
+              <span class="font-bold text-gray-300">docker-compose.yml + Nginx 生产反向代理编排</span>
+              <span>YAML / Nginx Conf</span>
+            </div>
+            <pre><code>version: '3.8'
+
+services:
+  subconverter:
+    image: tindy2013/subconverter:latest
+    container_name: subconverter-core
+    restart: always
+    environment:
+      # 强制开启 API 访问凭证校验，非授权请求将被直接丢弃
+      - SUB_API_ACCESS_TOKEN=SecToken_2026_YourRandomKey89X
+      # 开启托管配置强制前缀匹配，防范 Host 头注入
+      - SUB_MANAGED_CONFIG_PREFIX=https://sub.yourdomain.com
+      # 上游机场订阅拉取超时与节点缓存时间（秒）
+      - SUB_CACHE_SUBSCRIPTION=3600
+    ports:
+      # 严禁暴露至 0.0.0.0:25500！仅绑定宿主机本地回环
+      - "127.0.0.1:25500:25500"
+    volumes:
+      - ./pref.ini:/base/pref.ini:ro
+    networks:
+      - sub-internal
+
+  nginx-proxy:
+    image: nginx:alpine
+    container_name: subconverter-nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - subconverter
+    networks:
+      - sub-internal
+
+networks:
+  sub-internal:
+    driver: bridge
+
+# ================= 附：nginx.conf 关键安全虚拟主机段 =================
+# server {
+#     listen 443 ssl http2;
+#     server_name sub.yourdomain.com;
+#     ssl_certificate     /etc/nginx/ssl/fullchain.pem;
+#     ssl_certificate_key /etc/nginx/ssl/privkey.pem;
+#     ssl_protocols       TLSv1.2 TLSv1.3;
+#     ssl_ciphers         HIGH:!aNULL:!MD5;
+#
+#     # 阻断空 User-Agent 及常规爬虫探测
+#     if ($http_user_agent ~* "^$|curl|wget|python|scanner|nikto") {
+#         return 403;
+#     }
+#
+#     location / {
+#         proxy_pass http://127.0.0.1:25500;
+#         proxy_set_header Host $host;
+#         proxy_set_header X-Real-IP $remote_addr;
+#         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+#         proxy_connect_timeout 15s;
+#         proxy_read_timeout 60s;
+#     }
+# }</code></pre>
+          </div>
+
+          <!-- 逐行参数技术解析 -->
+          <div class="space-y-4 pt-2">
+            <h3 class="text-base md:text-lg font-bold text-[#2E2A27]">生产级核心安全参数深度拆解：</h3>
+            <ul class="list-disc pl-5 space-y-3 text-sm text-[#4B5563]">
+              <li>
+                <strong><code>SUB_API_ACCESS_TOKEN</code>（接口鉴权令牌）：</strong>
+                这是私有化转换防范未授权访问的第一道防线。在公共或默认部署中，该值为空，任何知晓服务器域名的攻击者均可通过 <code>/sub?target=clash&amp;url=...</code> 将该实例作为公共代理放大器使用。设置强随机令牌后，客户端请求必须在 URL 后显式携带 <code>&amp;token=SecToken_2026_YourRandomKey89X</code>，否则后端将返回 HTTP 403 彻底拒绝执行解析逻辑，从根本上杜绝了全网扫描与恶意蹭用。
+              </li>
+              <li>
+                <strong><code>127.0.0.1:25500:25500</code>（本地回环端口硬绑定）：</strong>
+                Docker 默认的网络桥接机制会在宿主机 iptables 的 <code>DOCKER</code> 链中自动注入端口映射规则，这一行为往往会直接穿透 <code>ufw</code> 或常规安全组策略。将绑定地址限定为 <code>127.0.0.1</code> 可确保外部流量无法通过公网 IP 直接访问该容器端口，强制所有请求经过 Nginx 反代层的安全审计与 TLS 握手。
+              </li>
+              <li>
+                <strong><code>SUB_CACHE_SUBSCRIPTION=3600</code>（上游缓存熔断保护）：</strong>
+                此参数规定 Subconverter 在成功拉取并解析上游机场订阅后，将解析后的节点数据在内存中保留 1 小时。当多台设备（手机、笔电、路由器）在短时间内并发请求更新时，直接从本地内存命中返回，避免在数秒内向上游机场服务器连续发起多次 HTTP 请求，消除命中服务商防爬虫与防合租滥用熔断策略的风险。
+              </li>
+              <li>
+                <strong><code>SUB_MANAGED_CONFIG_PREFIX</code>（托管配置防劫持标头）：</strong>
+                锁定自动更新配置的基准根域名，确保在向 Clash / Sing-box 下发带有 <code>Profile-Update-Interval</code> 等自更新标头的订阅时，客户端后续发起静默自动更新的 URL 指向绝对受信的私有域名，防止由于反向代理头篡改或中间人截获导致的更新劫持。
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 五、日常使用与多设备同步的四大防泄露军规 -->
+      <section class="mb-12">
+        <h2 class="text-xl md:text-2xl font-bold text-[#2E2A27] mb-6 flex items-center gap-2">
+          <span class="w-2 h-6 bg-[#E8935A] rounded-full inline-block"></span>
+          五、日常使用与多设备同步的四大防泄露军规
+        </h2>
+        <div class="space-y-6 text-[#4B5563] text-sm md:text-base leading-relaxed">
+          <p>
+            搭建私有服务仅完成了基础设施的安全收敛，在多终端长效分发与日常运维过程中，配置的细粒度治理同样不可忽视。以下四项经过生产环境严苛验证的防泄露原则，是保障长效稳定与信息主权的关键支撑：
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- 军规 1 -->
+            <div class="bg-white border border-[#F0EAE1] rounded-2xl p-6 shadow-sm space-y-3">
+              <div class="flex items-center gap-3">
+                <span class="w-7 h-7 rounded-lg bg-[#E8935A]/10 text-[#E8935A] flex items-center justify-center text-xs font-bold">1</span>
+                <h3 class="font-bold text-[#2E2A27] text-base">User-Agent 严格白名单过滤与探针抵御</h3>
+              </div>
+              <p class="text-sm text-gray-500 leading-relaxed">
+                互联网上遍布针对订阅转换默认路径（如 <code>/sub?</code>）的自动化资产测绘爬虫（如 Shodan、Censys、ZoomEye）。在 Nginx 反向代理层部署基于 <code>$http_user_agent</code> 的精确白名单校验，仅放行形如 <code>Clash*</code>、<code>sing-box*</code>、<code>Shadowrocket*</code> 或个人自定义的专有 UA 字符串。对所有 Python、curl、空 UA 或未知浏览器的 GET 请求直接返回 HTTP 404 或 403，彻底隐蔽服务特征，消除未知指纹暴露。
+              </p>
+            </div>
+
+            <!-- 军规 2 -->
+            <div class="bg-white border border-[#F0EAE1] rounded-2xl p-6 shadow-sm space-y-3">
+              <div class="flex items-center gap-3">
+                <span class="w-7 h-7 rounded-lg bg-[#E8935A]/10 text-[#E8935A] flex items-center justify-center text-xs font-bold">2</span>
+                <h3 class="font-bold text-[#2E2A27] text-base">采用远程二进制规则集替代全量内嵌文本</h3>
+              </div>
+              <p class="text-sm text-gray-500 leading-relaxed">
+                许多用户习惯在生成的配置文件中内嵌几万行静态 <code>DOMAIN-KEYWORD</code> 和 <code>IP-CIDR</code>。这不仅会使单次转换返回的文件体积极度膨胀（耗费数兆字节带宽），更会导致移动端与嵌入式路由器在加载配置时引发高达数百兆的瞬时内存占用，极易触发 iOS 的 15MB 扩展限制或低配软路由的 OOM 宕机。必须全面改用外部 <code>rule-providers</code>，引用远程预编译的 <code>.mrs</code> 或 <code>.srs</code> 二进制文件，实现轻量按需匹配。
+              </p>
+            </div>
+
+            <!-- 军规 3 -->
+            <div class="bg-white border border-[#F0EAE1] rounded-2xl p-6 shadow-sm space-y-3">
+              <div class="flex items-center gap-3">
+                <span class="w-7 h-7 rounded-lg bg-[#E8935A]/10 text-[#E8935A] flex items-center justify-center text-xs font-bold">3</span>
+                <h3 class="font-bold text-[#2E2A27] text-base">配置客户端本地容灾缓存与平滑更新周期</h3>
+              </div>
+              <p class="text-sm text-gray-500 leading-relaxed">
+                禁止将客户端的自动刷新间隔（<code>interval</code>）设置为激进的半小时或一小时。推荐设置在 12 至 24 小时（43200–86400 秒）之间。同时必须确保客户端启用了本地配置持久化缓存。即便遇到私有 VPS 临时重启、上游机场 API 遭遇短时网络波动或 Cloudflare 521 故障，内核仍能平稳读取本地缓存的节点拓扑，不会中断日常业务通信。
+              </p>
+            </div>
+
+            <!-- 军规 4 -->
+            <div class="bg-white border border-[#F0EAE1] rounded-2xl p-6 shadow-sm space-y-3">
+              <div class="flex items-center gap-3">
+                <span class="w-7 h-7 rounded-lg bg-[#E8935A]/10 text-[#E8935A] flex items-center justify-center text-xs font-bold">4</span>
+                <h3 class="font-bold text-[#2E2A27] text-base">敏感金融、AI 模型与本土流量分流硬隔离</h3>
+              </div>
+              <p class="text-sm text-gray-500 leading-relaxed">
+                在分流策略组设计上严禁实行“一刀切全局代理”。国内各商业银行网银、支付宝、微信与政企应用必须绑定 <code>DIRECT</code> 直连通道，杜绝海外节点绕行触发的反洗钱异地风控封卡；针对 OpenAI、Claude、Gemini 等高级 AI 接口，必须设立独立的专属代理策略组，选用具备高信誉度、原生双栈且纯净机房或家宽特性的节点；而流媒体与普通网页则分配至负载均衡池，实现安全与性能的最佳解耦。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 六、高频技术问题解答（FAQ）与总结 -->
+      <section class="mb-12">
+        <h2 class="text-xl md:text-2xl font-bold text-[#2E2A27] mb-6 flex items-center gap-2">
+          <span class="w-2 h-6 bg-[#E8935A] rounded-full inline-block"></span>
+          六、高频技术问题解答（FAQ）与总结
+        </h2>
+        <div class="space-y-6 text-[#4B5563] text-sm md:text-base leading-relaxed">
+          <p>
+            针对实际网络维护中最为突出的真实疑问，本节梳理了三组高频长尾问题，提供底层诊断与标准处置流程：
+          </p>
+
+          <!-- FAQ 问答卡片 -->
+          <div class="space-y-4">
+            <!-- Q1 -->
+            <div class="bg-white border border-[#F0EAE1] rounded-2xl p-6 shadow-sm space-y-3">
+              <h3 class="text-base md:text-lg font-bold text-[#2E2A27] flex items-center gap-2">
+                <span class="text-[#E8935A] font-extrabold">Q1：</span>
+                如果不小心在公共订阅转换网站输入过机场订阅，节点是否已经泄露？该如何彻底补救？
+              </h3>
+              <p class="text-sm text-gray-500 leading-relaxed">
+                <strong>解答：</strong>是的，必须立刻视作凭据已被完全泄露。由于公共服务后端的访问日志和解析进程会即时捕捉包含在 URL 中的 Token，即使事后停止使用该转换站，黑产爬虫可能已经将节点池抓取归档。
+              </p>
+              <div class="bg-[#FDFBF7] border-l-4 border-[#E8935A] p-4 text-xs md:text-sm text-gray-600 space-y-1">
+                <p class="font-bold text-[#2E2A27]">唯一彻底的补救流程：</p>
+                <p>1. 立即登录机场用户后台，在控制面板中找到并点击<strong>“重置订阅信息”</strong>（或“重置订阅 Token / 更改连接密码”）；</p>
+                <p>2. 该操作会在服务商数据库底层强制作废旧的 UUID 和鉴权哈希，使此前泄露的全部节点凭据瞬间失效；</p>
+                <p>3. 获取全新的订阅链接后，仅在本地或私有化 Subconverter 实例中进行处理，切勿在任何客户端删除旧配置前尝试二次解析。</p>
+              </div>
+            </div>
+
+            <!-- Q2 -->
+            <div class="bg-white border border-[#F0EAE1] rounded-2xl p-6 shadow-sm space-y-3">
+              <h3 class="text-base md:text-lg font-bold text-[#2E2A27] flex items-center gap-2">
+                <span class="text-[#E8935A] font-extrabold">Q2：</span>
+                在软路由 OpenClash 或 HomeProxy 中，如何跳过任何第三方转换直接加载机场原生订阅？
+              </h3>
+              <p class="text-sm text-gray-500 leading-relaxed">
+                <strong>解答：</strong>现代主流软路由固件已经具备强大的本地解析能力，完全无需依赖远端转换接口：
+              </p>
+              <ul class="list-disc pl-5 space-y-2 text-xs md:text-sm text-gray-500">
+                <li>
+                  <strong>OpenClash 方案：</strong>在配置文件订阅管理中添加机场下发的原生 Clash 配置 URL。将运行模式调整为“Fake-IP (TUN)”，在“开发者选项”或“配置文件覆写”中启用本地 Mixin 脚本。由路由器本地的 OpenClash 进程直接拉取原生订阅并在内存中动态合并自定义规则与 DNS 配置，全程不与任何外部转换服务通信。
+                </li>
+                <li>
+                  <strong>HomeProxy (Sing-box 内核) 方案：</strong>切换至支持原生配置导入的高级模式，利用内建的本地转换模块或直接配置 <code>outbounds</code> 导入包含 VLESS-Reality / Hysteria2 节点 JSON 数组，分流部分引用本地或官方 GitHub 发布的预编译 <code>.srs</code> 规则集，实现 100% 局域网闭环处理。
+                </li>
+              </ul>
+            </div>
+
+            <!-- Q3 -->
+            <div class="bg-white border border-[#F0EAE1] rounded-2xl p-6 shadow-sm space-y-3">
+              <h3 class="text-base md:text-lg font-bold text-[#2E2A27] flex items-center gap-2">
+                <span class="text-[#E8935A] font-extrabold">Q3：</span>
+                私有化部署 Subconverter 需要多大硬件配置的 VPS？家庭轻量 NAS 或软路由是否可以胜任？
+              </h3>
+              <p class="text-sm text-gray-500 leading-relaxed">
+                <strong>解答：</strong>Subconverter 本身采用 C++ 编写，具有极高的执行能效比。在空闲状态下，其物理内存驻留通常不超过 25MB；即使在上百个节点配置进行复杂正则表达式过滤、策略组拆分与 Base64 编解码的高峰瞬间，其瞬时 CPU 占用也仅在单核 10% 以内维持 100–300 毫秒。
+              </p>
+              <p class="text-sm text-gray-500 leading-relaxed">
+                因此，市面上最低规格的 1 核 512MB RAM 云服务器（年付十几美元的廉价 VPS）、家中常开的轻量级 Linux 软路由（如配备 RK3328、N100 的 OpenWrt 设备）、或是支持 Docker 容器的群晖/威联通/TrueNAS 网络存储设备，均能毫无压力地全天候稳定运行，综合硬件与电力运维边际成本几乎为零。
+              </p>
+            </div>
+          </div>
+
+          <!-- 总结 -->
+          <div class="bg-white border border-[#F0EAE1] rounded-2xl p-6 shadow-sm space-y-4 mt-8">
+            <h3 class="text-lg font-bold text-[#2E2A27] flex items-center gap-2">
+              <span class="w-2 h-5 bg-[#E8935A] rounded-full inline-block"></span>
+              全篇总结：守护网络凭据资产的工程底层底线
+            </h3>
+            <p>
+              在网络协议与对抗演进日益精细化的 2026 年，代理服务已不仅是一串简单的中继节点，而是承载个人关键数字通信、金融流动与工作生产力的核心管道。将包含身份验证密钥的原始订阅肆意输入公共转换网站，无异于将门禁钥匙随意丢弃在公共走廊。
+            </p>
+            <p>
+              消除这一系统性安全风险的根本途径，并非寄希望于公共平台的道德自律，而是建立基于<strong>“最小暴露原则”</strong>与<strong>“自主受控计算”</strong>的工程防护体系。通过轻量私有容器化部署 Subconverter，辅以 TLS 传输加密、强随机令牌访问控制、User-Agent 恶意指纹清洗以及现代二进制规则集（.mrs / .srs）的优化赋能，每一位网络工程师与资深用户均能以极低成本构建起专属的端到端安全闭环，将网络节点控制权与数据隐私真正掌握在自己手中。
+            </p>
+          </div>
+        </div>
+      </section>
+</article>
+  </main>
+
+  <!-- 全站统一便利店页脚 -->
+  <footer class="bg-[#F8F5F0] border-t border-[#F0EAE1] py-12 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-xs text-gray-600">
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <svg width="24" height="24" viewBox="0 0 36 36" fill="none">
+              <rect width="36" height="36" rx="8" fill="#E8935A"/>
+              <path d="M10 18L16 12V24L10 18Z" fill="#FFF8F0"/>
+              <path d="M18 12L26 18L18 24V12Z" fill="#F5D78E"/>
+            </svg>
+            <span class="font-bold text-sm text-[#2E2A27]">机场便利店 Speed Mart</span>
+          </div>
+          <p class="leading-relaxed text-gray-500">
+            24小时不打烊的网络性能与漫游补给站。坚持中立实测、客观数据与硬核开源工程。
+          </p>
+        </div>
+        <div>
+          <div class="font-bold text-sm text-[#2E2A27] mb-3">专栏导航</div>
+          <ul class="space-y-2">
+            <li><a href="/index.html" class="hover:text-[#E8935A]">首页</a></li>
+            <li><a href="/reviews.html" class="hover:text-[#E8935A]">店长严选</a></li>
+            <li><a href="/guide.html" class="hover:text-[#E8935A]">新手便当</a></li>
+            <li><a href="/devices.html" class="hover:text-[#E8935A]">设备专柜</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="font-bold text-sm text-[#2E2A27] mb-3">硬核知识库</div>
+          <ul class="space-y-2">
+            <li><a href="/speedtest.html" class="hover:text-[#E8935A]">测速冰箱</a></li>
+            <li><a href="/blog.html" class="hover:text-[#E8935A]">便利店日志</a></li>
+            <li><a href="/network-sla-cost-whitepaper-2026.html" class="hover:text-[#E8935A]">2026网络链路成本SLA白皮书</a></li>
+            <li><a href="/faq.html" class="hover:text-[#E8935A]">常见避坑指南</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="font-bold text-sm text-[#2E2A27] mb-3">开源与版权声明</div>
+          <p class="leading-relaxed text-gray-500 mb-2">
+            本站文章遵循 CC BY-NC-SA 4.0 国际许可协议。严禁任何未经授权的商业抓取。
+          </p>
+          <p class="text-[11px] text-gray-400">© 2026 机场便利店 jichangbianli.org 保留所有权利</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 页面交互与阅读进度脚本 -->
+  <script>
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      const bar = document.getElementById('readingProgressBar');
+      if (bar) bar.style.width = scrolled + '%';
+    });
+  </script>
+</body>
+</html>
+
