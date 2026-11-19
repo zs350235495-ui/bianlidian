@@ -274,10 +274,10 @@
         <!-- 2. 分类药丸筛选栏 (Category Tabs) -->
         <div class="mt-8 pt-6 border-t border-oat/60 flex flex-wrap items-center gap-2 sm:gap-3" id="categoryFilterBar">
           <button class="pill-filter active px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight transition-all" data-category="all">
-            全部文章 (14)
+            全部文章 (15)
           </button>
           <button class="pill-filter px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight transition-all" data-category="protocol">
-            协议与测速 (6)
+            协议与测速 (7)
           </button>
           <button class="pill-filter px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight transition-all" data-category="streaming">
             流媒体与AI (3)
@@ -420,11 +420,54 @@
             <h3 class="text-lg sm:text-xl font-black text-carbon">最新文章陈列架</h3>
             <span class="text-xs text-carbonMuted font-normal" id="currentCategoryTitle">（全部文章）</span>
           </div>
-          <span class="text-xs text-carbonMuted" id="showingCount">显示 11 篇精选</span>
+          <span class="text-xs text-carbonMuted" id="showingCount">显示 12 篇精选</span>
         </div>
 
         <!-- 2~3 列文章卡片网格 -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="blogCardsContainer">
+
+          <!-- CARD Dev & Research Guide: 2026机场推荐与梯子推荐指南：科研文献检索、开发工具加速与低延迟稳定选型 -->
+          <article class="blog-card group bg-white rounded-2xl border-2 border-blue-500/40 shadow-card hover:shadow-card-hover overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-category="protocol">
+            <div>
+              <div class="relative h-44 bg-gradient-to-tr from-[#DBEAFE] to-[#BFDBFE] overflow-hidden flex items-center justify-center border-b border-oat/60">
+                <div class="text-6xl group-hover:scale-110 transition-transform duration-500 select-none">
+                  🔬
+                </div>
+                <div class="absolute top-3 left-3 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+                  科研开发
+                </div>
+                <div class="absolute top-3 right-3 bg-warmOrange text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+                  工程加速
+                </div>
+                <div class="absolute bottom-2 right-3 text-[10px] text-blue-900 font-mono font-bold">
+                  TUN / Git / API
+                </div>
+              </div>
+
+              <div class="p-5 sm:p-6">
+                <a href="/articles/2026-airport-ladder-dev-research-guide.html" class="block group">
+                  <h4 class="text-base sm:text-lg font-bold text-carbon group-hover:text-warmOrange transition-colors leading-snug line-clamp-2">
+                    2026机场推荐与梯子推荐指南：科研文献检索、开发工具加速与低延迟稳定选型
+                  </h4>
+                </a>
+                <p class="mt-2.5 text-xs sm:text-sm text-carbonMuted leading-relaxed line-clamp-2">
+                  专为高校师生与开发者打造。深度剖析学术数据库、GitHub代码同步、接口调试与终端长连接场景下的网络选型痛点与避坑准则。
+                </p>
+              </div>
+            </div>
+
+            <div class="px-5 pb-5 sm:px-6 sm:pb-6 pt-3 border-t border-oat/50 flex items-center justify-between text-[11px] text-carbonMuted">
+              <div class="flex items-center gap-1.5">
+                <span>🔬 科研加速组</span>
+                <span>•</span>
+                <span>低延迟选型</span>
+              </div>
+              <a href="/articles/2026-airport-ladder-dev-research-guide.html" class="flex items-center gap-1 text-warmOrange font-bold group-hover:translate-x-0.5 transition-transform">
+                <span>深度精读</span>
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            </div>
+          </article>
 
           <!-- CARD Subconverter Guide: 2026全平台客户端订阅转换与Subconverter私有化防泄露部署指南 -->
           <article class="blog-card group bg-white rounded-2xl border-2 border-indigo-500/40 shadow-card hover:shadow-card-hover overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-category="rules">

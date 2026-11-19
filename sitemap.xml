@@ -7,7 +7,7 @@
   <!-- 1. 首页 (Home) - 核心入口 -->
   <url>
     <loc>https://jichangbianli.org/</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-11-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -31,7 +31,7 @@
   <!-- 4. 便利店日志 (Blog) - 技术专栏与教程索引 -->
   <url>
     <loc>https://jichangbianli.org/blog.html</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -121,5 +121,13 @@
     <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+  </url>
+
+  <!-- 5.8 2026机场推荐与梯子推荐指南：科研文献检索、开发工具加速与低延迟稳定选型 -->
+  <url>
+    <loc>https://jichangbianli.org/articles/2026-airport-ladder-dev-research-guide.html</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
   </url>
 </urlset>
