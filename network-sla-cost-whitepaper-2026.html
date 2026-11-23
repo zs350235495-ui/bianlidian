@@ -265,35 +265,94 @@
   <div id="readingProgressBar"></div>
 
   <!-- 统一顶部导航栏 -->
-  <header class="sticky top-0 z-50 bg-[#FDFBF7]/90 backdrop-blur-md border-b border-[#F0EAE1]">
-    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-      <a href="/index.html" class="flex items-center gap-2 group">
-        <span class="text-2xl transform group-hover:rotate-12 transition-transform">⚡</span>
-        <span class="font-extrabold text-xl text-[#2D3139] tracking-tight">机场<span class="text-[#FF6B35]">便利店</span></span>
-        <span class="text-xs bg-[#FF6B35]/10 text-[#FF6B35] font-bold px-2 py-0.5 rounded-full ml-1">SLA REPORT</span>
-      </a>
-
-      <!-- 7项统一导航菜单 -->
-      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-[#6B7280]">
-        <a href="/index.html" class="hover:text-[#FF6B35] transition-colors py-1">首页</a>
-        <a href="/reviews.html" class="hover:text-[#FF6B35] transition-colors py-1">店长严选</a>
-        <a href="/guide.html" class="hover:text-[#FF6B35] transition-colors py-1">新手便当</a>
-        <a href="/devices.html" class="hover:text-[#FF6B35] transition-colors py-1">设备专柜</a>
-        <a href="/speedtest.html" class="hover:text-[#FF6B35] transition-colors py-1">测速冰箱</a>
-        <a href="/blog.html" class="text-[#FF6B35] font-bold border-b-2 border-[#FF6B35] py-1">便利店日志</a>
-        <a href="/faq.html" class="hover:text-[#FF6B35] transition-colors py-1">常见避坑</a>
-      </nav>
-
-      <div class="flex items-center gap-3">
-        <a href="/reviews.html" class="inline-flex items-center justify-center px-4 py-2 text-xs font-bold text-white bg-[#FF6B35] hover:bg-[#E8551E] rounded-full transition-all shadow-xs">
-          查看严选货架 →
+  <header class="fixed top-0 left-0 right-0 z-50 navbar-blur bg-[#FFF8F0]/90 border-b border-oat/70" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 lg:h-[72px]">
+        <!-- Brand Logo -->
+        <a href="/index.html" class="flex items-center group py-1" aria-label="机场便利店首页">
+          <svg class="h-10 sm:h-11 w-auto drop-shadow-sm select-none group-hover:scale-[1.02] transition-transform duration-300" viewBox="0 0 320 80" fill="none" xmlns="http://www.w3.org/2000/svg" width="176" height="44" style="max-height:44px;width:auto;">
+            <defs>
+              <linearGradient id="c1-bg-grad" x1="8" y1="8" x2="68" y2="72" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FF8A3D"/>
+                <stop offset="100%" stop-color="#EA580C"/>
+              </linearGradient>
+              <linearGradient id="c1-bolt-grad" x1="28" y1="20" x2="52" y2="60" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FEF08A"/>
+                <stop offset="100%" stop-color="#FBBF24"/>
+              </linearGradient>
+              <filter id="c1-soft-shadow" x="0" y="4" width="80" height="80" filterUnits="userSpaceOnUse">
+                <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#EA580C" flood-opacity="0.25"/>
+              </filter>
+            </defs>
+            <g filter="url(#c1-soft-shadow)">
+              <rect x="8" y="8" width="64" height="64" rx="20" fill="url(#c1-bg-grad)"/>
+              <rect x="9.5" y="9.5" width="61" height="61" rx="18.5" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1.5"/>
+            </g>
+            <path d="M16 28 C16 23.58 19.58 20 24 20 H56 C60.42 20 64 23.58 64 28 L62 33 C61.2 35 59 36.5 56.5 36.5 C54 36.5 52 35 51.5 33 C50.5 35 48.5 36.5 46 36.5 C43.5 36.5 41.5 35 40.5 33 C39.5 35 37.5 36.5 35 36.5 C32.5 36.5 30.5 35 29.5 33 C28.5 35 26.5 36.5 24 36.5 C21.5 36.5 19.5 35 18.5 33 L16 28 Z" fill="#FFFBEB" fill-opacity="0.95"/>
+            <path d="M26 20 L27 34 M38 20 L37 34 M49 20 L48 34" stroke="#F97316" stroke-width="2.5" stroke-linecap="round" stroke-opacity="0.85"/>
+            <path d="M44 26 L26 44 H38 L32 58 L54 38 H40 L44 26 Z" fill="url(#c1-bolt-grad)" stroke="#7C2D12" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+            <text x="88" y="44" fill="#0F172A" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="25" font-weight="900" letter-spacing="1.5">
+              机场便利店
+            </text>
+            <g transform="translate(89, 53)">
+              <circle cx="4" cy="9" r="3" fill="#10B981"/>
+              <circle cx="4" cy="9" r="5" stroke="#10B981" stroke-width="1" stroke-opacity="0.4"/>
+              <text x="13" y="12" fill="#64748B" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10.5" font-weight="700" letter-spacing="2.2">
+                SPEED MART
+              </text>
+              <rect x="94" y="6" width="1" height="8" fill="#CBD5E1"/>
+              <text x="102" y="12" fill="#94A3B8" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="9" font-weight="500">
+                24H 网络漫游
+              </text>
+            </g>
+          </svg>
         </a>
+
+        <!-- Desktop Nav (全便利店风 7 项组合) -->
+        <nav class="hidden lg:flex items-center gap-1" aria-label="主导航">
+          <a href="/index.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="home">首页</a>
+          <a href="/reviews.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="reviews">店长严选</a>
+          <a href="/guide.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="guide">新手便当</a>
+          <a href="/devices.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="devices">设备专柜</a>
+          <a href="/speedtest.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="speedtest">测速冰箱</a>
+          <a href="/blog.html" class="nav-link active px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="blog">便利店日志</a>
+          <a href="/faq.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="faq">常见避坑</a>
+        </nav>
+
+        <!-- Search + Hamburger -->
+        <div class="flex items-center gap-2">
+          <div class="hidden md:flex items-center bg-oat/70 rounded-full px-3.5 py-2 gap-2 focus-within:ring-2 focus-within:ring-warmOrange/40 transition-shadow">
+            <svg class="w-4 h-4 text-carbonMuted flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" style="width:16px;height:16px;flex-shrink:0;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="blogSearchInput" placeholder="搜索文章或知识点..." class="bg-transparent outline-none text-sm text-carbon placeholder-carbonMuted w-36 lg:w-44" />
+          </div>
+          <button class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-oat/60 transition-colors" id="menu-toggle" aria-label="打开菜单" aria-expanded="false">
+            <svg class="w-5 h-5 text-carbon" id="menu-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="20" style="width:20px;height:20px;"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            <svg class="w-5 h-5 text-carbon hidden" id="menu-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="20" style="width:20px;height:20px;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Drawer (同步全便利店风组合) -->
+    <div class="lg:hidden mobile-menu-enter bg-cream/95 navbar-blur border-t border-oat/40" id="mobile-menu">
+      <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
+        <div class="flex items-center bg-oat/70 rounded-full px-3.5 py-2.5 gap-2 mb-3 md:hidden">
+          <svg class="w-4 h-4 text-carbonMuted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" style="width:16px;height:16px;flex-shrink:0;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="blogMobileSearchInput" placeholder="搜索文章或知识点..." class="bg-transparent outline-none text-sm text-carbon placeholder-carbonMuted w-full" />
+        </div>
+        <a href="/index.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="home">首页</a>
+        <a href="/reviews.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="reviews">店长严选</a>
+        <a href="/guide.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="guide">新手便当</a>
+        <a href="/devices.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="devices">设备专柜</a>
+        <a href="/speedtest.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="speedtest">测速冰箱</a>
+        <a href="/blog.html" class="mobile-nav-link active block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="blog">便利店日志</a>
+        <a href="/faq.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="faq">常见避坑</a>
       </div>
     </div>
   </header>
 
   <!-- 正文容器 -->
-  <div class="max-w-4xl mx-auto px-4 py-10 md:py-14">
+  <div class="max-w-4xl mx-auto px-4 pt-24 pb-14">
 
     <!-- 面包屑导航 -->
     <nav class="flex items-center gap-2 text-xs text-[#6B7280] mb-6 font-medium">
@@ -744,6 +803,43 @@ ipconfig /flushdns
       const bar = document.getElementById('readingProgressBar');
       if (bar) bar.style.width = scrolled + '%';
     });
+  </script>
+
+  <!-- 移动端菜单抽屉与顶栏搜索联动脚本 -->
+  <script>
+    (function() {
+      const menuToggle = document.getElementById('menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const iconOpen   = document.getElementById('menu-icon-open');
+      const iconClose  = document.getElementById('menu-icon-close');
+
+      if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', () => {
+          const isOpen = mobileMenu.classList.toggle('open');
+          menuToggle.setAttribute('aria-expanded', isOpen);
+          if (iconOpen) iconOpen.classList.toggle('hidden', isOpen);
+          if (iconClose) iconClose.classList.toggle('hidden', !isOpen);
+        });
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
+          mobileMenu.classList.remove('open');
+          if (iconOpen) iconOpen.classList.remove('hidden');
+          if (iconClose) iconClose.classList.add('hidden');
+        }));
+      }
+
+      // 搜索框回车联动跳转至博客主专栏过滤
+      const searchInputs = [document.getElementById('blogSearchInput'), document.getElementById('blogMobileSearchInput')];
+      searchInputs.forEach(input => {
+        if (input) {
+          input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+              const val = input.value.trim();
+              window.location.href = '/blog.html' + (val ? ('?q=' + encodeURIComponent(val)) : '');
+            }
+          });
+        }
+      });
+    })();
   </script>
 </body>
 </html>

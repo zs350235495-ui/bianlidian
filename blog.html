@@ -1299,6 +1299,12 @@
 
     // 3. Search Inputs
     const searchInputs = [document.getElementById('blogSearchInput'), document.getElementById('blogMobileSearchInput')];
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialQuery = urlParams.get('q');
+    if (initialQuery) {
+      searchInputs.forEach(input => { if (input) input.value = initialQuery; });
+      filterCards('all', initialQuery);
+    }
     searchInputs.forEach(input => {
       if (input) {
         input.addEventListener('input', (e) => {
