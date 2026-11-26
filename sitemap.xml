@@ -138,4 +138,12 @@
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
+
+  <!-- 5.10 2026 高性价比机场推荐与套餐选型指南：月付、流量包与专线线路怎么配更稳妥 -->
+  <url>
+    <loc>https://jichangbianli.org/articles/2026-yuefu-zhuanxian-gaoxingjiabi-jichang-zhinan.html</loc>
+    <lastmod>2026-11-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
 </urlset>
