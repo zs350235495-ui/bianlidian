@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -130,12 +131,14 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=Outfit:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
   <link rel="preload" href="/css/style.css" as="style" />
   <link rel="stylesheet" href="/css/style.css" />
   <script>
     // 优惠码一键复制
-    window.copyCouponCode = function(code) {
+    window.copyCouponCode = function (code) {
       if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(code).then(showTip).catch(() => fallbackCopy(code));
       } else {
@@ -168,62 +171,138 @@
         document.body.removeChild(ta);
       }
     };,
-          fontFamily: {
-            sans: ['"Noto Sans SC"', '"Outfit"', 'system-ui', 'sans-serif'],
-            display: ['"Outfit"', '"Noto Sans SC"', 'sans-serif'],
+    fontFamily: {
+      sans: ['"Noto Sans SC"', '"Outfit"', 'system-ui', 'sans-serif'],
+        display: ['"Outfit"', '"Noto Sans SC"', 'sans-serif'],
           },
-          boxShadow: {
-            'card': '0 2px 16px 0 rgba(46,42,39,0.06)',
-            'card-hover': '0 10px 32px 0 rgba(232,147,90,0.13)',
-            'shelf': '0 4px 24px 0 rgba(46,42,39,0.08)',
+    boxShadow: {
+      'card': '0 2px 16px 0 rgba(46,42,39,0.06)',
+        'card-hover': '0 10px 32px 0 rgba(232,147,90,0.13)',
+          'shelf': '0 4px 24px 0 rgba(46,42,39,0.08)',
           },
-          animation: {
-            'float': 'float 6s ease-in-out infinite',
-            'shimmer': 'shimmer 2.5s ease-in-out infinite',
-            'scale-up': 'scaleUp 0.25s ease-out forwards',
+    animation: {
+      'float': 'float 6s ease-in-out infinite',
+        'shimmer': 'shimmer 2.5s ease-in-out infinite',
+          'scale-up': 'scaleUp 0.25s ease-out forwards',
           },
-          keyframes: {
-            float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
-            shimmer: { '0%,100%': { opacity: '1' }, '50%': { opacity: '0.75' } },
-            scaleUp: { '0%': { opacity: '0', transform: 'scale(0.95)' }, '100%': { opacity: '1', transform: 'scale(1)' } }
-          },
+    keyframes: {
+      float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+      shimmer: { '0%,100%': { opacity: '1' }, '50%': { opacity: '0.75' } },
+      scaleUp: { '0%': { opacity: '0', transform: 'scale(0.95)' }, '100%': { opacity: '1', transform: 'scale(1)' } }
+    },
         },
       },
     }
   </script>
   <style>
     /* === 全局 SVG 防爆物理兜底 === */
-    svg { max-width: 100%; height: auto; }
-    header svg { max-height: 48px; }
-  
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #F5EDE3; }
-    ::-webkit-scrollbar-thumb { background: #E8935A; border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #D47A3F; }
-    html { scroll-behavior: smooth; }
+    svg {
+      max-width: 100%;
+      height: auto;
+    }
 
-    .dots-pattern { background-image: radial-gradient(circle, #E8935A 1.2px, transparent 1.2px); background-size: 24px 24px; opacity: .06; }
-    .navbar-blur { backdrop-filter: blur(16px) saturate(1.6); -webkit-backdrop-filter: blur(16px) saturate(1.6); }
+    header svg {
+      max-height: 48px;
+    }
 
-    .mobile-menu-enter { max-height: 0; opacity: 0; overflow: hidden; transition: max-height .4s ease, opacity .3s ease; }
-    .mobile-menu-enter.open { max-height: 500px; opacity: 1; }
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #F5EDE3;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #E8935A;
+      border-radius: 9999px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #D47A3F;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .dots-pattern {
+      background-image: radial-gradient(circle, #E8935A 1.2px, transparent 1.2px);
+      background-size: 24px 24px;
+      opacity: .06;
+    }
+
+    .navbar-blur {
+      backdrop-filter: blur(16px) saturate(1.6);
+      -webkit-backdrop-filter: blur(16px) saturate(1.6);
+    }
+
+    .mobile-menu-enter {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height .4s ease, opacity .3s ease;
+    }
+
+    .mobile-menu-enter.open {
+      max-height: 500px;
+      opacity: 1;
+    }
 
     /* Nav active state */
-    .nav-link { position: relative; }
-    .nav-link.active { color: #E8935A; font-weight: 600; }
-    .nav-link.active::after { content: ''; position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%); width: 18px; height: 3px; background: #E8935A; border-radius: 9999px; }
-    .mobile-nav-link.active { color: #E8935A; background: rgba(232,147,90,.08); font-weight: 600; }
+    .nav-link {
+      position: relative;
+    }
+
+    .nav-link.active {
+      color: #E8935A;
+      font-weight: 600;
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 18px;
+      height: 3px;
+      background: #E8935A;
+      border-radius: 9999px;
+    }
+
+    .mobile-nav-link.active {
+      color: #E8935A;
+      background: rgba(232, 147, 90, .08);
+      font-weight: 600;
+    }
 
     /* Filter pills */
-    .review-pill { transition: all .25s ease; cursor: pointer; user-select: none; }
-    .review-pill.active { background-color: #E8935A; color: #fff; box-shadow: 0 4px 14px rgba(232,147,90,.35); font-weight: 600; }
-    .review-pill:not(.active):hover { background-color: #FCEBD5; color: #2E2A27; }
+    .review-pill {
+      transition: all .25s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .review-pill.active {
+      background-color: #E8935A;
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(232, 147, 90, .35);
+      font-weight: 600;
+    }
+
+    .review-pill:not(.active):hover {
+      background-color: #FCEBD5;
+      color: #2E2A27;
+    }
   </style>
 </head>
+
 <body class="bg-[#FDFBF7] text-carbon font-sans antialiased min-h-screen flex flex-col">
 
   <!-- 复制成功浮动提示 (Toast) -->
-  <div id="copySuccessTip" class="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 hidden bg-carbon text-white text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-full shadow-2xl flex items-center gap-2 border border-warmOrange/40 animate-bounce">
+  <div id="copySuccessTip"
+    class="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 hidden bg-carbon text-white text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-full shadow-2xl flex items-center gap-2 border border-warmOrange/40 animate-bounce">
     <span class="text-base">🎉</span>
     <span>专属 7 折优惠码已复制到剪贴板！官网结算时直接粘贴即可。</span>
   </div>
@@ -234,38 +313,49 @@
       <div class="flex items-center justify-between h-16 lg:h-[72px]">
         <!-- Brand Logo -->
         <a href="/index.html" class="flex items-center group py-1" aria-label="机场便利店首页">
-          <svg class="h-10 sm:h-11 w-auto drop-shadow-sm select-none group-hover:scale-[1.02] transition-transform duration-300" viewBox="0 0 320 80" fill="none" xmlns="http://www.w3.org/2000/svg" width="176" height="44" style="max-height:44px;width:auto;">
+          <svg
+            class="h-10 sm:h-11 w-auto drop-shadow-sm select-none group-hover:scale-[1.02] transition-transform duration-300"
+            viewBox="0 0 320 80" fill="none" xmlns="http://www.w3.org/2000/svg" width="176" height="44"
+            style="max-height:44px;width:auto;">
             <defs>
               <linearGradient id="c1-bg-grad" x1="8" y1="8" x2="68" y2="72" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#FF8A3D"/>
-                <stop offset="100%" stop-color="#EA580C"/>
+                <stop offset="0%" stop-color="#FF8A3D" />
+                <stop offset="100%" stop-color="#EA580C" />
               </linearGradient>
               <linearGradient id="c1-bolt-grad" x1="28" y1="20" x2="52" y2="60" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#FEF08A"/>
-                <stop offset="100%" stop-color="#FBBF24"/>
+                <stop offset="0%" stop-color="#FEF08A" />
+                <stop offset="100%" stop-color="#FBBF24" />
               </linearGradient>
               <filter id="c1-soft-shadow" x="0" y="4" width="80" height="80" filterUnits="userSpaceOnUse">
-                <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#EA580C" flood-opacity="0.25"/>
+                <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#EA580C" flood-opacity="0.25" />
               </filter>
             </defs>
             <g filter="url(#c1-soft-shadow)">
-              <rect x="8" y="8" width="64" height="64" rx="20" fill="url(#c1-bg-grad)"/>
-              <rect x="9.5" y="9.5" width="61" height="61" rx="18.5" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1.5"/>
+              <rect x="8" y="8" width="64" height="64" rx="20" fill="url(#c1-bg-grad)" />
+              <rect x="9.5" y="9.5" width="61" height="61" rx="18.5" stroke="#FFFFFF" stroke-opacity="0.3"
+                stroke-width="1.5" />
             </g>
-            <path d="M16 28 C16 23.58 19.58 20 24 20 H56 C60.42 20 64 23.58 64 28 L62 33 C61.2 35 59 36.5 56.5 36.5 C54 36.5 52 35 51.5 33 C50.5 35 48.5 36.5 46 36.5 C43.5 36.5 41.5 35 40.5 33 C39.5 35 37.5 36.5 35 36.5 C32.5 36.5 30.5 35 29.5 33 C28.5 35 26.5 36.5 24 36.5 C21.5 36.5 19.5 35 18.5 33 L16 28 Z" fill="#FFFBEB" fill-opacity="0.95"/>
-            <path d="M26 20 L27 34 M38 20 L37 34 M49 20 L48 34" stroke="#F97316" stroke-width="2.5" stroke-linecap="round" stroke-opacity="0.85"/>
-            <path d="M44 26 L26 44 H38 L32 58 L54 38 H40 L44 26 Z" fill="url(#c1-bolt-grad)" stroke="#7C2D12" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-            <text x="88" y="44" fill="#0F172A" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="25" font-weight="900" letter-spacing="1.5">
+            <path
+              d="M16 28 C16 23.58 19.58 20 24 20 H56 C60.42 20 64 23.58 64 28 L62 33 C61.2 35 59 36.5 56.5 36.5 C54 36.5 52 35 51.5 33 C50.5 35 48.5 36.5 46 36.5 C43.5 36.5 41.5 35 40.5 33 C39.5 35 37.5 36.5 35 36.5 C32.5 36.5 30.5 35 29.5 33 C28.5 35 26.5 36.5 24 36.5 C21.5 36.5 19.5 35 18.5 33 L16 28 Z"
+              fill="#FFFBEB" fill-opacity="0.95" />
+            <path d="M26 20 L27 34 M38 20 L37 34 M49 20 L48 34" stroke="#F97316" stroke-width="2.5"
+              stroke-linecap="round" stroke-opacity="0.85" />
+            <path d="M44 26 L26 44 H38 L32 58 L54 38 H40 L44 26 Z" fill="url(#c1-bolt-grad)" stroke="#7C2D12"
+              stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+            <text x="88" y="44" fill="#0F172A" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="25"
+              font-weight="900" letter-spacing="1.5">
               机场便利店
             </text>
             <g transform="translate(89, 53)">
-              <circle cx="4" cy="9" r="3" fill="#10B981"/>
-              <circle cx="4" cy="9" r="5" stroke="#10B981" stroke-width="1" stroke-opacity="0.4"/>
-              <text x="13" y="12" fill="#64748B" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10.5" font-weight="700" letter-spacing="2.2">
+              <circle cx="4" cy="9" r="3" fill="#10B981" />
+              <circle cx="4" cy="9" r="5" stroke="#10B981" stroke-width="1" stroke-opacity="0.4" />
+              <text x="13" y="12" fill="#64748B" font-family="'Plus Jakarta Sans', system-ui, sans-serif"
+                font-size="10.5" font-weight="700" letter-spacing="2.2">
                 SPEED MART
               </text>
-              <rect x="94" y="6" width="1" height="8" fill="#CBD5E1"/>
-              <text x="102" y="12" fill="#94A3B8" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="9" font-weight="500">
+              <rect x="94" y="6" width="1" height="8" fill="#CBD5E1" />
+              <text x="102" y="12" fill="#94A3B8" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="9"
+                font-weight="500">
                 24H 网络漫游
               </text>
             </g>
@@ -274,24 +364,56 @@
 
         <!-- Desktop Nav -->
         <nav class="hidden lg:flex items-center gap-1" aria-label="主导航">
-          <a href="/index.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="home">首页</a>
-          <a href="/reviews.html" class="nav-link active px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="reviews">店长严选</a>
-          <a href="/guide.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="guide">新手便当</a>
-          <a href="/devices.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="devices">设备专柜</a>
-          <a href="/speedtest.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="speedtest">测速冰箱</a>
-          <a href="/blog.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="blog">便利店日志</a>
-          <a href="/faq.html" class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors" data-page="faq">常见避坑</a>
+          <a href="/index.html"
+            class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors"
+            data-page="home">首页</a>
+          <a href="/reviews.html"
+            class="nav-link active px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors"
+            data-page="reviews">店长严选</a>
+          <a href="/guide.html"
+            class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors"
+            data-page="guide">新手便当</a>
+          <a href="/devices.html"
+            class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors"
+            data-page="devices">设备专柜</a>
+          <a href="/speedtest.html"
+            class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors"
+            data-page="speedtest">测速冰箱</a>
+          <a href="/blog.html"
+            class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors"
+            data-page="blog">便利店日志</a>
+          <a href="/faq.html"
+            class="nav-link px-3 py-2 text-sm font-medium text-carbonLight hover:text-warmOrange hover:bg-warmOrange/5 rounded-lg transition-colors"
+            data-page="faq">常见避坑</a>
         </nav>
 
         <!-- Search + Hamburger -->
         <div class="flex items-center gap-2">
-          <div class="hidden md:flex items-center bg-oat/70 rounded-full px-3.5 py-2 gap-2 focus-within:ring-2 focus-within:ring-warmOrange/40 transition-shadow">
-            <svg class="w-4 h-4 text-carbonMuted flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" style="width:16px;height:16px;flex-shrink:0;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" placeholder="搜索教程或工具..." class="bg-transparent outline-none text-sm text-carbon placeholder-carbonMuted w-36 lg:w-44" id="search-input" />
+          <div
+            class="hidden md:flex items-center bg-oat/70 rounded-full px-3.5 py-2 gap-2 focus-within:ring-2 focus-within:ring-warmOrange/40 transition-shadow">
+            <svg class="w-4 h-4 text-carbonMuted flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" height="16" style="width:16px;height:16px;flex-shrink:0;">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input type="text" placeholder="搜索教程或工具..."
+              class="bg-transparent outline-none text-sm text-carbon placeholder-carbonMuted w-36 lg:w-44"
+              id="search-input" />
           </div>
-          <button class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-oat/60 transition-colors" id="menu-toggle" aria-label="打开菜单" aria-expanded="false">
-            <svg class="w-5 h-5 text-carbon" id="menu-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="20" style="width:20px;height:20px;"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-            <svg class="w-5 h-5 text-carbon hidden" id="menu-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="20" style="width:20px;height:20px;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          <button
+            class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-oat/60 transition-colors"
+            id="menu-toggle" aria-label="打开菜单" aria-expanded="false">
+            <svg class="w-5 h-5 text-carbon" id="menu-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" height="20" style="width:20px;height:20px;">
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+            <svg class="w-5 h-5 text-carbon hidden" id="menu-icon-close" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" height="20" style="width:20px;height:20px;">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
           </button>
         </div>
       </div>
@@ -301,16 +423,36 @@
     <div class="lg:hidden mobile-menu-enter bg-cream/95 navbar-blur border-t border-oat/40" id="mobile-menu">
       <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
         <div class="flex items-center bg-oat/70 rounded-full px-3.5 py-2.5 gap-2 mb-3 md:hidden">
-          <svg class="w-4 h-4 text-carbonMuted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" style="width:16px;height:16px;flex-shrink:0;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" placeholder="搜索教程或工具..." class="bg-transparent outline-none text-sm text-carbon placeholder-carbonMuted w-full" id="mobile-search-input" />
+          <svg class="w-4 h-4 text-carbonMuted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            height="16" style="width:16px;height:16px;flex-shrink:0;">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          <input type="text" placeholder="搜索教程或工具..."
+            class="bg-transparent outline-none text-sm text-carbon placeholder-carbonMuted w-full"
+            id="mobile-search-input" />
         </div>
-        <a href="/index.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="home">首页</a>
-        <a href="/reviews.html" class="mobile-nav-link active block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="reviews">店长严选</a>
-        <a href="/guide.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="guide">新手便当</a>
-        <a href="/devices.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="devices">设备专柜</a>
-        <a href="/speedtest.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="speedtest">测速冰箱</a>
-        <a href="/blog.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="blog">便利店日志</a>
-        <a href="/faq.html" class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors" data-page="faq">常见避坑</a>
+        <a href="/index.html"
+          class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors"
+          data-page="home">首页</a>
+        <a href="/reviews.html"
+          class="mobile-nav-link active block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors"
+          data-page="reviews">店长严选</a>
+        <a href="/guide.html"
+          class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors"
+          data-page="guide">新手便当</a>
+        <a href="/devices.html"
+          class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors"
+          data-page="devices">设备专柜</a>
+        <a href="/speedtest.html"
+          class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors"
+          data-page="speedtest">测速冰箱</a>
+        <a href="/blog.html"
+          class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors"
+          data-page="blog">便利店日志</a>
+        <a href="/faq.html"
+          class="mobile-nav-link block px-4 py-2.5 text-sm font-medium text-carbonLight hover:text-warmOrange rounded-lg transition-colors"
+          data-page="faq">常见避坑</a>
       </div>
     </div>
   </header>
@@ -319,22 +461,27 @@
   <main class="pt-20 lg:pt-[76px] flex-grow">
 
     <!-- 1. 专柜头部 (Header & Breadcrumb) -->
-    <section class="relative bg-gradient-to-b from-[#FFF8F0] via-[#FAF3EC] to-[#FDFBF7] border-b border-oat/70 py-10 md:py-14 overflow-hidden">
+    <section
+      class="relative bg-gradient-to-b from-[#FFF8F0] via-[#FAF3EC] to-[#FDFBF7] border-b border-oat/70 py-10 md:py-14 overflow-hidden">
       <div class="absolute inset-0 dots-pattern pointer-events-none"></div>
       <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         <!-- 面包屑 -->
         <nav class="mb-4" aria-label="面包屑导航">
           <ol class="flex items-center gap-1.5 text-xs text-carbonMuted">
             <li><a href="/index.html" class="hover:text-warmOrange transition-colors">首页</a></li>
-            <li><svg class="w-3.5 h-3.5 text-carbonMuted/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></li>
+            <li><svg class="w-3.5 h-3.5 text-carbonMuted/50" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <polyline points="9 18 15 12 9 6" />
+              </svg></li>
             <li class="text-warmOrange font-semibold">店长严选专柜</li>
           </ol>
         </nav>
 
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-bold mb-3 shadow-xs">
+            <div
+              class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-bold mb-3 shadow-xs">
               <span>🏪</span>
               <span>2026 深度横测专柜 · 拒绝虚标与盲盒</span>
             </div>
@@ -348,36 +495,47 @@
 
           <!-- 便捷统计与天梯锚点 -->
           <div class="flex flex-wrap items-center gap-3">
-            <div class="bg-white/90 backdrop-blur rounded-2xl border border-oat px-4 py-2.5 flex items-center gap-3 shadow-xs">
+            <div
+              class="bg-white/90 backdrop-blur rounded-2xl border border-oat px-4 py-2.5 flex items-center gap-3 shadow-xs">
               <span class="text-2xl">🏆</span>
               <div>
                 <div class="text-[11px] text-carbonMuted font-medium">严选上架品牌</div>
                 <div class="text-base font-black text-carbon">6 家旗舰品牌</div>
               </div>
             </div>
-            <a href="#matrix-table" class="px-4 py-2.5 rounded-2xl bg-warmOrange hover:bg-warmOrangeDeep text-white text-xs font-bold shadow-sm transition-all flex items-center gap-1.5">
+            <a href="#matrix-table"
+              class="px-4 py-2.5 rounded-2xl bg-warmOrange hover:bg-warmOrangeDeep text-white text-xs font-bold shadow-sm transition-all flex items-center gap-1.5">
               <span>查看参数天梯榜</span>
-              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg>
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M19 9l-7 7-7-7" />
+              </svg>
             </a>
           </div>
         </div>
 
         <!-- 2. 多维度动态筛选 Bar (Category / Tag Filters) -->
-        <div class="mt-8 pt-6 border-t border-oat/60 flex flex-wrap items-center justify-between gap-3" id="reviewFilterBar">
+        <div class="mt-8 pt-6 border-t border-oat/60 flex flex-wrap items-center justify-between gap-3"
+          id="reviewFilterBar">
           <div class="flex flex-wrap items-center gap-2 sm:gap-2.5">
-            <button class="review-pill active px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight" data-tag="all">
+            <button
+              class="review-pill active px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight"
+              data-tag="all">
               全部精选 (15)
             </button>
-            <button class="review-pill px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight" data-tag="iplc">
+            <button class="review-pill px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight"
+              data-tag="iplc">
               全 IPLC/IEPL 专线 (10)
             </button>
-            <button class="review-pill px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight" data-tag="unlimited">
+            <button class="review-pill px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight"
+              data-tag="unlimited">
               不限设备数 (10)
             </button>
-            <button class="review-pill px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight" data-tag="isp">
+            <button class="review-pill px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight"
+              data-tag="isp">
               双 ISP 原生全解 (8)
             </button>
-            <button class="review-pill px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight" data-tag="budget">
+            <button class="review-pill px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-oat/70 text-carbonLight"
+              data-tag="budget">
               学生高性价比 (7)
             </button>
           </div>
@@ -400,7 +558,8 @@
           </h2>
           <p class="text-xs text-carbonMuted mt-1">点击「查看套餐」可直接查阅各家各档位精确价格；点击「直达官网」自动携带优惠码。</p>
         </div>
-        <span class="text-xs text-warmOrangeDeep font-bold bg-warmOrange/10 px-3 py-1 rounded-full" id="showingBrandCount">
+        <span class="text-xs text-warmOrangeDeep font-bold bg-warmOrange/10 px-3 py-1 rounded-full"
+          id="showingBrandCount">
           显示 15 款品牌
         </span>
       </div>
@@ -408,15 +567,19 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch" id="brandCardsGrid">
 
         <!-- BRAND 1: 环球梯 -->
-        <div class="brand-item group relative bg-white rounded-3xl border-2 border-warmOrange/60 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-tags="iplc,unlimited,isp">
-          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-warmOrange to-orange-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+        <div
+          class="brand-item group relative bg-white rounded-3xl border-2 border-warmOrange/60 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5"
+          data-tags="iplc,unlimited,isp">
+          <div
+            class="absolute -top-3.5 right-6 bg-gradient-to-r from-warmOrange to-orange-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
             <span>👑</span>
             <span>店长首选 · NO.1</span>
           </div>
 
           <div>
             <div class="flex items-start gap-3.5 mb-4">
-              <div class="w-12 h-12 rounded-2xl bg-warmOrange/15 text-warmOrangeDeep flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+              <div
+                class="w-12 h-12 rounded-2xl bg-warmOrange/15 text-warmOrangeDeep flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
                 🌐
               </div>
               <div>
@@ -429,9 +592,15 @@
             </div>
 
             <div class="flex flex-wrap gap-1.5 mb-5">
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200/60">👑 店长首选</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-orange-50 text-orange-800 border border-orange-200/60">🔥 晚高峰极速</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">🎬 4K/AI 原生全解</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200/60">👑
+                店长首选</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-orange-50 text-orange-800 border border-orange-200/60">🔥
+                晚高峰极速</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">🎬
+                4K/AI 原生全解</span>
             </div>
 
             <!-- 参数表格速查 -->
@@ -464,26 +633,33 @@
 
           <!-- 底部专属优惠码与三按钮 -->
           <div class="pt-3 border-t border-oat/70 space-y-3">
-            <div class="flex items-center justify-between bg-orange-50/70 border border-orange-200 rounded-xl px-3 py-2 text-xs">
+            <div
+              class="flex items-center justify-between bg-orange-50/70 border border-orange-200 rounded-xl px-3 py-2 text-xs">
               <div class="flex items-center gap-1.5">
                 <span class="text-sm">🎟️</span>
                 <span class="text-carbon text-[11px]">专属 7 折优惠码：</span>
-                <span class="font-mono font-bold text-warmOrangeDeep bg-white px-2 py-0.5 rounded border border-orange-200 select-all">HQ66</span>
+                <span
+                  class="font-mono font-bold text-warmOrangeDeep bg-white px-2 py-0.5 rounded border border-orange-200 select-all">HQ66</span>
               </div>
-              <button onclick="copyCouponCode('HQ66')" class="text-[11px] font-bold text-warmOrange hover:text-warmOrangeDeep flex items-center gap-1 hover:underline cursor-pointer">
+              <button onclick="copyCouponCode('HQ66')"
+                class="text-[11px] font-bold text-warmOrange hover:text-warmOrangeDeep flex items-center gap-1 hover:underline cursor-pointer">
                 <span>复制</span>
               </button>
             </div>
 
             <!-- 三按钮操作: 查看套餐 / 深度评测 / 直达官网 -->
             <div class="grid grid-cols-3 gap-2">
-              <button type="button" onclick="openPackageModal('huanqiuti')" class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <button type="button" onclick="openPackageModal('huanqiuti')"
+                class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>查看套餐</span>
               </button>
-              <a href="#matrix-table" class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
+              <a href="#matrix-table"
+                class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
                 <span>深度测评 📊</span>
               </a>
-              <a href="/go.html?id=huanqiuti" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('HQ66')" class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <a href="/go.html?id=huanqiuti" target="_blank" rel="nofollow sponsored noopener noreferrer"
+                onclick="copyCouponCode('HQ66')"
+                class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>直达官网 ↗</span>
               </a>
             </div>
@@ -491,15 +667,19 @@
         </div>
 
         <!-- BRAND 2: 大佬云 -->
-        <div class="brand-item group relative bg-white rounded-3xl border border-indigo-200 hover:border-indigo-400 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-tags="iplc,unlimited">
-          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-indigo-600 to-blue-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+        <div
+          class="brand-item group relative bg-white rounded-3xl border border-indigo-200 hover:border-indigo-400 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5"
+          data-tags="iplc,unlimited">
+          <div
+            class="absolute -top-3.5 right-6 bg-gradient-to-r from-indigo-600 to-blue-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
             <span>🥈</span>
             <span>口碑亚军 · NO.2</span>
           </div>
 
           <div>
             <div class="flex items-start gap-3.5 mb-4">
-              <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+              <div
+                class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
                 ☁️
               </div>
               <div>
@@ -512,9 +692,15 @@
             </div>
 
             <div class="flex flex-wrap gap-1.5 mb-5">
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-indigo-50 text-indigo-800 border border-indigo-200/60">⚡ 全 IPLC 专线</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-blue-50 text-blue-800 border border-blue-200/60">👥 不限在线设备</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">🎮 极低游戏跳Ping</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-indigo-50 text-indigo-800 border border-indigo-200/60">⚡
+                全 IPLC 专线</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-blue-50 text-blue-800 border border-blue-200/60">👥
+                不限在线设备</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">🎮
+                极低游戏跳Ping</span>
             </div>
 
             <div class="bg-indigo-50/30 rounded-2xl p-4 border border-indigo-100 mb-5 space-y-2.5 text-xs">
@@ -545,25 +731,32 @@
           </div>
 
           <div class="pt-3 border-t border-oat/70 space-y-3">
-            <div class="flex items-center justify-between bg-indigo-50/70 border border-indigo-200 rounded-xl px-3 py-2 text-xs">
+            <div
+              class="flex items-center justify-between bg-indigo-50/70 border border-indigo-200 rounded-xl px-3 py-2 text-xs">
               <div class="flex items-center gap-1.5">
                 <span class="text-sm">🎟️</span>
                 <span class="text-carbon text-[11px]">专属 7 折优惠码：</span>
-                <span class="font-mono font-bold text-indigo-700 bg-white px-2 py-0.5 rounded border border-indigo-200 select-all">dly88</span>
+                <span
+                  class="font-mono font-bold text-indigo-700 bg-white px-2 py-0.5 rounded border border-indigo-200 select-all">dly88</span>
               </div>
-              <button onclick="copyCouponCode('dly88')" class="text-[11px] font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 hover:underline cursor-pointer">
+              <button onclick="copyCouponCode('dly88')"
+                class="text-[11px] font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 hover:underline cursor-pointer">
                 <span>复制</span>
               </button>
             </div>
 
             <div class="grid grid-cols-3 gap-2">
-              <button type="button" onclick="openPackageModal('dalaoyun')" class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <button type="button" onclick="openPackageModal('dalaoyun')"
+                class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>查看套餐</span>
               </button>
-              <a href="#matrix-table" class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
+              <a href="#matrix-table"
+                class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
                 <span>深度测评 📊</span>
               </a>
-              <a href="/go.html?id=dalaoyun" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('dly88')" class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <a href="/go.html?id=dalaoyun" target="_blank" rel="nofollow sponsored noopener noreferrer"
+                onclick="copyCouponCode('dly88')"
+                class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>直达官网 ↗</span>
               </a>
             </div>
@@ -571,15 +764,19 @@
         </div>
 
         <!-- BRAND 3: 榴莲云 -->
-        <div class="brand-item group relative bg-white rounded-3xl border border-amber-300 hover:border-amber-500 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-tags="budget,unlimited">
-          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-amber-500 to-yellow-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+        <div
+          class="brand-item group relative bg-white rounded-3xl border border-amber-300 hover:border-amber-500 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5"
+          data-tags="budget,unlimited">
+          <div
+            class="absolute -top-3.5 right-6 bg-gradient-to-r from-amber-500 to-yellow-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
             <span>🥉</span>
             <span>性价比王 · NO.3</span>
           </div>
 
           <div>
             <div class="flex items-start gap-3.5 mb-4">
-              <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+              <div
+                class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
                 🍈
               </div>
               <div>
@@ -592,9 +789,15 @@
             </div>
 
             <div class="flex flex-wrap gap-1.5 mb-5">
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200/60">💰 性价比首选</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-orange-50 text-orange-800 border border-orange-200/60">📶 海量大流量</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">👥 不限设备</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200/60">💰
+                性价比首选</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-orange-50 text-orange-800 border border-orange-200/60">📶
+                海量大流量</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">👥
+                不限设备</span>
             </div>
 
             <div class="bg-amber-50/30 rounded-2xl p-4 border border-amber-200 mb-5 space-y-2.5 text-xs">
@@ -625,25 +828,32 @@
           </div>
 
           <div class="pt-3 border-t border-oat/70 space-y-3">
-            <div class="flex items-center justify-between bg-amber-50/70 border border-amber-200 rounded-xl px-3 py-2 text-xs">
+            <div
+              class="flex items-center justify-between bg-amber-50/70 border border-amber-200 rounded-xl px-3 py-2 text-xs">
               <div class="flex items-center gap-1.5">
                 <span class="text-sm">🎟️</span>
                 <span class="text-carbon text-[11px]">专属 7 折优惠码：</span>
-                <span class="font-mono font-bold text-amber-700 bg-white px-2 py-0.5 rounded border border-amber-300 select-all">ll88</span>
+                <span
+                  class="font-mono font-bold text-amber-700 bg-white px-2 py-0.5 rounded border border-amber-300 select-all">ll88</span>
               </div>
-              <button onclick="copyCouponCode('ll88')" class="text-[11px] font-bold text-amber-600 hover:text-amber-800 flex items-center gap-1 hover:underline cursor-pointer">
+              <button onclick="copyCouponCode('ll88')"
+                class="text-[11px] font-bold text-amber-600 hover:text-amber-800 flex items-center gap-1 hover:underline cursor-pointer">
                 <span>复制</span>
               </button>
             </div>
 
             <div class="grid grid-cols-3 gap-2">
-              <button type="button" onclick="openPackageModal('liulianyun')" class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <button type="button" onclick="openPackageModal('liulianyun')"
+                class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>查看套餐</span>
               </button>
-              <a href="#matrix-table" class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
+              <a href="#matrix-table"
+                class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
                 <span>深度测评 📊</span>
               </a>
-              <a href="/go.html?id=liulianyun" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('ll88')" class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <a href="/go.html?id=liulianyun" target="_blank" rel="nofollow sponsored noopener noreferrer"
+                onclick="copyCouponCode('ll88')"
+                class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>直达官网 ↗</span>
               </a>
             </div>
@@ -651,15 +861,19 @@
         </div>
 
         <!-- BRAND 4: 云界线 -->
-        <div class="brand-item group relative bg-white rounded-3xl border border-cyan-300 hover:border-cyan-500 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-tags="iplc,isp,unlimited">
-          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-cyan-600 to-teal-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+        <div
+          class="brand-item group relative bg-white rounded-3xl border border-cyan-300 hover:border-cyan-500 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5"
+          data-tags="iplc,isp,unlimited">
+          <div
+            class="absolute -top-3.5 right-6 bg-gradient-to-r from-cyan-600 to-teal-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
             <span>⚡</span>
             <span>新锐电竞专线 · NO.4</span>
           </div>
 
           <div>
             <div class="flex items-start gap-3.5 mb-4">
-              <div class="w-12 h-12 rounded-2xl bg-cyan-50 text-cyan-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+              <div
+                class="w-12 h-12 rounded-2xl bg-cyan-50 text-cyan-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
                 ⚡
               </div>
               <div>
@@ -672,9 +886,15 @@
             </div>
 
             <div class="flex flex-wrap gap-1.5 mb-5">
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-cyan-50 text-cyan-800 border border-cyan-200/60">⚡ 极低抖动</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-teal-50 text-teal-800 border border-teal-200/60">🔒 双 ISP 家宽</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">👥 不限设备</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-cyan-50 text-cyan-800 border border-cyan-200/60">⚡
+                极低抖动</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-teal-50 text-teal-800 border border-teal-200/60">🔒
+                双 ISP 家宽</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">👥
+                不限设备</span>
             </div>
 
             <div class="bg-cyan-50/30 rounded-2xl p-4 border border-cyan-200 mb-5 space-y-2.5 text-xs">
@@ -705,25 +925,32 @@
           </div>
 
           <div class="pt-3 border-t border-oat/70 space-y-3">
-            <div class="flex items-center justify-between bg-cyan-50/70 border border-cyan-200 rounded-xl px-3 py-2 text-xs">
+            <div
+              class="flex items-center justify-between bg-cyan-50/70 border border-cyan-200 rounded-xl px-3 py-2 text-xs">
               <div class="flex items-center gap-1.5">
                 <span class="text-sm">🎟️</span>
                 <span class="text-carbon text-[11px]">专属 7 折优惠码：</span>
-                <span class="font-mono font-bold text-cyan-700 bg-white px-2 py-0.5 rounded border border-cyan-300 select-all">yjx888</span>
+                <span
+                  class="font-mono font-bold text-cyan-700 bg-white px-2 py-0.5 rounded border border-cyan-300 select-all">yjx888</span>
               </div>
-              <button onclick="copyCouponCode('yjx888')" class="text-[11px] font-bold text-cyan-600 hover:text-cyan-800 flex items-center gap-1 hover:underline cursor-pointer">
+              <button onclick="copyCouponCode('yjx888')"
+                class="text-[11px] font-bold text-cyan-600 hover:text-cyan-800 flex items-center gap-1 hover:underline cursor-pointer">
                 <span>复制</span>
               </button>
             </div>
 
             <div class="grid grid-cols-3 gap-2">
-              <button type="button" onclick="openPackageModal('yunjiexian')" class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <button type="button" onclick="openPackageModal('yunjiexian')"
+                class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>查看套餐</span>
               </button>
-              <a href="#matrix-table" class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
+              <a href="#matrix-table"
+                class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
                 <span>深度测评 📊</span>
               </a>
-              <a href="/go.html?id=yunjiexian" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('yjx888')" class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <a href="/go.html?id=yunjiexian" target="_blank" rel="nofollow sponsored noopener noreferrer"
+                onclick="copyCouponCode('yjx888')"
+                class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>直达官网 ↗</span>
               </a>
             </div>
@@ -731,15 +958,19 @@
         </div>
 
         <!-- BRAND 5: 闪电鼠 -->
-        <div class="brand-item group relative bg-white rounded-3xl border border-yellow-300 hover:border-yellow-500 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-tags="budget,unlimited">
-          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-amber-500 to-yellow-500 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+        <div
+          class="brand-item group relative bg-white rounded-3xl border border-yellow-300 hover:border-yellow-500 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5"
+          data-tags="budget,unlimited">
+          <div
+            class="absolute -top-3.5 right-6 bg-gradient-to-r from-amber-500 to-yellow-500 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
             <span>🐭</span>
             <span>疾速畅享 · NO.5</span>
           </div>
 
           <div>
             <div class="flex items-start gap-3.5 mb-4">
-              <div class="w-12 h-12 rounded-2xl bg-yellow-50 text-amber-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+              <div
+                class="w-12 h-12 rounded-2xl bg-yellow-50 text-amber-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
                 ⚡
               </div>
               <div>
@@ -752,9 +983,15 @@
             </div>
 
             <div class="flex flex-wrap gap-1.5 mb-5">
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-yellow-50 text-amber-800 border border-yellow-200/60">⚡ 极速起跑</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200/60">💰 超实惠年付</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">👥 不限设备</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-yellow-50 text-amber-800 border border-yellow-200/60">⚡
+                极速起跑</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200/60">💰
+                超实惠年付</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">👥
+                不限设备</span>
             </div>
 
             <div class="bg-yellow-50/30 rounded-2xl p-4 border border-yellow-200 mb-5 space-y-2.5 text-xs">
@@ -785,25 +1022,32 @@
           </div>
 
           <div class="pt-3 border-t border-oat/70 space-y-3">
-            <div class="flex items-center justify-between bg-yellow-50/70 border border-yellow-200 rounded-xl px-3 py-2 text-xs">
+            <div
+              class="flex items-center justify-between bg-yellow-50/70 border border-yellow-200 rounded-xl px-3 py-2 text-xs">
               <div class="flex items-center gap-1.5">
                 <span class="text-sm">🎟️</span>
                 <span class="text-carbon text-[11px]">专属 7 折优惠码：</span>
-                <span class="font-mono font-bold text-amber-700 bg-white px-2 py-0.5 rounded border border-amber-300 select-all">sds88</span>
+                <span
+                  class="font-mono font-bold text-amber-700 bg-white px-2 py-0.5 rounded border border-amber-300 select-all">sds88</span>
               </div>
-              <button onclick="copyCouponCode('sds88')" class="text-[11px] font-bold text-amber-600 hover:text-amber-800 flex items-center gap-1 hover:underline cursor-pointer">
+              <button onclick="copyCouponCode('sds88')"
+                class="text-[11px] font-bold text-amber-600 hover:text-amber-800 flex items-center gap-1 hover:underline cursor-pointer">
                 <span>复制</span>
               </button>
             </div>
 
             <div class="grid grid-cols-3 gap-2">
-              <button type="button" onclick="openPackageModal('shandianshu')" class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <button type="button" onclick="openPackageModal('shandianshu')"
+                class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>查看套餐</span>
               </button>
-              <a href="#matrix-table" class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
+              <a href="#matrix-table"
+                class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
                 <span>深度测评 📊</span>
               </a>
-              <a href="/go.html?id=shandianshu" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('sds88')" class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <a href="/go.html?id=shandianshu" target="_blank" rel="nofollow sponsored noopener noreferrer"
+                onclick="copyCouponCode('sds88')"
+                class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>直达官网 ↗</span>
               </a>
             </div>
@@ -811,15 +1055,19 @@
         </div>
 
         <!-- BRAND 6: 神行加速 -->
-        <div class="brand-item group relative bg-white rounded-3xl border border-purple-300 hover:border-purple-500 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-tags="iplc,isp,unlimited,budget">
-          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+        <div
+          class="brand-item group relative bg-white rounded-3xl border border-purple-300 hover:border-purple-500 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5"
+          data-tags="iplc,isp,unlimited,budget">
+          <div
+            class="absolute -top-3.5 right-6 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
             <span>🚀</span>
             <span>旗舰破风 · NO.6</span>
           </div>
 
           <div>
             <div class="flex items-start gap-3.5 mb-4">
-              <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+              <div
+                class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
                 🚀
               </div>
               <div>
@@ -832,9 +1080,15 @@
             </div>
 
             <div class="flex flex-wrap gap-1.5 mb-5">
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-purple-50 text-purple-800 border border-purple-200/60">🚀 2.5G 极速</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-indigo-50 text-indigo-800 border border-indigo-200/60">🔒 全 IPLC 专线</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">👥 不限设备</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-purple-50 text-purple-800 border border-purple-200/60">🚀
+                2.5G 极速</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-indigo-50 text-indigo-800 border border-indigo-200/60">🔒
+                全 IPLC 专线</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">👥
+                不限设备</span>
             </div>
 
             <div class="bg-purple-50/30 rounded-2xl p-4 border border-purple-200 mb-5 space-y-2.5 text-xs">
@@ -865,41 +1119,52 @@
           </div>
 
           <div class="pt-3 border-t border-oat/70 space-y-3">
-            <div class="flex items-center justify-between bg-purple-50/70 border border-purple-200 rounded-xl px-3 py-2 text-xs">
+            <div
+              class="flex items-center justify-between bg-purple-50/70 border border-purple-200 rounded-xl px-3 py-2 text-xs">
               <div class="flex items-center gap-1.5">
                 <span class="text-sm">🎟️</span>
                 <span class="text-carbon text-[11px]">专属 7 折优惠码：</span>
-                <span class="font-mono font-bold text-purple-700 bg-white px-2 py-0.5 rounded border border-purple-200 select-all">sx0077</span>
+                <span
+                  class="font-mono font-bold text-purple-700 bg-white px-2 py-0.5 rounded border border-purple-200 select-all">sx0077</span>
               </div>
-              <button onclick="copyCouponCode('sx0077')" class="text-[11px] font-bold text-purple-600 hover:text-purple-800 flex items-center gap-1 hover:underline cursor-pointer">
+              <button onclick="copyCouponCode('sx0077')"
+                class="text-[11px] font-bold text-purple-600 hover:text-purple-800 flex items-center gap-1 hover:underline cursor-pointer">
                 <span>复制</span>
               </button>
             </div>
 
             <div class="grid grid-cols-3 gap-2">
-              <button type="button" onclick="openPackageModal('shenxing')" class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <button type="button" onclick="openPackageModal('shenxing')"
+                class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>查看套餐</span>
               </button>
-              <a href="#matrix-table" class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
+              <a href="#matrix-table"
+                class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
                 <span>深度测评 📊</span>
               </a>
-              <a href="/go.html?id=shenxing" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('sx0077')" class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <a href="/go.html?id=shenxing" target="_blank" rel="nofollow sponsored noopener noreferrer"
+                onclick="copyCouponCode('sx0077')"
+                class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>直达官网 ↗</span>
               </a>
             </div>
           </div>
         </div>
 
-      
+
         <!-- BRAND 7: 可信云 -->
-        <div class="brand-item group relative bg-white rounded-3xl border border-blue-200 hover:border-blue-400 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-tags="iplc,unlimited,budget">
-          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-blue-600 to-cyan-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+        <div
+          class="brand-item group relative bg-white rounded-3xl border border-blue-200 hover:border-blue-400 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5"
+          data-tags="iplc,unlimited,budget">
+          <div
+            class="absolute -top-3.5 right-6 bg-gradient-to-r from-blue-600 to-cyan-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
             <span>🛡️</span>
             <span>金融级安全 · NO.7</span>
           </div>
           <div>
             <div class="flex items-start gap-3.5 mb-4">
-              <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+              <div
+                class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
                 🛡️
               </div>
               <div>
@@ -911,9 +1176,15 @@
               </div>
             </div>
             <div class="flex flex-wrap gap-1.5 mb-5">
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-blue-50 text-blue-800 border border-blue-200/60">🛡️ 金融安全</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-cyan-50 text-cyan-800 border border-cyan-200/60">⚡ 8折特惠</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">🌐 多云灾备</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-blue-50 text-blue-800 border border-blue-200/60">🛡️
+                金融安全</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-cyan-50 text-cyan-800 border border-cyan-200/60">⚡
+                8折特惠</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">🌐
+                多云灾备</span>
             </div>
             <div class="bg-blue-50/30 rounded-2xl p-4 border border-blue-200 mb-5 space-y-2.5 text-xs">
               <div class="flex items-center justify-between">
@@ -941,24 +1212,31 @@
             </p>
           </div>
           <div class="pt-3 border-t border-oat/70 space-y-3">
-            <div class="flex items-center justify-between bg-blue-50/70 border border-blue-200 rounded-xl px-3 py-2 text-xs">
+            <div
+              class="flex items-center justify-between bg-blue-50/70 border border-blue-200 rounded-xl px-3 py-2 text-xs">
               <div class="flex items-center gap-1.5">
                 <span class="text-sm">🏷️</span>
                 <span class="text-carbon text-[11px]">专属 8 折优惠码：</span>
-                <span class="font-mono font-bold text-blue-700 bg-white px-2 py-0.5 rounded border border-blue-200 select-all">kxy80</span>
+                <span
+                  class="font-mono font-bold text-blue-700 bg-white px-2 py-0.5 rounded border border-blue-200 select-all">kxy80</span>
               </div>
-              <button onclick="copyCouponCode('kxy80')" class="text-[11px] font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 hover:underline cursor-pointer">
+              <button onclick="copyCouponCode('kxy80')"
+                class="text-[11px] font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 hover:underline cursor-pointer">
                 <span>复制</span>
               </button>
             </div>
             <div class="grid grid-cols-3 gap-2">
-              <button type="button" onclick="openPackageModal('kexinyun')" class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <button type="button" onclick="openPackageModal('kexinyun')"
+                class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>查看套餐</span>
               </button>
-              <a href="#matrix-table" class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
+              <a href="#matrix-table"
+                class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
                 <span>深度测评 📊</span>
               </a>
-              <a href="/go.html?id=kexinyun" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('kxy80')" class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <a href="/go.html?id=kexinyun" target="_blank" rel="nofollow sponsored noopener noreferrer"
+                onclick="copyCouponCode('kxy80')"
+                class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>直达官网 ↗</span>
               </a>
             </div>
@@ -966,14 +1244,18 @@
         </div>
 
         <!-- BRAND 8: 速界 -->
-        <div class="brand-item group relative bg-white rounded-3xl border border-rose-200 hover:border-rose-400 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-tags="iplc,unlimited">
-          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-rose-600 to-red-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+        <div
+          class="brand-item group relative bg-white rounded-3xl border border-rose-200 hover:border-rose-400 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5"
+          data-tags="iplc,unlimited">
+          <div
+            class="absolute -top-3.5 right-6 bg-gradient-to-r from-rose-600 to-red-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
             <span>⚡</span>
             <span>大带宽破峰 · NO.8</span>
           </div>
           <div>
             <div class="flex items-start gap-3.5 mb-4">
-              <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+              <div
+                class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
                 ⚡
               </div>
               <div>
@@ -985,9 +1267,15 @@
               </div>
             </div>
             <div class="flex flex-wrap gap-1.5 mb-5">
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-rose-50 text-rose-800 border border-rose-200/60">⚡ 极速破峰</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-red-50 text-red-800 border border-red-200/60">🎬 4K秒开</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">👥 不限设备</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-rose-50 text-rose-800 border border-rose-200/60">⚡
+                极速破峰</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-red-50 text-red-800 border border-red-200/60">🎬
+                4K秒开</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">👥
+                不限设备</span>
             </div>
             <div class="bg-rose-50/30 rounded-2xl p-4 border border-rose-200 mb-5 space-y-2.5 text-xs">
               <div class="flex items-center justify-between">
@@ -1015,24 +1303,31 @@
             </p>
           </div>
           <div class="pt-3 border-t border-oat/70 space-y-3">
-            <div class="flex items-center justify-between bg-rose-50/70 border border-rose-200 rounded-xl px-3 py-2 text-xs">
+            <div
+              class="flex items-center justify-between bg-rose-50/70 border border-rose-200 rounded-xl px-3 py-2 text-xs">
               <div class="flex items-center gap-1.5">
                 <span class="text-sm">🏷️</span>
                 <span class="text-carbon text-[11px]">专属优惠码：</span>
-                <span class="font-mono font-bold text-rose-700 bg-white px-2 py-0.5 rounded border border-rose-200 select-all">sujie888</span>
+                <span
+                  class="font-mono font-bold text-rose-700 bg-white px-2 py-0.5 rounded border border-rose-200 select-all">sujie888</span>
               </div>
-              <button onclick="copyCouponCode('sujie888')" class="text-[11px] font-bold text-rose-600 hover:text-rose-800 flex items-center gap-1 hover:underline cursor-pointer">
+              <button onclick="copyCouponCode('sujie888')"
+                class="text-[11px] font-bold text-rose-600 hover:text-rose-800 flex items-center gap-1 hover:underline cursor-pointer">
                 <span>复制</span>
               </button>
             </div>
             <div class="grid grid-cols-3 gap-2">
-              <button type="button" onclick="openPackageModal('sujie')" class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <button type="button" onclick="openPackageModal('sujie')"
+                class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>查看套餐</span>
               </button>
-              <a href="#matrix-table" class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
+              <a href="#matrix-table"
+                class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
                 <span>深度测评 📊</span>
               </a>
-              <a href="/go.html?id=sujie" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('sujie888')" class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <a href="/go.html?id=sujie" target="_blank" rel="nofollow sponsored noopener noreferrer"
+                onclick="copyCouponCode('sujie888')"
+                class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>直达官网 ↗</span>
               </a>
             </div>
@@ -1040,14 +1335,18 @@
         </div>
 
         <!-- BRAND 9: 快狸快狸 -->
-        <div class="brand-item group relative bg-white rounded-3xl border border-emerald-200 hover:border-emerald-400 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-tags="budget">
-          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+        <div
+          class="brand-item group relative bg-white rounded-3xl border border-emerald-200 hover:border-emerald-400 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5"
+          data-tags="budget">
+          <div
+            class="absolute -top-3.5 right-6 bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
             <span>🦝</span>
             <span>萌新轻量 · NO.9</span>
           </div>
           <div>
             <div class="flex items-start gap-3.5 mb-4">
-              <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+              <div
+                class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
                 🦝
               </div>
               <div>
@@ -1059,9 +1358,15 @@
               </div>
             </div>
             <div class="flex flex-wrap gap-1.5 mb-5">
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">🦝 萌新首选</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-teal-50 text-teal-800 border border-teal-200/60">💰 亲民实惠</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200/60">📱 一键配置</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">🦝
+                萌新首选</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-teal-50 text-teal-800 border border-teal-200/60">💰
+                亲民实惠</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200/60">📱
+                一键配置</span>
             </div>
             <div class="bg-emerald-50/30 rounded-2xl p-4 border border-emerald-200 mb-5 space-y-2.5 text-xs">
               <div class="flex items-center justify-between">
@@ -1089,24 +1394,31 @@
             </p>
           </div>
           <div class="pt-3 border-t border-oat/70 space-y-3">
-            <div class="flex items-center justify-between bg-emerald-50/70 border border-emerald-200 rounded-xl px-3 py-2 text-xs">
+            <div
+              class="flex items-center justify-between bg-emerald-50/70 border border-emerald-200 rounded-xl px-3 py-2 text-xs">
               <div class="flex items-center gap-1.5">
                 <span class="text-sm">🏷️</span>
                 <span class="text-carbon text-[11px]">专属优惠码：</span>
-                <span class="font-mono font-bold text-emerald-700 bg-white px-2 py-0.5 rounded border border-emerald-200 select-all">kl888</span>
+                <span
+                  class="font-mono font-bold text-emerald-700 bg-white px-2 py-0.5 rounded border border-emerald-200 select-all">kl888</span>
               </div>
-              <button onclick="copyCouponCode('kl888')" class="text-[11px] font-bold text-emerald-600 hover:text-emerald-800 flex items-center gap-1 hover:underline cursor-pointer">
+              <button onclick="copyCouponCode('kl888')"
+                class="text-[11px] font-bold text-emerald-600 hover:text-emerald-800 flex items-center gap-1 hover:underline cursor-pointer">
                 <span>复制</span>
               </button>
             </div>
             <div class="grid grid-cols-3 gap-2">
-              <button type="button" onclick="openPackageModal('kuaili')" class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <button type="button" onclick="openPackageModal('kuaili')"
+                class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>查看套餐</span>
               </button>
-              <a href="#matrix-table" class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
+              <a href="#matrix-table"
+                class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
                 <span>深度测评 📊</span>
               </a>
-              <a href="/go.html?id=kuaili" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('kl888')" class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <a href="/go.html?id=kuaili" target="_blank" rel="nofollow sponsored noopener noreferrer"
+                onclick="copyCouponCode('kl888')"
+                class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>直达官网 ↗</span>
               </a>
             </div>
@@ -1114,14 +1426,18 @@
         </div>
 
         <!-- BRAND 10: 边缘节点 -->
-        <div class="brand-item group relative bg-white rounded-3xl border border-violet-200 hover:border-violet-400 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-tags="iplc,isp">
-          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-violet-600 to-purple-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+        <div
+          class="brand-item group relative bg-white rounded-3xl border border-violet-200 hover:border-violet-400 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5"
+          data-tags="iplc,isp">
+          <div
+            class="absolute -top-3.5 right-6 bg-gradient-to-r from-violet-600 to-purple-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
             <span>🌐</span>
             <span>Anycast智能边缘 · NO.10</span>
           </div>
           <div>
             <div class="flex items-start gap-3.5 mb-4">
-              <div class="w-12 h-12 rounded-2xl bg-violet-50 text-violet-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+              <div
+                class="w-12 h-12 rounded-2xl bg-violet-50 text-violet-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
                 🌐
               </div>
               <div>
@@ -1133,9 +1449,15 @@
               </div>
             </div>
             <div class="flex flex-wrap gap-1.5 mb-5">
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-violet-50 text-violet-800 border border-violet-200/60">🌐 边缘调度</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-purple-50 text-purple-800 border border-purple-200/60">⚡ 极低延迟</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">🔒 抗DDoS</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-violet-50 text-violet-800 border border-violet-200/60">🌐
+                边缘调度</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-purple-50 text-purple-800 border border-purple-200/60">⚡
+                极低延迟</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">🔒
+                抗DDoS</span>
             </div>
             <div class="bg-violet-50/30 rounded-2xl p-4 border border-violet-200 mb-5 space-y-2.5 text-xs">
               <div class="flex items-center justify-between">
@@ -1163,24 +1485,31 @@
             </p>
           </div>
           <div class="pt-3 border-t border-oat/70 space-y-3">
-            <div class="flex items-center justify-between bg-violet-50/70 border border-violet-200 rounded-xl px-3 py-2 text-xs">
+            <div
+              class="flex items-center justify-between bg-violet-50/70 border border-violet-200 rounded-xl px-3 py-2 text-xs">
               <div class="flex items-center gap-1.5">
                 <span class="text-sm">🏷️</span>
                 <span class="text-carbon text-[11px]">专属优惠码：</span>
-                <span class="font-mono font-bold text-violet-700 bg-white px-2 py-0.5 rounded border border-violet-200 select-all">xk808</span>
+                <span
+                  class="font-mono font-bold text-violet-700 bg-white px-2 py-0.5 rounded border border-violet-200 select-all">xk808</span>
               </div>
-              <button onclick="copyCouponCode('xk808')" class="text-[11px] font-bold text-violet-600 hover:text-violet-800 flex items-center gap-1 hover:underline cursor-pointer">
+              <button onclick="copyCouponCode('xk808')"
+                class="text-[11px] font-bold text-violet-600 hover:text-violet-800 flex items-center gap-1 hover:underline cursor-pointer">
                 <span>复制</span>
               </button>
             </div>
             <div class="grid grid-cols-3 gap-2">
-              <button type="button" onclick="openPackageModal('edgenode')" class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <button type="button" onclick="openPackageModal('edgenode')"
+                class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>查看套餐</span>
               </button>
-              <a href="#matrix-table" class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
+              <a href="#matrix-table"
+                class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
                 <span>深度测评 📊</span>
               </a>
-              <a href="/go.html?id=edgenode" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('xk808')" class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <a href="/go.html?id=edgenode" target="_blank" rel="nofollow sponsored noopener noreferrer"
+                onclick="copyCouponCode('xk808')"
+                class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>直达官网 ↗</span>
               </a>
             </div>
@@ -1188,14 +1517,18 @@
         </div>
 
         <!-- BRAND 11: 云图机场 -->
-        <div class="brand-item group relative bg-white rounded-3xl border border-sky-200 hover:border-sky-400 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-tags="budget,isp">
-          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-sky-600 to-blue-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+        <div
+          class="brand-item group relative bg-white rounded-3xl border border-sky-200 hover:border-sky-400 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5"
+          data-tags="budget,isp">
+          <div
+            class="absolute -top-3.5 right-6 bg-gradient-to-r from-sky-600 to-blue-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
             <span>🗺️</span>
             <span>老牌稳定中继 · NO.11</span>
           </div>
           <div>
             <div class="flex items-start gap-3.5 mb-4">
-              <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+              <div
+                class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
                 🗺️
               </div>
               <div>
@@ -1207,9 +1540,15 @@
               </div>
             </div>
             <div class="flex flex-wrap gap-1.5 mb-5">
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-sky-50 text-sky-800 border border-sky-200/60">🗺️ 老牌稳定</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-blue-50 text-blue-800 border border-blue-200/60">🌍 冷门节点</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200/60">💰 平价入门</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-sky-50 text-sky-800 border border-sky-200/60">🗺️
+                老牌稳定</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-blue-50 text-blue-800 border border-blue-200/60">🌍
+                冷门节点</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200/60">💰
+                平价入门</span>
             </div>
             <div class="bg-sky-50/30 rounded-2xl p-4 border border-sky-200 mb-5 space-y-2.5 text-xs">
               <div class="flex items-center justify-between">
@@ -1237,21 +1576,26 @@
             </p>
           </div>
           <div class="pt-3 border-t border-oat/70 space-y-3">
-            <div class="flex items-center justify-between bg-sky-50/70 border border-sky-200 rounded-xl px-3 py-2 text-xs">
+            <div
+              class="flex items-center justify-between bg-sky-50/70 border border-sky-200 rounded-xl px-3 py-2 text-xs">
               <div class="flex items-center gap-1.5">
                 <span class="text-sm">🏷️</span>
                 <span class="text-carbon text-[11px]">优惠状态：</span>
-                <span class="font-mono font-bold text-sky-700 bg-white px-2 py-0.5 rounded border border-sky-200">官网直达注册通道</span>
+                <span
+                  class="font-mono font-bold text-sky-700 bg-white px-2 py-0.5 rounded border border-sky-200">官网直达注册通道</span>
               </div>
             </div>
             <div class="grid grid-cols-3 gap-2">
-              <button type="button" onclick="openPackageModal('yuntu')" class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <button type="button" onclick="openPackageModal('yuntu')"
+                class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>查看套餐</span>
               </button>
-              <a href="#matrix-table" class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
+              <a href="#matrix-table"
+                class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
                 <span>深度测评 📊</span>
               </a>
-              <a href="/go.html?id=yuntu" target="_blank" rel="nofollow sponsored noopener noreferrer" class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <a href="/go.html?id=yuntu" target="_blank" rel="nofollow sponsored noopener noreferrer"
+                class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>直达官网 ↗</span>
               </a>
             </div>
@@ -1259,14 +1603,18 @@
         </div>
 
         <!-- BRAND 12: 鲲鹏加速 -->
-        <div class="brand-item group relative bg-white rounded-3xl border border-indigo-200 hover:border-indigo-400 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-tags="unlimited">
-          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-indigo-600 to-blue-700 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+        <div
+          class="brand-item group relative bg-white rounded-3xl border border-indigo-200 hover:border-indigo-400 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5"
+          data-tags="unlimited">
+          <div
+            class="absolute -top-3.5 right-6 bg-gradient-to-r from-indigo-600 to-blue-700 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
             <span>🦅</span>
             <span>高密BGP专网 · NO.12</span>
           </div>
           <div>
             <div class="flex items-start gap-3.5 mb-4">
-              <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+              <div
+                class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
                 🦅
               </div>
               <div>
@@ -1278,9 +1626,15 @@
               </div>
             </div>
             <div class="flex flex-wrap gap-1.5 mb-5">
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-indigo-50 text-indigo-800 border border-indigo-200/60">🦅 办公专线</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-blue-50 text-blue-800 border border-blue-200/60">⚡ 千兆下行</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">👥 不限设备</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-indigo-50 text-indigo-800 border border-indigo-200/60">🦅
+                办公专线</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-blue-50 text-blue-800 border border-blue-200/60">⚡
+                千兆下行</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">👥
+                不限设备</span>
             </div>
             <div class="bg-indigo-50/30 rounded-2xl p-4 border border-indigo-200 mb-5 space-y-2.5 text-xs">
               <div class="flex items-center justify-between">
@@ -1308,21 +1662,26 @@
             </p>
           </div>
           <div class="pt-3 border-t border-oat/70 space-y-3">
-            <div class="flex items-center justify-between bg-indigo-50/70 border border-indigo-200 rounded-xl px-3 py-2 text-xs">
+            <div
+              class="flex items-center justify-between bg-indigo-50/70 border border-indigo-200 rounded-xl px-3 py-2 text-xs">
               <div class="flex items-center gap-1.5">
                 <span class="text-sm">🏷️</span>
                 <span class="text-carbon text-[11px]">优惠状态：</span>
-                <span class="font-mono font-bold text-indigo-700 bg-white px-2 py-0.5 rounded border border-indigo-200">官网直达注册通道</span>
+                <span
+                  class="font-mono font-bold text-indigo-700 bg-white px-2 py-0.5 rounded border border-indigo-200">官网直达注册通道</span>
               </div>
             </div>
             <div class="grid grid-cols-3 gap-2">
-              <button type="button" onclick="openPackageModal('kunpeng')" class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <button type="button" onclick="openPackageModal('kunpeng')"
+                class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>查看套餐</span>
               </button>
-              <a href="#matrix-table" class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
+              <a href="#matrix-table"
+                class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
                 <span>深度测评 📊</span>
               </a>
-              <a href="/go.html?id=kunpeng" target="_blank" rel="nofollow sponsored noopener noreferrer" class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <a href="/go.html?id=kunpeng" target="_blank" rel="nofollow sponsored noopener noreferrer"
+                class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>直达官网 ↗</span>
               </a>
             </div>
@@ -1330,14 +1689,18 @@
         </div>
 
         <!-- BRAND 13: 瞬云 -->
-        <div class="brand-item group relative bg-white rounded-3xl border border-teal-200 hover:border-teal-400 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-tags="iplc,isp">
-          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-teal-600 to-cyan-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+        <div
+          class="brand-item group relative bg-white rounded-3xl border border-teal-200 hover:border-teal-400 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5"
+          data-tags="iplc,isp">
+          <div
+            class="absolute -top-3.5 right-6 bg-gradient-to-r from-teal-600 to-cyan-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
             <span>⚡</span>
             <span>毫秒级瞬时连接 · NO.13</span>
           </div>
           <div>
             <div class="flex items-start gap-3.5 mb-4">
-              <div class="w-12 h-12 rounded-2xl bg-teal-50 text-teal-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+              <div
+                class="w-12 h-12 rounded-2xl bg-teal-50 text-teal-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
                 ⚡
               </div>
               <div>
@@ -1349,9 +1712,15 @@
               </div>
             </div>
             <div class="flex flex-wrap gap-1.5 mb-5">
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-teal-50 text-teal-800 border border-teal-200/60">⚡ 瞬时响应</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-cyan-50 text-cyan-800 border border-cyan-200/60">🤖 AI原生全解</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">🔒 纯净IP</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-teal-50 text-teal-800 border border-teal-200/60">⚡
+                瞬时响应</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-cyan-50 text-cyan-800 border border-cyan-200/60">🤖
+                AI原生全解</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">🔒
+                纯净IP</span>
             </div>
             <div class="bg-teal-50/30 rounded-2xl p-4 border border-teal-200 mb-5 space-y-2.5 text-xs">
               <div class="flex items-center justify-between">
@@ -1379,21 +1748,26 @@
             </p>
           </div>
           <div class="pt-3 border-t border-oat/70 space-y-3">
-            <div class="flex items-center justify-between bg-teal-50/70 border border-teal-200 rounded-xl px-3 py-2 text-xs">
+            <div
+              class="flex items-center justify-between bg-teal-50/70 border border-teal-200 rounded-xl px-3 py-2 text-xs">
               <div class="flex items-center gap-1.5">
                 <span class="text-sm">🏷️</span>
                 <span class="text-carbon text-[11px]">优惠状态：</span>
-                <span class="font-mono font-bold text-teal-700 bg-white px-2 py-0.5 rounded border border-teal-200">官网直达注册通道</span>
+                <span
+                  class="font-mono font-bold text-teal-700 bg-white px-2 py-0.5 rounded border border-teal-200">官网直达注册通道</span>
               </div>
             </div>
             <div class="grid grid-cols-3 gap-2">
-              <button type="button" onclick="openPackageModal('shunyun')" class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <button type="button" onclick="openPackageModal('shunyun')"
+                class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>查看套餐</span>
               </button>
-              <a href="#matrix-table" class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
+              <a href="#matrix-table"
+                class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
                 <span>深度测评 📊</span>
               </a>
-              <a href="/go.html?id=shunyun" target="_blank" rel="nofollow sponsored noopener noreferrer" class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <a href="/go.html?id=shunyun" target="_blank" rel="nofollow sponsored noopener noreferrer"
+                class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>直达官网 ↗</span>
               </a>
             </div>
@@ -1401,14 +1775,18 @@
         </div>
 
         <!-- BRAND 14: 极连云 -->
-        <div class="brand-item group relative bg-white rounded-3xl border border-orange-200 hover:border-orange-400 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-tags="unlimited,budget">
-          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-orange-600 to-amber-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+        <div
+          class="brand-item group relative bg-white rounded-3xl border border-orange-200 hover:border-orange-400 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5"
+          data-tags="unlimited,budget">
+          <div
+            class="absolute -top-3.5 right-6 bg-gradient-to-r from-orange-600 to-amber-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
             <span>📱</span>
             <span>自研客户端 · NO.14</span>
           </div>
           <div>
             <div class="flex items-start gap-3.5 mb-4">
-              <div class="w-12 h-12 rounded-2xl bg-orange-50 text-orange-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+              <div
+                class="w-12 h-12 rounded-2xl bg-orange-50 text-orange-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
                 📱
               </div>
               <div>
@@ -1420,9 +1798,15 @@
               </div>
             </div>
             <div class="flex flex-wrap gap-1.5 mb-5">
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-orange-50 text-orange-800 border border-orange-200/60">📱 全端自研</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200/60">🔄 智能切线</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">👥 不限设备</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-orange-50 text-orange-800 border border-orange-200/60">📱
+                全端自研</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200/60">🔄
+                智能切线</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">👥
+                不限设备</span>
             </div>
             <div class="bg-orange-50/30 rounded-2xl p-4 border border-orange-200 mb-5 space-y-2.5 text-xs">
               <div class="flex items-center justify-between">
@@ -1450,24 +1834,31 @@
             </p>
           </div>
           <div class="pt-3 border-t border-oat/70 space-y-3">
-            <div class="flex items-center justify-between bg-orange-50/70 border border-orange-200 rounded-xl px-3 py-2 text-xs">
+            <div
+              class="flex items-center justify-between bg-orange-50/70 border border-orange-200 rounded-xl px-3 py-2 text-xs">
               <div class="flex items-center gap-1.5">
                 <span class="text-sm">🏷️</span>
                 <span class="text-carbon text-[11px]">专属优惠码：</span>
-                <span class="font-mono font-bold text-orange-700 bg-white px-2 py-0.5 rounded border border-orange-200 select-all">JLY888</span>
+                <span
+                  class="font-mono font-bold text-orange-700 bg-white px-2 py-0.5 rounded border border-orange-200 select-all">JLY888</span>
               </div>
-              <button onclick="copyCouponCode('JLY888')" class="text-[11px] font-bold text-orange-600 hover:text-orange-800 flex items-center gap-1 hover:underline cursor-pointer">
+              <button onclick="copyCouponCode('JLY888')"
+                class="text-[11px] font-bold text-orange-600 hover:text-orange-800 flex items-center gap-1 hover:underline cursor-pointer">
                 <span>复制</span>
               </button>
             </div>
             <div class="grid grid-cols-3 gap-2">
-              <button type="button" onclick="openPackageModal('jilianyun')" class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <button type="button" onclick="openPackageModal('jilianyun')"
+                class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>查看套餐</span>
               </button>
-              <a href="#matrix-table" class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
+              <a href="#matrix-table"
+                class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
                 <span>深度测评 📊</span>
               </a>
-              <a href="/go.html?id=jilianyun" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('JLY888')" class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <a href="/go.html?id=jilianyun" target="_blank" rel="nofollow sponsored noopener noreferrer"
+                onclick="copyCouponCode('JLY888')"
+                class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>直达官网 ↗</span>
               </a>
             </div>
@@ -1475,14 +1866,18 @@
         </div>
 
         <!-- BRAND 15: 光年梯 -->
-        <div class="brand-item group relative bg-white rounded-3xl border border-amber-300 hover:border-amber-500 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5" data-tags="iplc,unlimited,isp">
-          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-amber-500 to-yellow-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
+        <div
+          class="brand-item group relative bg-white rounded-3xl border border-amber-300 hover:border-amber-500 shadow-card hover:shadow-card-hover p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5"
+          data-tags="iplc,unlimited,isp">
+          <div
+            class="absolute -top-3.5 right-6 bg-gradient-to-r from-amber-500 to-yellow-600 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1">
             <span>✨</span>
             <span>全光纤旗舰 · NO.15</span>
           </div>
           <div>
             <div class="flex items-start gap-3.5 mb-4">
-              <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
+              <div
+                class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center text-2xl font-bold shrink-0 shadow-inner">
                 ✨
               </div>
               <div>
@@ -1494,9 +1889,15 @@
               </div>
             </div>
             <div class="flex flex-wrap gap-1.5 mb-5">
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200/60">✨ 全光纤IPLC</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-yellow-50 text-yellow-800 border border-yellow-200/60">🎮 游戏低Ping</span>
-              <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">👥 不限设备</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200/60">✨
+                全光纤IPLC</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-yellow-50 text-yellow-800 border border-yellow-200/60">🎮
+                游戏低Ping</span>
+              <span
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">👥
+                不限设备</span>
             </div>
             <div class="bg-amber-50/30 rounded-2xl p-4 border border-amber-200 mb-5 space-y-2.5 text-xs">
               <div class="flex items-center justify-between">
@@ -1524,24 +1925,31 @@
             </p>
           </div>
           <div class="pt-3 border-t border-oat/70 space-y-3">
-            <div class="flex items-center justify-between bg-amber-50/70 border border-amber-200 rounded-xl px-3 py-2 text-xs">
+            <div
+              class="flex items-center justify-between bg-amber-50/70 border border-amber-200 rounded-xl px-3 py-2 text-xs">
               <div class="flex items-center gap-1.5">
                 <span class="text-sm">🏷️</span>
                 <span class="text-carbon text-[11px]">专属 8 折优惠码：</span>
-                <span class="font-mono font-bold text-amber-700 bg-white px-2 py-0.5 rounded border border-amber-200 select-all">GNT80</span>
+                <span
+                  class="font-mono font-bold text-amber-700 bg-white px-2 py-0.5 rounded border border-amber-200 select-all">GNT80</span>
               </div>
-              <button onclick="copyCouponCode('GNT80')" class="text-[11px] font-bold text-amber-600 hover:text-amber-800 flex items-center gap-1 hover:underline cursor-pointer">
+              <button onclick="copyCouponCode('GNT80')"
+                class="text-[11px] font-bold text-amber-600 hover:text-amber-800 flex items-center gap-1 hover:underline cursor-pointer">
                 <span>复制</span>
               </button>
             </div>
             <div class="grid grid-cols-3 gap-2">
-              <button type="button" onclick="openPackageModal('guangnianti')" class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <button type="button" onclick="openPackageModal('guangnianti')"
+                class="py-2.5 px-1.5 rounded-xl border border-blue-400 hover:bg-blue-50 text-blue-600 font-bold text-xs text-center transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>查看套餐</span>
               </button>
-              <a href="#matrix-table" class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
+              <a href="#matrix-table"
+                class="py-2.5 px-1.5 rounded-xl border border-oat hover:bg-oat text-carbonLight font-semibold text-xs text-center transition-all flex items-center justify-center gap-1">
                 <span>深度测评 📊</span>
               </a>
-              <a href="/go.html?id=guangnianti" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('GNT80')" class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <a href="/go.html?id=guangnianti" target="_blank" rel="nofollow sponsored noopener noreferrer"
+                onclick="copyCouponCode('GNT80')"
+                class="py-2.5 px-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm hover:shadow transition-all flex items-center justify-center gap-1 cursor-pointer">
                 <span>直达官网 ↗</span>
               </a>
             </div>
@@ -1554,7 +1962,8 @@
     <!-- 4. 横向对比天梯榜（表格区） -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16 border-t border-oat/80" id="matrix-table">
       <div class="mb-8">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-bold mb-2">
+        <div
+          class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-warmOrange/15 text-warmOrangeDeep text-xs font-bold mb-2">
           <span>📊</span>
           <span>实测对比天梯</span>
         </div>
@@ -1603,7 +2012,12 @@
                 <td class="p-4 sm:p-5 font-mono font-bold text-warmOrangeDeep">¥10.5/月</td>
                 <td class="p-4 sm:p-5 font-bold text-amber-500">9.9 / 10</td>
                 <td class="p-4 sm:p-5 text-center">
-                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=huanqiuti" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('HQ66')" class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网 ↗</a><button type="button" onclick="openPackageModal('huanqiuti')" class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button></div>
+                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=huanqiuti" target="_blank"
+                      rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('HQ66')"
+                      class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网
+                      ↗</a><button type="button" onclick="openPackageModal('huanqiuti')"
+                      class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button>
+                  </div>
                 </td>
               </tr>
 
@@ -1626,7 +2040,12 @@
                 <td class="p-4 sm:p-5 font-mono font-bold text-indigo-700">¥12.6/月</td>
                 <td class="p-4 sm:p-5 font-bold text-amber-500">9.7 / 10</td>
                 <td class="p-4 sm:p-5 text-center">
-                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=dalaoyun" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('dly88')" class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网 ↗</a><button type="button" onclick="openPackageModal('dalaoyun')" class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button></div>
+                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=dalaoyun" target="_blank"
+                      rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('dly88')"
+                      class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网
+                      ↗</a><button type="button" onclick="openPackageModal('dalaoyun')"
+                      class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button>
+                  </div>
                 </td>
               </tr>
 
@@ -1649,7 +2068,12 @@
                 <td class="p-4 sm:p-5 font-mono font-bold text-amber-700">¥10.5/月</td>
                 <td class="p-4 sm:p-5 font-bold text-amber-500">9.5 / 10</td>
                 <td class="p-4 sm:p-5 text-center">
-                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=liulianyun" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('ll88')" class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网 ↗</a><button type="button" onclick="openPackageModal('liulianyun')" class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button></div>
+                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=liulianyun" target="_blank"
+                      rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('ll88')"
+                      class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网
+                      ↗</a><button type="button" onclick="openPackageModal('liulianyun')"
+                      class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button>
+                  </div>
                 </td>
               </tr>
 
@@ -1672,7 +2096,12 @@
                 <td class="p-4 sm:p-5 font-mono font-bold text-cyan-700">¥15.4/月</td>
                 <td class="p-4 sm:p-5 font-bold text-amber-500">9.6 / 10</td>
                 <td class="p-4 sm:p-5 text-center">
-                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=yunjiexian" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('yjx888')" class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网 ↗</a><button type="button" onclick="openPackageModal('yunjiexian')" class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button></div>
+                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=yunjiexian" target="_blank"
+                      rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('yjx888')"
+                      class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网
+                      ↗</a><button type="button" onclick="openPackageModal('yunjiexian')"
+                      class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button>
+                  </div>
                 </td>
               </tr>
 
@@ -1695,7 +2124,12 @@
                 <td class="p-4 sm:p-5 font-mono font-bold text-amber-600">¥14.0/月</td>
                 <td class="p-4 sm:p-5 font-bold text-amber-500">9.4 / 10</td>
                 <td class="p-4 sm:p-5 text-center">
-                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=shandianshu" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('sds88')" class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网 ↗</a><button type="button" onclick="openPackageModal('shandianshu')" class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button></div>
+                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=shandianshu"
+                      target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('sds88')"
+                      class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网
+                      ↗</a><button type="button" onclick="openPackageModal('shandianshu')"
+                      class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button>
+                  </div>
                 </td>
               </tr>
 
@@ -1718,10 +2152,15 @@
                 <td class="p-4 sm:p-5 font-mono font-bold text-purple-700">¥15.4/月</td>
                 <td class="p-4 sm:p-5 font-bold text-amber-500">9.6 / 10</td>
                 <td class="p-4 sm:p-5 text-center">
-                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=shenxing" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('sx0077')" class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网 ↗</a><button type="button" onclick="openPackageModal('shenxing')" class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button></div>
+                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=shenxing" target="_blank"
+                      rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('sx0077')"
+                      class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网
+                      ↗</a><button type="button" onclick="openPackageModal('shenxing')"
+                      class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button>
+                  </div>
                 </td>
               </tr>
-            
+
               <!-- 可信云 -->
               <tr class="hover:bg-blue-50/40 transition-colors">
                 <td class="p-4 sm:p-5 font-bold text-carbon">
@@ -1741,7 +2180,12 @@
                 <td class="p-4 sm:p-5 font-mono font-bold text-blue-700">¥16.8/月</td>
                 <td class="p-4 sm:p-5 font-bold text-amber-500">9.4 / 10</td>
                 <td class="p-4 sm:p-5 text-center">
-                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=kexinyun" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('kxy80')" class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网 ↗</a><button type="button" onclick="openPackageModal('kexinyun')" class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button></div>
+                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=kexinyun" target="_blank"
+                      rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('kxy80')"
+                      class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网
+                      ↗</a><button type="button" onclick="openPackageModal('kexinyun')"
+                      class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button>
+                  </div>
                 </td>
               </tr>
 
@@ -1764,7 +2208,12 @@
                 <td class="p-4 sm:p-5 font-mono font-bold text-rose-700">¥18.0/月</td>
                 <td class="p-4 sm:p-5 font-bold text-amber-500">9.3 / 10</td>
                 <td class="p-4 sm:p-5 text-center">
-                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=sujie" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('sujie888')" class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网 ↗</a><button type="button" onclick="openPackageModal('sujie')" class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button></div>
+                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=sujie" target="_blank"
+                      rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('sujie888')"
+                      class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网
+                      ↗</a><button type="button" onclick="openPackageModal('sujie')"
+                      class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button>
+                  </div>
                 </td>
               </tr>
 
@@ -1787,7 +2236,12 @@
                 <td class="p-4 sm:p-5 font-mono font-bold text-emerald-700">¥12.0/月</td>
                 <td class="p-4 sm:p-5 font-bold text-amber-500">9.2 / 10</td>
                 <td class="p-4 sm:p-5 text-center">
-                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=kuaili" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('kl888')" class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网 ↗</a><button type="button" onclick="openPackageModal('kuaili')" class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button></div>
+                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=kuaili" target="_blank"
+                      rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('kl888')"
+                      class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网
+                      ↗</a><button type="button" onclick="openPackageModal('kuaili')"
+                      class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button>
+                  </div>
                 </td>
               </tr>
 
@@ -1810,7 +2264,12 @@
                 <td class="p-4 sm:p-5 font-mono font-bold text-violet-700">¥19.0/月</td>
                 <td class="p-4 sm:p-5 font-bold text-amber-500">9.5 / 10</td>
                 <td class="p-4 sm:p-5 text-center">
-                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=edgenode" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('xk808')" class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网 ↗</a><button type="button" onclick="openPackageModal('edgenode')" class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button></div>
+                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=edgenode" target="_blank"
+                      rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('xk808')"
+                      class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网
+                      ↗</a><button type="button" onclick="openPackageModal('edgenode')"
+                      class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button>
+                  </div>
                 </td>
               </tr>
 
@@ -1833,7 +2292,12 @@
                 <td class="p-4 sm:p-5 font-mono font-bold text-sky-700">¥15.0/月</td>
                 <td class="p-4 sm:p-5 font-bold text-amber-500">9.1 / 10</td>
                 <td class="p-4 sm:p-5 text-center">
-                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=yuntu" target="_blank" rel="nofollow sponsored noopener noreferrer" class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网 ↗</a><button type="button" onclick="openPackageModal('yuntu')" class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button></div>
+                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=yuntu" target="_blank"
+                      rel="nofollow sponsored noopener noreferrer"
+                      class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网
+                      ↗</a><button type="button" onclick="openPackageModal('yuntu')"
+                      class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button>
+                  </div>
                 </td>
               </tr>
 
@@ -1856,7 +2320,12 @@
                 <td class="p-4 sm:p-5 font-mono font-bold text-indigo-700">¥16.0/月</td>
                 <td class="p-4 sm:p-5 font-bold text-amber-500">9.2 / 10</td>
                 <td class="p-4 sm:p-5 text-center">
-                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=kunpeng" target="_blank" rel="nofollow sponsored noopener noreferrer" class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网 ↗</a><button type="button" onclick="openPackageModal('kunpeng')" class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button></div>
+                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=kunpeng" target="_blank"
+                      rel="nofollow sponsored noopener noreferrer"
+                      class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网
+                      ↗</a><button type="button" onclick="openPackageModal('kunpeng')"
+                      class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button>
+                  </div>
                 </td>
               </tr>
 
@@ -1879,7 +2348,12 @@
                 <td class="p-4 sm:p-5 font-mono font-bold text-teal-700">¥15.0/月</td>
                 <td class="p-4 sm:p-5 font-bold text-amber-500">9.4 / 10</td>
                 <td class="p-4 sm:p-5 text-center">
-                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=shunyun" target="_blank" rel="nofollow sponsored noopener noreferrer" class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网 ↗</a><button type="button" onclick="openPackageModal('shunyun')" class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button></div>
+                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=shunyun" target="_blank"
+                      rel="nofollow sponsored noopener noreferrer"
+                      class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网
+                      ↗</a><button type="button" onclick="openPackageModal('shunyun')"
+                      class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button>
+                  </div>
                 </td>
               </tr>
 
@@ -1902,7 +2376,12 @@
                 <td class="p-4 sm:p-5 font-mono font-bold text-orange-700">¥16.0/月</td>
                 <td class="p-4 sm:p-5 font-bold text-amber-500">9.3 / 10</td>
                 <td class="p-4 sm:p-5 text-center">
-                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=jilianyun" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('JLY888')" class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网 ↗</a><button type="button" onclick="openPackageModal('jilianyun')" class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button></div>
+                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=jilianyun" target="_blank"
+                      rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('JLY888')"
+                      class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网
+                      ↗</a><button type="button" onclick="openPackageModal('jilianyun')"
+                      class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button>
+                  </div>
                 </td>
               </tr>
 
@@ -1925,7 +2404,12 @@
                 <td class="p-4 sm:p-5 font-mono font-bold text-amber-700">¥18.4/月</td>
                 <td class="p-4 sm:p-5 font-bold text-amber-500">9.6 / 10</td>
                 <td class="p-4 sm:p-5 text-center">
-                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=guangnianti" target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('GNT80')" class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网 ↗</a><button type="button" onclick="openPackageModal('guangnianti')" class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button></div>
+                  <div class="flex items-center justify-center gap-1.5"><a href="/go.html?id=guangnianti"
+                      target="_blank" rel="nofollow sponsored noopener noreferrer" onclick="copyCouponCode('GNT80')"
+                      class="inline-block px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors shadow-xs">直达官网
+                      ↗</a><button type="button" onclick="openPackageModal('guangnianti')"
+                      class="inline-block px-2.5 py-1.5 rounded-lg border border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold transition-colors cursor-pointer">套餐</button>
+                  </div>
                 </td>
               </tr>
 
@@ -1938,14 +2422,18 @@
   </main>
 
   <!-- ===================== MODAL: 品牌详细套餐弹窗 (支持 6 大品牌灵活切换) ===================== -->
-  <div id="packageModal" class="fixed inset-0 z-50 hidden transition-opacity duration-300" aria-labelledby="modalTitle" role="dialog" aria-modal="true">
+  <div id="packageModal" class="fixed inset-0 z-50 hidden transition-opacity duration-300" aria-labelledby="modalTitle"
+    role="dialog" aria-modal="true">
     <div class="fixed inset-0 bg-carbon/60 backdrop-blur-sm transition-opacity" onclick="closePackageModal()"></div>
 
     <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 lg:p-8 flex items-center justify-center">
-      <div class="relative bg-white rounded-3xl max-w-5xl w-full max-h-[90vh] overflow-hidden shadow-2xl border-2 border-warmOrange/30 flex flex-col" onclick="event.stopPropagation()">
-        
+      <div
+        class="relative bg-white rounded-3xl max-w-5xl w-full max-h-[90vh] overflow-hidden shadow-2xl border-2 border-warmOrange/30 flex flex-col"
+        onclick="event.stopPropagation()">
+
         <!-- Header -->
-        <div class="p-5 sm:p-6 border-b border-oat bg-gradient-to-r from-cream via-white to-buttercupLight/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div
+          class="p-5 sm:p-6 border-b border-oat bg-gradient-to-r from-cream via-white to-buttercupLight/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div class="inline-flex items-center gap-1.5 text-xs text-warmOrange font-bold mb-1">
               <span>🏪</span>
@@ -1957,51 +2445,67 @@
           </div>
 
           <!-- Brand Switcher Tabs -->
-          <div class="flex items-center gap-1 bg-oat/60 p-1.5 rounded-xl border border-oat self-start sm:self-auto overflow-x-auto max-w-full">
-            <button type="button" id="tabHq" onclick="switchModalBrand('huanqiuti')" class="px-3 py-1.5 rounded-lg bg-warmOrange text-white shadow-sm transition-all text-xs font-bold whitespace-nowrap cursor-pointer">
+          <div
+            class="flex items-center gap-1 bg-oat/60 p-1.5 rounded-xl border border-oat self-start sm:self-auto overflow-x-auto max-w-full">
+            <button type="button" id="tabHq" onclick="switchModalBrand('huanqiuti')"
+              class="px-3 py-1.5 rounded-lg bg-warmOrange text-white shadow-sm transition-all text-xs font-bold whitespace-nowrap cursor-pointer">
               🌐 环球梯
             </button>
-            <button type="button" id="tabDly" onclick="switchModalBrand('dalaoyun')" class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
+            <button type="button" id="tabDly" onclick="switchModalBrand('dalaoyun')"
+              class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
               ☁️ 大佬云
             </button>
-            <button type="button" id="tabLly" onclick="switchModalBrand('liulianyun')" class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
+            <button type="button" id="tabLly" onclick="switchModalBrand('liulianyun')"
+              class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
               🍈 榴莲云
             </button>
-            <button type="button" id="tabYjx" onclick="switchModalBrand('yunjiexian')" class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
+            <button type="button" id="tabYjx" onclick="switchModalBrand('yunjiexian')"
+              class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
               ⚡ 云界线
             </button>
-            <button type="button" id="tabSds" onclick="switchModalBrand('shandianshu')" class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
+            <button type="button" id="tabSds" onclick="switchModalBrand('shandianshu')"
+              class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
               🐭 闪电鼠
             </button>
-            <button type="button" id="tabSx" onclick="switchModalBrand('shenxing')" class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
+            <button type="button" id="tabSx" onclick="switchModalBrand('shenxing')"
+              class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
               🚀 神行加速
             </button>
 
-            <button type="button" id="tabKxy" onclick="switchModalBrand('kexinyun')" class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
+            <button type="button" id="tabKxy" onclick="switchModalBrand('kexinyun')"
+              class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
               🛡️ 可信云
             </button>
-            <button type="button" id="tabSj" onclick="switchModalBrand('sujie')" class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
+            <button type="button" id="tabSj" onclick="switchModalBrand('sujie')"
+              class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
               ⚡ 速界
             </button>
-            <button type="button" id="tabKl" onclick="switchModalBrand('kuaili')" class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
+            <button type="button" id="tabKl" onclick="switchModalBrand('kuaili')"
+              class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
               🦝 快狸快狸
             </button>
-            <button type="button" id="tabEn" onclick="switchModalBrand('edgenode')" class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
+            <button type="button" id="tabEn" onclick="switchModalBrand('edgenode')"
+              class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
               🌐 边缘节点
             </button>
-            <button type="button" id="tabYt" onclick="switchModalBrand('yuntu')" class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
+            <button type="button" id="tabYt" onclick="switchModalBrand('yuntu')"
+              class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
               🗺️ 云图机场
             </button>
-            <button type="button" id="tabKp" onclick="switchModalBrand('kunpeng')" class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
+            <button type="button" id="tabKp" onclick="switchModalBrand('kunpeng')"
+              class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
               🦅 鲲鹏加速
             </button>
-            <button type="button" id="tabSy" onclick="switchModalBrand('shunyun')" class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
+            <button type="button" id="tabSy" onclick="switchModalBrand('shunyun')"
+              class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
               ⚡ 瞬云
             </button>
-            <button type="button" id="tabJly" onclick="switchModalBrand('jilianyun')" class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
+            <button type="button" id="tabJly" onclick="switchModalBrand('jilianyun')"
+              class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
               📱 极连云
             </button>
-            <button type="button" id="tabGnt" onclick="switchModalBrand('guangnianti')" class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
+            <button type="button" id="tabGnt" onclick="switchModalBrand('guangnianti')"
+              class="px-3 py-1.5 rounded-lg text-carbonMuted hover:text-carbon transition-all text-xs whitespace-nowrap cursor-pointer">
               ✨ 光年梯
             </button>
 
@@ -2009,11 +2513,15 @@
         </div>
 
         <!-- 专属折扣提醒条 -->
-        <div class="px-6 py-2.5 bg-warmOrange/10 border-b border-warmOrange/20 flex items-center justify-between text-xs text-warmOrangeDeep">
+        <div
+          class="px-6 py-2.5 bg-warmOrange/10 border-b border-warmOrange/20 flex items-center justify-between text-xs text-warmOrangeDeep">
           <div class="flex items-center gap-2" id="modalCouponText">
-            <span>🎟️ 结算时在「折价券/优惠码」栏粘贴 <strong class="font-mono text-warmOrangeDeep bg-white px-2 py-0.5 rounded border border-warmOrange/30">HQ66</strong>，立享 7 折！</span>
+            <span>🎟️ 结算时在「折价券/优惠码」栏粘贴 <strong
+                class="font-mono text-warmOrangeDeep bg-white px-2 py-0.5 rounded border border-warmOrange/30">HQ66</strong>，立享
+              7 折！</span>
           </div>
-          <button id="modalCouponBtn" onclick="copyCouponCode('HQ66')" class="text-xs font-bold bg-warmOrange hover:bg-warmOrangeDeep text-white px-3 py-1 rounded-full shadow-xs transition-colors shrink-0 cursor-pointer">
+          <button id="modalCouponBtn" onclick="copyCouponCode('HQ66')"
+            class="text-xs font-bold bg-warmOrange hover:bg-warmOrangeDeep text-white px-3 py-1 rounded-full shadow-xs transition-colors shrink-0 cursor-pointer">
             一键复制优惠码
           </button>
         </div>
@@ -2027,50 +2535,62 @@
               <div>
                 <span class="text-xs font-bold text-warmOrange">入门特惠</span>
                 <h4 class="font-black text-lg text-carbon mt-1">基础版 · 月付/季付</h4>
-                <div class="mt-2 text-2xl font-black text-warmOrangeDeep font-mono">¥14.70 <span class="text-xs text-carbonMuted font-normal line-through">¥21.00</span></div>
+                <div class="mt-2 text-2xl font-black text-warmOrangeDeep font-mono">¥14.70 <span
+                    class="text-xs text-carbonMuted font-normal line-through">¥21.00</span></div>
                 <div class="mt-3 text-xs text-carbonLight space-y-1">
                   <div>✓ 100GB/月 IPLC专线</div>
                   <div>✓ 不限在线设备</div>
                   <div>✓ 全解流媒体与ChatGPT</div>
                 </div>
               </div>
-              <button type="button" onclick="copyCouponCode('HQ66')" class="mt-4 w-full py-2.5 rounded-xl bg-warmOrange text-white text-xs font-bold text-center block hover:bg-warmOrangeDeep transition-colors cursor-pointer shadow-sm">一键复制折价码 HQ66 并选型</button>
+              <button type="button" onclick="copyCouponCode('HQ66')"
+                class="mt-4 w-full py-2.5 rounded-xl bg-warmOrange text-white text-xs font-bold text-center block hover:bg-warmOrangeDeep transition-colors cursor-pointer shadow-sm">一键复制折价码
+                HQ66 并选型</button>
             </div>
 
-            <div class="bg-orange-50/70 rounded-2xl border-2 border-warmOrange p-5 flex flex-col justify-between relative shadow-sm">
-              <span class="absolute -top-2.5 right-4 bg-warmOrange text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full">店长推荐</span>
+            <div
+              class="bg-orange-50/70 rounded-2xl border-2 border-warmOrange p-5 flex flex-col justify-between relative shadow-sm">
+              <span
+                class="absolute -top-2.5 right-4 bg-warmOrange text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full">店长推荐</span>
               <div>
                 <span class="text-xs font-bold text-warmOrange">畅享进阶</span>
                 <h4 class="font-black text-lg text-carbon mt-1">进阶版 · 大流量</h4>
-                <div class="mt-2 text-2xl font-black text-warmOrangeDeep font-mono">¥28.00 <span class="text-xs text-carbonMuted font-normal line-through">¥40.00</span></div>
+                <div class="mt-2 text-2xl font-black text-warmOrangeDeep font-mono">¥28.00 <span
+                    class="text-xs text-carbonMuted font-normal line-through">¥40.00</span></div>
                 <div class="mt-3 text-xs text-carbonLight space-y-1">
                   <div>✓ 260GB/月 极速大带宽</div>
                   <div>✓ 4K/8K秒开与AI免验证</div>
                   <div>✓ 独立客服优先响应</div>
                 </div>
               </div>
-              <button type="button" onclick="copyCouponCode('HQ66')" class="mt-4 w-full py-2.5 rounded-xl bg-warmOrange text-white text-xs font-bold text-center block hover:bg-warmOrangeDeep transition-colors cursor-pointer shadow-sm">一键复制折价码 HQ66 并选型</button>
+              <button type="button" onclick="copyCouponCode('HQ66')"
+                class="mt-4 w-full py-2.5 rounded-xl bg-warmOrange text-white text-xs font-bold text-center block hover:bg-warmOrangeDeep transition-colors cursor-pointer shadow-sm">一键复制折价码
+                HQ66 并选型</button>
             </div>
 
             <div class="bg-cream/40 rounded-2xl border border-oat p-5 flex flex-col justify-between">
               <div>
                 <span class="text-xs font-bold text-carbonMuted">重度旗舰</span>
                 <h4 class="font-black text-lg text-carbon mt-1">尊享版 · 极速破风</h4>
-                <div class="mt-2 text-2xl font-black text-warmOrangeDeep font-mono">¥50.40 <span class="text-xs text-carbonMuted font-normal line-through">¥72.00</span></div>
+                <div class="mt-2 text-2xl font-black text-warmOrangeDeep font-mono">¥50.40 <span
+                    class="text-xs text-carbonMuted font-normal line-through">¥72.00</span></div>
                 <div class="mt-3 text-xs text-carbonLight space-y-1">
                   <div>✓ 520GB/月 纯内网专线</div>
                   <div>✓ 峰值带宽高达 2.5Gbps</div>
                   <div>✓ 全家/工作室重度共享</div>
                 </div>
               </div>
-              <button type="button" onclick="copyCouponCode('HQ66')" class="mt-4 w-full py-2.5 rounded-xl bg-carbon text-white text-xs font-bold text-center block hover:bg-carbonLight transition-colors cursor-pointer">一键复制折价码 HQ66 并选型</button>
+              <button type="button" onclick="copyCouponCode('HQ66')"
+                class="mt-4 w-full py-2.5 rounded-xl bg-carbon text-white text-xs font-bold text-center block hover:bg-carbonLight transition-colors cursor-pointer">一键复制折价码
+                HQ66 并选型</button>
             </div>
           </div>
         </div>
 
         <div class="p-4 border-t border-oat bg-cream/30 flex items-center justify-between text-xs text-carbonMuted">
           <span>官方直营通道 · 实时自动激活 · 支付宝 / 微信快捷支付</span>
-          <button type="button" onclick="closePackageModal()" class="px-4 py-2 bg-oat hover:bg-oat/80 text-carbon font-bold rounded-xl transition-colors cursor-pointer">
+          <button type="button" onclick="closePackageModal()"
+            class="px-4 py-2 bg-oat hover:bg-oat/80 text-carbon font-bold rounded-xl transition-colors cursor-pointer">
             关闭窗口
           </button>
         </div>
@@ -2085,11 +2605,16 @@
         <div class="md:col-span-2">
           <div class="flex items-center gap-2.5 mb-4">
             <div class="w-8 h-8 rounded-lg bg-warmOrange flex items-center justify-center">
-              <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" style="width:16px;height:16px;flex-shrink:0;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 12 15 12 15 22"/></svg>
+              <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                height="16" style="width:16px;height:16px;flex-shrink:0;">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 12 15 12 15 22" />
+              </svg>
             </div>
             <div class="leading-tight">
               <span class="block text-sm font-bold text-cream">光速便利店</span>
-              <span class="block text-[9px] font-display font-semibold text-cream/50 tracking-widest uppercase">Speed Mart</span>
+              <span class="block text-[9px] font-display font-semibold text-cream/50 tracking-widest uppercase">Speed
+                Mart</span>
             </div>
           </div>
           <p class="text-xs text-cream/50 leading-relaxed max-w-md">
@@ -2114,12 +2639,24 @@
           <h3 class="text-sm font-bold text-cream mb-4">店长联络</h3>
           <p class="text-xs text-cream/50 mb-3">若有新机场推荐申请横评或反馈错误：</p>
           <div class="space-y-2">
-            
-            <a href="https://t.me/huanqiuti8899" target="_blank" rel="nofollow sponsored noopener noreferrer" class="inline-flex items-center gap-2 bg-[#0088cc]/20 hover:bg-[#0088cc]/30 text-sky-300 hover:text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition-colors border border-sky-500/30">
-              <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current shrink-0" height="16" style="width:16px;height:16px;"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+
+            <a href="https://t.me/huanqiuti8899" target="_blank" rel="nofollow sponsored noopener noreferrer"
+              class="inline-flex items-center gap-2 bg-[#0088cc]/20 hover:bg-[#0088cc]/30 text-sky-300 hover:text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition-colors border border-sky-500/30">
+              <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current shrink-0" height="16"
+                style="width:16px;height:16px;">
+                <path
+                  d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+              </svg>
               <span>Telegram 在线客服 ↗</span>
             </a>
-            <a href="/faq.html" class="inline-flex items-center gap-2 bg-warmOrange/20 hover:bg-warmOrange/30 text-warmOrangeLight hover:text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors border border-warmOrange/30"><svg class="w-4 h-4 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2" height="16" style="width:16px;height:16px;flex-shrink:0;"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>常见问题排错 ↗</span></a>
+            <a href="/faq.html"
+              class="inline-flex items-center gap-2 bg-warmOrange/20 hover:bg-warmOrange/30 text-warmOrangeLight hover:text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors border border-warmOrange/30"><svg
+                class="w-4 h-4 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2" height="16"
+                style="width:16px;height:16px;flex-shrink:0;">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg><span>常见问题排错 ↗</span></a>
           </div>
         </div>
       </div>
@@ -2151,8 +2688,8 @@
     // 1. Mobile Menu Drawer
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
-    const iconOpen   = document.getElementById('menu-icon-open');
-    const iconClose  = document.getElementById('menu-icon-close');
+    const iconOpen = document.getElementById('menu-icon-open');
+    const iconClose = document.getElementById('menu-icon-close');
 
     if (menuToggle && mobileMenu) {
       menuToggle.addEventListener('click', () => {
@@ -2269,7 +2806,8 @@
           { badge: '主力进阶', name: '神行·基础包', price: '¥15.40', orig: '¥22.00', traffic: '120GB/月', desc: ['✓ 120GB 专线流量', '✓ 全节点 x1 倍率无套路', '✓ 极低跳 Ping，游戏友好'] },
           { badge: '重度尊享', name: '神行·进阶包', price: '¥28.00', orig: '¥40.00', traffic: '260GB/月', desc: ['✓ 260GB 巨量专线流量', '✓ 4K秒开软路由首选', '✓ 高效专属客服响应'] }
         ]
-      },
+      }
+      ,
       kexinyun: {
         name: '可信云',
         url: '/go.html?id=kexinyun',
@@ -2473,4 +3011,5 @@
     });
   </script>
 </body>
+
 </html>
